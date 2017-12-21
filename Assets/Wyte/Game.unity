@@ -300,11 +300,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114547587107821684, guid: d3e90c533927e4304bbe56f30b7e4997,
-        type: 2}
-      propertyPath: Songs.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4059653036557298, guid: d3e90c533927e4304bbe56f30b7e4997, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -337,30 +332,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114422079785413850, guid: d3e90c533927e4304bbe56f30b7e4997,
-        type: 2}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 20336434455120676, guid: d3e90c533927e4304bbe56f30b7e4997,
         type: 2}
       propertyPath: orthographic size
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 114547587107821684, guid: d3e90c533927e4304bbe56f30b7e4997,
-        type: 2}
-      propertyPath: Songs.Array.data[2].id
-      value: hometown
-      objectReference: {fileID: 0}
-    - target: {fileID: 114547587107821684, guid: d3e90c533927e4304bbe56f30b7e4997,
-        type: 2}
-      propertyPath: Songs.Array.data[2].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: dd35aa4a9099f40cbae9608144bcff70, type: 3}
-    - target: {fileID: 114547587107821684, guid: d3e90c533927e4304bbe56f30b7e4997,
-        type: 2}
-      propertyPath: Songs.Array.data[2].loop
-      value: 1
+      value: 102.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d3e90c533927e4304bbe56f30b7e4997, type: 2}
