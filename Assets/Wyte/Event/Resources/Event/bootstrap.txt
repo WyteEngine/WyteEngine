@@ -1,0 +1,33 @@
+#boot
+//mes+onsflag #skip
+:"<b>うるせえよ</b>"
+:うーわー><
+//:"...。 <pname>って言うんだね！"
+#skip
++sflag on, mes
++move "demo"
++bgmplay "port_town.day"
++pshow -109.9, -56
++fade in, 0.2
++end
+
+#neko
+:"ねこ！"
+:"ねえこ！"
++goto #neko
+
+#tag_test
+
+to_tag_2+onflag #tag2 #tag1
+#tag1
+:"<<><>> で囲まれた言葉は呪文なんだ。"
+:"あなたのことを 当ててあげるよ。"
+:"君の名前は <pname>。"
+:"HPは <plife>/<pmaxlife>。"
+:"すごいでしょ？"
++flag on, "to_tag_2"
+#tag2
+:"<<>pname<>> で 名前"
+:"<<>plife<>> <<>pmaxlife<>> でそれぞれ 体力と 最大体力"
+:"<<><<><>> <<><>><>> でそれぞれ <<> <>> を表示するよ。"
+:"すごいでしょ？"
