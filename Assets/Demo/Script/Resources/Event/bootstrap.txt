@@ -13,7 +13,6 @@ mes+onsflag #skip
 
 #neko
 :"ねこ！"
-:"ねえこ！"
 +goto #neko
 
 #tag_test

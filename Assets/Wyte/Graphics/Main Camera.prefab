@@ -159,7 +159,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -332,15 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397f6dec25bb77a47ba610930c9e833b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Effects:
-  - id: player.death
-    clip: {fileID: 8300000, guid: 15ce2140f5b72574ea4552f2dbb5d80e, type: 3}
-  - id: player.jump
-    clip: {fileID: 8300000, guid: 8429bda0c90338b409485a625f723a0e, type: 3}
-  - id: player.land
-    clip: {fileID: 8300000, guid: 3f4e4b80147a18341bf01b4d0126cad8, type: 3}
-  - id: npc.saying
-    clip: {fileID: 8300000, guid: 1b905488531fd43eaaeb0036b01729c2, type: 3}
+  Effects: []
 --- !u!114 &114547587107821684
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -352,16 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4bc8ba5728205e42b48a66367c8f8dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Songs:
-  - id: port_town.day
-    clip: {fileID: 8300000, guid: 1c6d496e88ee94d629495d3867bc770f, type: 3}
-    loop: 1
-  - id: stage02.day
-    clip: {fileID: 8300000, guid: be801d9119492f04ca78b6123713c73a, type: 3}
-    loop: 1
-  - id: hometown
-    clip: {fileID: 8300000, guid: dd35aa4a9099f40cbae9608144bcff70, type: 3}
-    loop: 1
+  Songs: []
 --- !u!114 &114881179960506532
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -269,7 +269,7 @@ public class UnityNRuntime
 			throw new NRuntimeException("移動先のラベルが指定されていません．");
 		var label = GetLine(CombineAll(args));
 		// 移動する
-		Goto(label - 1);
+		Goto(label);
 		yield break;
 	}
 

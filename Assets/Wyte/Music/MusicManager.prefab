@@ -132,10 +132,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4bc8ba5728205e42b48a66367c8f8dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Songs:
-  - id: port_town.day
-    clip: {fileID: 8300000, guid: 1c6d496e88ee94d629495d3867bc770f, type: 3}
-    loop: 1
-  - id: stage02.day
-    clip: {fileID: 8300000, guid: be801d9119492f04ca78b6123713c73a, type: 3}
-    loop: 1
+  Songs: []
