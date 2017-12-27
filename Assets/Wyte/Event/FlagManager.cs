@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Novel.Exceptions;
+using System.Linq;
 
 public class FlagManager : SingletonBaseBehaviour<FlagManager>
 {
@@ -23,14 +24,15 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 		flagDic[args[1]] = args[0] == "on";
 	}
 
-	private void OnFlagImpl(Dictionary<string, bool> flagDic, string key, string[] labels)
+	private IEnumerator OnFlagImpl(Dictionary<string, bool> flagDic, string key, string[] labels)
 	{
 		if (labels.Length < 1)
-			return;
-		if (flagDic.ContainsKey(key) && flagDic[key]) 
-			EventController.Instance.Runtime.Goto("", labels[0]);
-		else if (labels.Length >= 2)
-			EventController.Instance.Runtime.Goto("", labels[1]);
+			return null;
+		if (flagDic.ContainsKey(key) && flagDic[key])
+			return EventController.Instance.Runtime.Goto("", labels[0]);
+		if (labels.Length >= 2)
+			return EventController.Instance.Runtime.Goto("", labels[1]);
+		return null;
 	
 	}
 
@@ -42,8 +44,7 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 
 	public IEnumerator OnFlag(string name, string[] labels)
 	{
-		OnFlagImpl(flags, name, labels);
-		yield break;
+		yield return OnFlagImpl(flags, name, labels);
 	}
 
 
@@ -55,7 +56,6 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 
 	public IEnumerator OnSkipFlag(string name, string[] labels)
 	{
-		OnFlagImpl(skipFlags, name, labels);
-		yield break;
+		yield return OnFlagImpl(skipFlags, name, labels);
 	}
 }
