@@ -11,9 +11,58 @@ mes+onsflag #skip
 +fade in, 0.2
 +end
 
+#sub_test
++gosub #neko
++gosub #neko
++gosub #neko
++goto #boot
+
+
+#sof_test
++gosub #sof
++goto #boot
+
+#sof
++gosub #sof a
++return
+
+#recruse_test
++gosub #recruse
++gosub #recruse
++goto #boot
+
+#recruse
+r1+onflag #recruse_1
++flag on, r1
++gosub #recruse_test
++goto #recruse_skip
+
+#recruse_1
+r2+onflag #recruse_2
++flag on, r2
++gosub #recruse_test
++goto #recruse_skip
+
+#recruse_2
+r3+onflag #recruse_3
++flag on, r3
++gosub #recruse_test
++goto #recruse_skip
+
+#recruse_3
+: 再帰終わり！
+
+#recruse_skip
++return
+
 #neko
-:"ねこ！"
-+goto #neko
+neko+onflag #skip2
++flag on, "neko"
+: にゃー
++return
+#skip2
+: もういった
++return
 
 #tag_test
 

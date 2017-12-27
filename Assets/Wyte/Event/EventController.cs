@@ -88,6 +88,10 @@ public class UnityNRuntime
 	/// </summary>
 	public int ProgramCounter { get; private set; }
 
+	/// <summary>
+	/// サブルーチン実行用のスタック
+	/// </summary>
+	private Stack<int> goSubStack;
 
 
 	/// <summary>
@@ -113,12 +117,15 @@ public class UnityNRuntime
 		var text = string.Join("¥n", assets.Select(a => a.text));
 		code = NParser.Parse(text);
 		outErr = errorCommand;
+		goSubStack = new Stack<int>();
 
 		#region 組み込みコマンド登録
 		commands["goto"] = Goto;
 		commands["debug"] = Debug;
 		commands["wait"] = Wait;
 		commands["end"] = End;
+		commands["gosub"] = Gosub;
+		commands["return"] = Return;
 		#endregion
 
 	}
@@ -190,6 +197,7 @@ public class UnityNRuntime
 			// stop
 			if (!IsRunning)
 				break;
+			UnityEngine.Debug.Log(ProgramCounter);
 			// ステートメントを取得
 			var statement = code.Statements[ProgramCounter];
 			if (!commands.ContainsKey(statement.CommandName))
@@ -270,6 +278,22 @@ public class UnityNRuntime
 		var label = GetLine(CombineAll(args));
 		// 移動する
 		Goto(label);
+		yield break;
+	}
+
+	public IEnumerator Gosub(string _, params string[] args)
+	{
+		if (goSubStack.Count > 20)
+			throw new NRuntimeException("スタックオーバーフローです．");
+		goSubStack.Push(ProgramCounter + 1);
+		return Goto(_, args);
+	}
+
+	public IEnumerator Return(string _, params string[] args)
+	{
+		if (goSubStack.Count < 1)
+			throw new NRuntimeException("サブルーチンにいません．");
+		Goto(goSubStack.Pop());
 		yield break;
 	}
 

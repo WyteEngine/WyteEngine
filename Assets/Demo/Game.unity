@@ -678,7 +678,7 @@ Prefab:
     - target: {fileID: 114426115041763256, guid: 5a26eeba5b9d4433481e8e4b6311396c,
         type: 2}
       propertyPath: BootstrapLabel
-      value: boot
+      value: sof_test
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a26eeba5b9d4433481e8e4b6311396c, type: 2}
