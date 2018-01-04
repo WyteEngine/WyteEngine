@@ -134,8 +134,7 @@ public class PlayerController : BaseBehaviour
 	{
 		if (isDeath)
 			return;
-		if (IsGrounded() && (int)rigid.velocity.y == 0) IsJumping = false;
-		//TODO: スマートデバイスにおいて、イベント実装時にここのジャンプ判定もいじる
+		IsJumping &= (!IsGrounded() || (int)rigid.velocity.y != 0);
 		if (GetJumpKeyPushed(true))
 		{
 			if (currentNpc != null && currentNpc.EventWhen == EventCondition.Talked)

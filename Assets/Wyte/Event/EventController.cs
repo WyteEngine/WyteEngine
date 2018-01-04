@@ -33,31 +33,40 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			// Fade
 			.Register("fade", FadeController.Instance.Fade)
 			// Play BGM
-			.Register("bgmplay", MusicManager.Instance.Play)
+			.Register("bgmplay", Bgm.Play)
 			// Stop BGM
-			.Register("bgmstop", MusicManager.Instance.Stop)
+			.Register("bgmstop", Bgm.Stop)
 			// Sound FX 
-			.Register("sfx", SfxManager.Instance.Play)
+			.Register("sfx", Sfx.Play)
 			// Alias
-			.Register("se", SfxManager.Instance.Play)
+			.Register("se", Sfx.Play)
 			// Map Moving
 			.Register("move", MapManager.Instance.Move)
 			 // Show Player
-			.Register("pshow", GameMaster.Instance.PlayerShow)
+			.Register("pshow", Wyte.PlayerShow)
 			 // Hide Player
-			.Register("phide", GameMaster.Instance.PlayerHide)
+			.Register("phide", Wyte.PlayerHide)
 			// Edit Flag
-			.Register("flag", FlagManager.Instance.Flag)
+			.Register("flag", Flag.Flag)
 			// Event by Flag
-			.Register("onflag", FlagManager.Instance.OnFlag)
-			.Register("say", MessageContoller.Instance.Say);
+			.Register("onflag", Flag.OnFlag)
+			// Edit Skip Flag
+			.Register("sflag", Flag.SkipFlag)
+			// Event by Skip Flag
+			.Register("onsflag", Flag.OnSkipFlag)
+			// Say message
+			.Register("say", MessageContoller.Instance.Say)
+			// Freeze All
+			.Register("freeze", Wyte.Freeze)
+			// Freeze the Player
+			.Register("pfreeze", Wyte.PlayerFreeze);
 
 
 		#endregion
 
-		StartCoroutine(runtime.Call(Wyte.BootstrapLabel));
 	}
 
+	public void Run(string label) => StartCoroutine(runtime.Call(label));
 	// Update is called once per frame
 	void Update()
 	{
@@ -152,7 +161,7 @@ public class UnityNRuntime
 	{
 		// 申し訳ないが重複はNG.
 		if (commands.ContainsKey(name))
-			throw new ArgumentException(nameof(name));
+			throw new ArgumentException($"The command name {name} is duplicated.");
 		#region NullCheck
 		NullCheck(name);
 		NullCheck(command);
@@ -197,7 +206,6 @@ public class UnityNRuntime
 			// stop
 			if (!IsRunning)
 				break;
-			UnityEngine.Debug.Log(ProgramCounter);
 			// ステートメントを取得
 			var statement = code.Statements[ProgramCounter];
 			if (!commands.ContainsKey(statement.CommandName))

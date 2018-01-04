@@ -29,9 +29,9 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 		if (labels.Length < 1)
 			return null;
 		if (flagDic.ContainsKey(key) && flagDic[key])
-			return EventController.Instance.Runtime.Goto("", labels[0]);
+			return Novel.Runtime.Goto("", labels[0]);
 		if (labels.Length >= 2)
-			return EventController.Instance.Runtime.Goto("", labels[1]);
+			return Novel.Runtime.Goto("", labels[1]);
 		return null;
 	
 	}

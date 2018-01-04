@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +16,9 @@ public class FadeController : SingletonBaseBehaviour<FadeController> {
 		image = GetComponent<Image>();
 	}
 
-	Color light = new Color(0, 0, 0, 0);
-	Color dark = new Color(0, 0, 0, 1);
+	new readonly Color light = new Color(0, 0, 0, 0);
+	readonly Color dark = new Color(0, 0, 0, 1);
+
 
 	public IEnumerator Fade(string _, params string[] args)
 	{
