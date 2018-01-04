@@ -309,9 +309,9 @@ public class PlayerController : BaseBehaviour
 	{
 		isDeath = true;
 		
-		BgmStop();
+		StartCoroutine(Bgm.Stop(0.5f));
 		Sfx.Play("player.death");
 		yield return new WaitForSeconds(3);
-		SceneManager.LoadScene(0);
+		Wyte.Initalize();
 	}
 }

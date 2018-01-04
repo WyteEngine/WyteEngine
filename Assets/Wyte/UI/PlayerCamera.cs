@@ -20,6 +20,11 @@ public class PlayerCamera : BaseBehaviour
 	{
 		if (windowRect == null)
 			windowRect = GameObject.FindGameObjectWithTag("UIWindow").GetComponent<RectTransform>();
+		WyteEvent.Instance.GameReset += (wyte) =>
+		{
+			offset = Vector3.zero;
+			player = null;
+		};
 	}
 
 	void LateUpdate()
@@ -29,6 +34,7 @@ public class PlayerCamera : BaseBehaviour
 			var g = GameObject.FindGameObjectWithTag("Player");
 			if (!g) return;
 			player = g.transform;
+			transform.position = new Vector3(0, 0, -1);
 			offset = Vector3.zero;
 		}
 		if (offset == Vector3.zero)

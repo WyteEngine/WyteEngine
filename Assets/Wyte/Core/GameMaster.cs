@@ -28,6 +28,9 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	[SerializeField]
 	GameObject playerPrefab;
 
+
+	public PlayerController CurrentPlayer => playerTemp == null ? null : playerTemp.GetComponent<PlayerController>();
+
 	GameObject playerTemp;
 
 	/// <summary>
@@ -55,7 +58,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 			canMove = value;
 		}
 	}
-
+	#region Novel API
 	public IEnumerator PlayerShow(string t, string[] a)
 	{
 		if (playerTemp != null)
@@ -116,7 +119,24 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 			booted = true;
 		}
 
+		// Clossplatform UI Visible
+		if (CanMove)
+			MessageContoller.Instance.ShowBox();
+		else
+			MessageContoller.Instance.HideBox();
 
+		// Initialize
+
+	//todo 必要ならescapeもキーバインドつける
+	bool Escape => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Escape, true) : Input.GetKeyDown(KeyCode.Escape);
+
+	public void Initalize()
+	{
+		if (playerTemp != null)
+			Destroy(playerTemp);
+		IsNotFreezed = CanMove = true;
+		WyteEvent.Instance.GameReset?.Invoke(this);
+		booted = false;
 	}
 }
 
