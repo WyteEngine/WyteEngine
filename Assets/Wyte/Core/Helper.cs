@@ -43,20 +43,6 @@ public abstract class BaseBehaviour : MonoBehaviour
 	protected bool IsSmartDevice => EnvironmentFlag.IsSmartDevice;
 
 
-	/// <summary>
-	/// BGM を終了します。
-	/// </summary>
-	public void BgmStop()
-	{
-		var bgmplayer = GameObject.FindGameObjectWithTag("Bgm");
-		if (!bgmplayer) return;
-
-		var audio = bgmplayer.GetComponent<AudioSource>();
-		if (!audio) return;
-
-		audio.Stop();
-	}
-
 }
 
 /// <summary>
