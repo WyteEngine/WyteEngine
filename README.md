@@ -29,7 +29,7 @@ I won't write more informations because this project is WIP.
 
 Contributing
 ==============
-No thanks yet. I'll write the contributing guildline ASAP.
+No thanks yet. I'll write the contributing guideline ASAP.
 
 LICENSE
 ==========
