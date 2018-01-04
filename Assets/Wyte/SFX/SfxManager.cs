@@ -24,8 +24,9 @@ public class SfxManager : SingletonBaseBehaviour<SfxManager>
 	private AudioSource source;
 
 	// Use this for initialization
-	void Start()
+	protected override void Awake()
 	{
+		base.Awake();
 		source = GetComponent<AudioSource>();
 	}
 

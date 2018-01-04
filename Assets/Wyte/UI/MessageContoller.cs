@@ -43,11 +43,11 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 			text.text += Cursor;
 	}
 
-	void ShowBox() => CurrentPad.SetActive(false);
+	public void HideBox() => CurrentPad.SetActive(false);
 
-	void HideBox() => CurrentPad.SetActive(true);
+	public void ShowBox() => CurrentPad.SetActive(true);
 
-	public IEnumerator Say(string sprite, string[] args)
+	public IEnumerator Say(string sprite, params string[] args)
 	{
 		var tmp = UnityNRuntime.CombineAll(args);
 		// 話者がいる場合は表示
@@ -59,12 +59,12 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 			.Replace("<pmaxlife>", GameMaster.Instance.Player?.MaxLife.ToString())
 			.Replace("<<>", "<")
 			.Replace("<>>", ">");
-		ShowBox();
 		bool prevTouch = true;
 		foreach (char c in tmp)
 		{
 			textTemp += c;
 			// タッチ時は早くする
+			Sfx.Play("npc.saying");
 			yield return new WaitForSeconds(speed / (IsTouched ? 2 : 1));
 		}
 
@@ -75,7 +75,6 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 			yield return null;
 		}
 		textTemp = "";
-		HideBox();
 
 	}
 

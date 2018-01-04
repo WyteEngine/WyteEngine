@@ -103,8 +103,17 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		Player = new PlayerData("ホワイト", 20);
 	}
 
+	private bool booted;
+
 	void Update()
 	{
+		// Novel Bootstrap
+		if (!booted)
+		{
+			Novel.Run(BootstrapLabel);
+			booted = true;
+		}
+
 
 	}
 }
