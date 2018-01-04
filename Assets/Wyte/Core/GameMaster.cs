@@ -48,7 +48,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		get
 		{
 			// フリーズ状態にも依存
-			return canMove | IsNotFreezed;
+			return canMove && IsNotFreezed;
 		}
 		set
 		{
