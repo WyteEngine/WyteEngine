@@ -1,5 +1,7 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
 
 [DefaultExecutionOrder(-1000)]
 public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
@@ -7,6 +9,8 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
 	PlayerController player;
 
 	public RectTransform Left, Right, Action, Menu, SliderUp, SliderDown, SliderLeft, SliderRight, Escape;
+	private Text actionText;
+	public Text Haribote;
 
 	// Use this for initialization
 	void Start ()
@@ -14,10 +18,17 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
 		if (!IsSmartDevice)
 			gameObject.SetActive(false);
 		Input.multiTouchEnabled = true;
+		actionText = Action.gameObject.GetComponentInChildren<Text>();
 	}
 
 	// Update is called once per frame
 	void Update() {
+		if (actionText != null && Wyte.CurrentPlayer != null)
+		{
+			actionText.text = Wyte.CurrentPlayer.CurrentNpc == null ? "↑" : "…";
+		}
+		Haribote.text = DateTime.Now.ToString("T");
+
 	}
 
 	public bool Get(GamePadButtons gpb, bool down = false)
