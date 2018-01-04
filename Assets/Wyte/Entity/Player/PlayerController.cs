@@ -77,7 +77,10 @@ public class PlayerController : BaseBehaviour
 	void FixedUpdate()
 	{
 		Animation();
-		if (isInput)
+		// しないと CanMove でないときにｽｨｰってなる
+		rigid.velocity = new Vector2(0, rigid.velocity.y);
+		// 移動可能時に処理を行う
+		if (Wyte.CanMove)
 			InputKey();
 		prevIsCeiling = IsCeiling();
 		prevIsGrounded = IsGrounded();
@@ -143,7 +146,7 @@ public class PlayerController : BaseBehaviour
 			}
 			else
 			{
-			Jump();
+				Jump();
 			}
 		}
 		Move(KeyBind.Arrow.x);
@@ -308,7 +311,7 @@ public class PlayerController : BaseBehaviour
 	public IEnumerator Death()
 	{
 		isDeath = true;
-		
+
 		StartCoroutine(Bgm.Stop(0.5f));
 		Sfx.Play("player.death");
 		yield return new WaitForSeconds(3);

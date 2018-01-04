@@ -11,9 +11,13 @@ public class NpcBehaviour : BaseBehaviour {
 	[Tooltip("アクション時に実行するイベント ラベル。")]
 	private string label;
 
+	public string Label => label;
+
 	[SerializeField]
 	[Tooltip("イベントの発火条件。")]
 	private EventCondition eventWhen;
+
+	public EventCondition EventWhen => eventWhen;
 
 	// Use this for initialization
 	void Start () {
