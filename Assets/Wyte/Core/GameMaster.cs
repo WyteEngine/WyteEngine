@@ -58,6 +58,8 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 
 	public IEnumerator PlayerShow(string t, string[] a)
 	{
+		if (playerTemp != null)
+			yield break;
 		float x = 0, y = 0;
 		if (a.Length >= 2)
 		{
@@ -66,8 +68,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 			if (!float.TryParse(a[1], out y))
 				throw new NRuntimeException("座標が不正です。");
 		}
-		playerTemp = Instantiate(playerPrefab, new Vector3(x, y), Quaternion.Euler(0, 0, 0));
-		yield break;
+		playerTemp = Instantiate(playerPrefab, new Vector3(x, y), Quaternion.Euler(0, 0, 0)) as GameObject;
 	}
 
 	public IEnumerator PlayerHide(string t, string[] a)
@@ -77,21 +78,22 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		yield break;
 	}
 
-	public IEnumerator Freeze(string t, string[] a)
+	public IEnumerator Freeze(string t, params string[] a)
 	{
 		if (a.Length < 1)
 			throw new NRuntimeException("引数が足りません．");
 		// フリーズ時に false になることに注意．
-		IsNotFreezed = a[0] == "on" ? false : true;
+		IsNotFreezed = a[0] != "on";
 		yield break;
 	}
 
-	public IEnumerator PlayerFreeze(string t, string[] a)
+	public IEnumerator PlayerFreeze(string t, params string[] a)
 	{
 		if (a.Length < 1)
 			throw new NRuntimeException("引数が足りません．");
 		// フリーズ時に false になることに注意．
-		CanMove = a[0] == "on" ? false : true;
+		CanMove = a[0] != "on";
+		Debug.Log(canMove);
 		yield break;
 	}
 
