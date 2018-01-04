@@ -1,31 +1,43 @@
 #boot
+// フラグを倒す
++flag off, saw_the_house
++flag off, creators_surprise
++flag off, stupid_spelling
++pfreeze on
 mes+onsflag #skip
+
+// プロローグ
 :"きみ，名前は？"
 :"............。"
 :"<pname>！いい名前だね！"
+
+// デモマップへの移動
 #skip
 +sflag on, mes
 +move "demo"
 +bgmplay "port_town.day"
 +pshow -109.9, -56
 +fade in, 0.2
++pfreeze off
 +end
 
+// サブルーチンテスト
 #sub_test
 +gosub #neko
 +gosub #neko
 +gosub #neko
 +goto #boot
 
-
+// スタックオーバーフローテスト
 #sof_test
 +gosub #sof
 +goto #boot
 
 #sof
-+gosub #sof a
++gosub #sof
 +return
 
+// 再帰テスト(強引ｗ)
 #recruse_test
 +gosub #recruse
 +gosub #recruse
@@ -55,6 +67,7 @@ r3+onflag #recruse_3
 #recruse_skip
 +return
 
+// フラグテスト
 #neko
 neko+onflag #skip2
 +flag on, "neko"
@@ -64,9 +77,10 @@ neko+onflag #skip2
 : もういった
 +return
 
+// say コマンドにおけるタグのテスト
 #tag_test
-
-to_tag_2+onflag #tag2 #tag1
++pfreeze on
+to_tag_2+onflag #tag2, #tag1
 #tag1
 :"<<><>> で囲まれた言葉は呪文なんだ。"
 :"あなたのことを 当ててあげるよ。"
@@ -74,8 +88,54 @@ to_tag_2+onflag #tag2 #tag1
 :"HPは <plife>/<pmaxlife>。"
 :"すごいでしょ？"
 +flag on, "to_tag_2"
++pfreeze off
++end
 #tag2
 :"<<>pname<>> で 名前"
 :"<<>plife<>> <<>pmaxlife<>> でそれぞれ 体力と 最大体力"
 :"<<><<><>> <<><>><>> でそれぞれ <<> <>> を表示するよ。"
 :"すごいでしょ？"
++pfreeze off
++end
+
+// ドア イベント
+#door
++pfreeze on
+:家が ある。
+saw_the_house+onflag #saw_the_house
++flag on, "saw_the_house"
+:"入りますか？"
+:"...どうやら あなたに 選択権は ないようだ。"
+:"選択肢の インターフェイスが まだ作られていない みたいだ。"
+
+#saw_the_house
++pfreeze off
++end
+
+// 創始者イベント
+#creator
++pfreeze on
+creators_surprise+onflag #auamazing
+:やあ。
+:僕はね、この世界を作っている人なんだ。
+:世界を変えるなんて、できるわけないだろって？
+:普通はそう思うよね。じゃあこうしてみよう。
++bgmplay "resistor"
++wait 1
+:これでわかったかい？
++flag on, "creators_surprise"
++pfreeze off
++end
+
+#auamazing
+stupid_spelling+onflag #stupid_spelling
+:これは、僕が18のときに作った世界の民謡なんだ。
+:英語の綴りをすこし間違えたけど。
++flag on, "stupid_spelling"
++pfreeze off
++end
+
+#stupid_spelling
+:"抵抗器は Register じゃなくて\nResistor なんだよね...。"
++pfreeze off
++end
