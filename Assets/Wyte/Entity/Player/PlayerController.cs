@@ -35,8 +35,10 @@ public class PlayerController : BaseBehaviour
 	public float charaJumpScale = 10.0f;
 	public float charaCeilingBouness = -1.0f;
 
+
+	public NpcBehaviour CurrentNpc => currentNpc;
+
 	[Header("KEY_CONFIG")]
-	public bool isInput = true;
 	public float jumpThreshold = .5f;
 
 	private Rigidbody2D rigid;
@@ -51,6 +53,7 @@ public class PlayerController : BaseBehaviour
 	private string nowAnim;
 	private bool prevIsGrounded, prevIsCeiling;
 
+	private NpcBehaviour currentNpc;
 	/// <summary>
 	/// キャラの向き
 	/// </summary>
@@ -134,10 +137,17 @@ public class PlayerController : BaseBehaviour
 		if (IsGrounded() && (int)rigid.velocity.y == 0) IsJumping = false;
 		//TODO: スマートデバイスにおいて、イベント実装時にここのジャンプ判定もいじる
 		if (GetJumpKeyPushed(true))
+		{
+			if (currentNpc != null && currentNpc.EventWhen == EventCondition.Talked)
+			{
+				Novel.Run(currentNpc.Label);
+			}
+			else
+			{
 			Jump();
-
+			}
+		}
 		Move(KeyBind.Arrow.x);
-		// 
 	}
 
 	
@@ -236,8 +246,26 @@ public class PlayerController : BaseBehaviour
 
 	}
 
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		var npc = collision.GetComponent<NpcBehaviour>();
+		if (npc != null)
+			currentNpc = npc;
+		// タッチするだけで発動するイベントはここで処理
+		if (npc.EventWhen == EventCondition.Touched)
+		{
+			Novel.Run(npc.Label);
+			currentNpc = null;
+		}
+	}
 
-
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		if (currentNpc == collision.GetComponent<NpcBehaviour>())
+		{
+			currentNpc = null;
+		}
+	}
 
 	/// <summary>
 	/// 地面についているかどうか
