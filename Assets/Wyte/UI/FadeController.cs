@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +14,18 @@ public class FadeController : SingletonBaseBehaviour<FadeController> {
 	private void Start()
 	{
 		image = GetComponent<Image>();
+		WyteEvent.Instance.GameReset += (wyte) =>
+		{
+			FadeOutAsync(0);
+		};
 	}
 
 	new readonly Color light = new Color(0, 0, 0, 0);
 	readonly Color dark = new Color(0, 0, 0, 1);
 
+	public void FadeInAsync(float time) => StartCoroutine(Fade(null, "in", time.ToString()));
+
+	public void FadeOutAsync(float time) => StartCoroutine(Fade(null, "out", time.ToString()));
 
 	public IEnumerator Fade(string _, params string[] args)
 	{
