@@ -62,7 +62,8 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
 					break;
 				case GamePadButtons.Escape:
 					if (!Escape) return false;
-					return false;
+					if (Escape.Overlaps(t.position)) return true;
+					break;
 				default:
 					throw new System.ArgumentException("予期しないボタンの判定を試みました。");
 			}

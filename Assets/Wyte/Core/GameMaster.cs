@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using Novel.Exceptions;
+using System;
+using UnityEngine.SceneManagement;
 
 public class GameMaster : SingletonBaseBehaviour<GameMaster>
 {
@@ -142,6 +144,19 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 			MessageContoller.Instance.HideBox();
 
 		// Initialize
+		if (Escape && !escaping)
+		{
+			StartCoroutine(Init());
+		}
+	}
+	bool escaping;
+	IEnumerator Init()
+	{
+		escaping = true;
+		yield return Freeze(null, "on");
+		yield return MessageContoller.Instance.Say(null, "初期化します。");
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
 
 	//todo 必要ならescapeもキーバインドつける
 	bool Escape => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Escape, true) : Input.GetKeyDown(KeyCode.Escape);
