@@ -1,6 +1,8 @@
 Wyte Engine
 ===============
 
+[日本語](README-ja.md) ・ English
+
 Wyte Engine is a 2D horizontal-scrolling action-adventure game assets for Unity3D.
 
 Features
@@ -23,7 +25,7 @@ To use
 **WARNING! This project is work in progress!**
 
 - The folder named `Assets/Wyte` is all components of the Wyte Engine. Copy that folder into your unity projects.
-- Then load the main scene " `Game.unity` ."
+- `Assets/Demo` is the demo project for the Wyte Engine. Please refer it to use.
 
 I won't write more informations because this project is WIP.
 
@@ -35,4 +37,4 @@ LICENSE
 ==========
 Under the MIT License. See [LICENSE](LICENSE).
 
-<span style="font-size: 6pt; color: #aaaaaa">(But I don't think my code is useful for supporting your game...)</p>
+<s>(But I don't think my code is useful for supporting your game...)</s>
