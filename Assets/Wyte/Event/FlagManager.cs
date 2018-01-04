@@ -13,8 +13,16 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 	protected override void Awake()
 	{
 		base.Awake();
-		flags = new Dictionary<string, bool>();
+		flags = SaveDataHelper.Load<Dictionary<string, bool>>("flag.json") ?? new Dictionary<string, bool>();
 		skipFlags = new Dictionary<string, bool>();
+
+
+		WyteEvent.Instance.Save += (wyte) =>
+		{
+			SaveDataHelper.Save("flag.json", flags);
+			// スキップフラグはセーブされない．
+		};
+
 	}
 
 	private void FlagImpl(Dictionary<string, bool> flagDic, string[] args)

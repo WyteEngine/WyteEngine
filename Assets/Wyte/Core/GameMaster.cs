@@ -100,6 +100,22 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		yield break;
 	}
 
+	public IEnumerator Save(string t, string[] a)
+	{
+		try
+		{
+			WyteEvent.Instance.Save?.Invoke(this);
+		}
+		catch (Exception ex)
+		{
+			Debug.LogError($"セーブエラー: {ex.Message}\n{ex.StackTrace}");
+			return MessageContoller.Instance.Say("", "セーブに失敗しました。");
+		}
+		return MessageContoller.Instance.Say("", "セーブしました。");
+
+	}
+#endregion
+
 	void Start()
 	{
 		IsNotFreezed = true;
