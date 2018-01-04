@@ -35,4 +35,4 @@ LICENSE
 ==========
 Under the MIT License. See [LICENSE](LICENSE).
 
-<span style="font-size: 6pt; color: #aaaaaa">(But I don't think my code is not useful for supporting your game...)</p>
+<span style="font-size: 6pt; color: #aaaaaa">(But I don't think my code is useful for supporting your game...)</p>
