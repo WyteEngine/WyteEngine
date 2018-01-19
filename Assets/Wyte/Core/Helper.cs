@@ -23,6 +23,7 @@ public abstract class BaseBehaviour : MonoBehaviour
 	protected FlagManager Flag => FlagManager.Instance;
 	protected GameMaster Wyte => GameMaster.Instance;
 	protected EventController Novel => EventController.Instance;
+	protected CoroutineHelper Coroutine => CoroutineHelper.Instance;
 	/// <summary>
 	/// タッチパネルをサポートしているかどうか。
 	/// </summary>
