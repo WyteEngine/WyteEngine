@@ -25,6 +25,9 @@ public abstract class BaseBehaviour : MonoBehaviour
 	protected EventController Novel => EventController.Instance;
 	protected CoroutineHelper Coroutine => CoroutineHelper.Instance;
 	protected MapManager Map => MapManager.Instance;
+	protected PlayerCamera Camera => PlayerCamera.Instance;
+	protected WyteEvent Event => WyteEvent.Instance;
+
 	/// <summary>
 	/// タッチパネルをサポートしているかどうか。
 	/// </summary>
