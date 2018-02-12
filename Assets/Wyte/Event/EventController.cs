@@ -45,7 +45,7 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			// Alias
 			.Register("se", Sfx.Play)
 			// Map Moving
-			.Register("move", MapManager.Instance.Move)
+			.Register("move", Map.Move)
 			 // Show Player
 			.Register("pshow", Wyte.PlayerShow)
 			 // Hide Player
