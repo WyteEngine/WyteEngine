@@ -65,6 +65,11 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			// Event by Skip Flag
 			.Register("onsflag", Flag.OnSkipFlag)
 
+			// Edit Area Flag
+			.Register("aflag", Flag.AreaFlag)
+			// Event by Area Flag
+			.Register("onaflag", Flag.OnAreaFlag)
+
 			// Say message
 			.Register("say", MessageContoller.Instance.Say)
 

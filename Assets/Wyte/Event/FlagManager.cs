@@ -3,24 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using Novel.Exceptions;
 using System.Linq;
+using FlagMap = System.Collections.Generic.Dictionary<string, bool>;
 
 public class FlagManager : SingletonBaseBehaviour<FlagManager>
 {
-	Dictionary<string, bool> flags;
-	Dictionary<string, bool> skipFlags;
+	/// <summary>
+	/// セーブされるフラグ．
+	/// </summary>
+	FlagMap flags;
+	/// <summary>
+	/// セーブされず，ゲームを終了すると消去されるフラグ．
+	/// </summary>
+	FlagMap skipFlags;
+	/// <summary>
+	/// マップ切り替え時に消去されるスキップフラグ．
+	/// </summary>
+	FlagMap areaFlags;
 
 
 	protected override void Awake()
 	{
 		base.Awake();
-		flags = SaveDataHelper.Load<Dictionary<string, bool>>("flag.json") ?? new Dictionary<string, bool>();
-		skipFlags = new Dictionary<string, bool>();
-
+		flags = SaveDataHelper.Load<FlagMap>("flag.json") ?? new FlagMap();
+		skipFlags = new FlagMap();
+		areaFlags = new FlagMap();
 
 		WyteEvent.Instance.Save += (wyte) =>
 		{
 			SaveDataHelper.Save("flag.json", flags);
 			// スキップフラグはセーブされない．
+		};
+
+		WyteEvent.Instance.MapChanged += (wyte) =>
+		{
+			// さようなら．
+			areaFlags.Clear();
 		};
 
 	}
@@ -65,5 +82,16 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 	public IEnumerator OnSkipFlag(string name, string[] labels)
 	{
 		yield return OnFlagImpl(skipFlags, name, labels);
+	}
+
+	public IEnumerator AreaFlag(string _, string[] args)
+	{
+		FlagImpl(areaFlags, args);
+		yield break;
+	}
+
+	public IEnumerator OnAreaFlag(string name, string[] labels)
+	{
+		yield return OnFlagImpl(areaFlags, name, labels);
 	}
 }
