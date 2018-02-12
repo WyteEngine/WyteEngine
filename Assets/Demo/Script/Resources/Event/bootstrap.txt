@@ -3,16 +3,12 @@
 // ----
 
 #boot
-	// フラグを倒す
-	+flag off, saw_the_house
-	+flag off, creators_surprise
-	+flag off, stupid_spelling
 	+pfreeze on
 
 	mes+onsflag #skip
 
 	// プロローグ
-	:"きみ，名前は？"
+	:"きみ　名前は？"
 	:"............。"
 	:"<pname>！いい名前だね！"
 
@@ -26,38 +22,17 @@
 	+pfreeze off
 +end
 
-// say コマンドにおけるタグのテスト
-#tag_test
-	+pfreeze on
-	to_tag_2+onflag #tag2, #tag1
-#tag1
-	:"<<><>> で囲まれた言葉は呪文なんだ。"
-	:"あなたのことを 当ててあげるよ。"
-	:"君の名前は <pname>。"
-	:"HPは <plife>/<pmaxlife>。"
-	:"すごいでしょ？"
-	+flag on, "to_tag_2"
-	+pfreeze off
-	+end
-#tag2
-	:"<<>pname<>> で 名前"
-	:"<<>plife<>> <<>pmaxlife<>> でそれぞれ 体力と 最大体力"
-	:"<<><<><>> <<><>><>> でそれぞれ <<> <>> を表示するよ。"
-	:"すごいでしょ？"
-	+pfreeze off
-+end
-
 // ドア イベント
 #door
 	+pfreeze on
-	saw_the_house+onflag #saw_the_house
-	:家が ある。ドアは開きっぱなしのようだ。
-	+flag on, "saw_the_house"
+	saw_the_house+onsflag #saw_the_house
+	:"家が　ある。ドアは　ひらきっぱなしの　ようだ。"
+	+sflag on, "saw_the_house"
 	#saw_the_house
 	+flag on, "fool"
-	+phide
 	+bgmstopasync 0.2
 	+fade out, 0.2
+	+phide
 	+bgmplay "ruins" 
 	+move "house"
 	+pshow -112, -40
@@ -69,12 +44,12 @@
 #creator
 	fool+onflag #fool
 	+pfreeze on
-	:やあ。
-	:僕はね、この世界を作っている人なんだ。
+	:"やあ！"
+	:"ぼくはね　この世界を　つくっている人　なんだ。"
 	+freecamera -24, -40
 	+wait 0.4
-	:あれは僕のお家だよ。まだ建築中だけどね。
-	:くれぐれも中に入らないように。
+	:"あれは　ぼくの　お家だよ。"
+	:"くれぐれも　中に　はいらないように。"
 	+playercamera
 	+wait 0.5
 	:絶対だよ！！！！
@@ -82,9 +57,26 @@
 +end
 
 #fool
+	told_to_creator+onaflag #told_to_creator
 	+pfreeze on
-	:だから言ったのに。
-	:命知らずが。
+	+aflag on, "told_to_creator"
+	:"えっ？"
+	:"お家に　入ってしまったの？"
+
+	:"えっと。"
+	:"あの。"
+	:"その。"
+	:"......。"
+	:"あの。"
+	:"えっと　変なものとか　なかったよね...？"
+	:"......。"
+	:"なら　よかったけど...。"
+	+pfreeze off
++end
+
+#told_to_creator
+	+pfreeze on
+	:"ドアの　鍵を　しめておくべき　だったよ。"
 	+pfreeze off
 +end
 

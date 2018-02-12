@@ -11,91 +11,90 @@
 
 #house_pc
 	+pfreeze on
-	: パソコンがある。
+	: "パソコンが　ある。"
 
 	// フラグなし
-	house.pc.3+onflag #house_pc_3
-	house.pc.2+onflag #house_pc_2
-	house.pc.1+onflag #house_pc_1
+	house.pc.3+onaflag #house_pc_3
+	house.pc.2+onaflag #house_pc_2
+	house.pc.1+onaflag #house_pc_1
 
-	: 触るのはやめておこう...。
-	+flag on, house.pc.1
+	: "さわるのは　やめておこう...。"
+	+aflag on, house.pc.1
 	+pfreeze off
 +end
 	
 #house_pc_1
-	: やっぱり触っちゃおう。
+	: "やっぱり　さわっちゃおう。"
 	: .....。
-	: スパゲッティと　虫だ。
-	+flag on, house.pc.2
+	: "くろい画面　いっぱいに　文字が　書いてある。"
+	+aflag on, house.pc.2
 	+pfreeze off
 +end
 
 #house_pc_2
-	: まだまだ触り足りない。
+	: "まだまだ　さわり足りない。"
 	: .....。
-	: 痛いシナリオ集だ。 見るに堪えない。
-	+flag on, house.pc.3
+	: "ゲームシナリオ集だ。あまり　みられたもの　じゃない。"
+	+aflag on, house.pc.3
 	+pfreeze off
 +end
 
 #house_pc_3
-	: もう面白いものは ない。
+	: "もう　おもしろいものは　ない。"
 	+pfreeze off
 +end
 
 #house_plant
 	+pfreeze on
-	: 観葉植物だ。手入れが行き届いている。
-	: ..... 行き届きすぎて 角ばっている。
+	: "観葉植物だ。お手入れが　行き届いている。"
+	: "..... 行き届きすぎて　かくばっている。"
 	+pfreeze off
-#end
++end
 
 #house_bookshelf
 	+pfreeze on
-	house.bs.3+onflag #house_bs_3
-	house.bs.2+onflag #house_bs_2
-	house.bs.1+onflag #house_bs_1
-	+flag on, house.bs.1
+	house.bs.3+onaflag #house_bs_3
+	house.bs.2+onaflag #house_bs_2
+	house.bs.1+onaflag #house_bs_1
+	+aflag on, house.bs.1
 	+goto house_bs_3
 +end
 
 #house_bs_1
-	: よく見たら箱がある。
-	: 開けた。
-	: .....。
-	: 黄色い玉が 入っている。
-	+flag on, house.bs.2
+	: "よく見たら　はこがある。"
+	: "あけた。"
+	: ".....。"
+	: "黄色い玉が はいっている。"
+	+aflag on, house.bs.2
 	+pfreeze off
 +end
 
 #house_bs_2
-	: よく見たら箱がある。
-	: 開けた。
-	: .....。
-	: 黄色い水晶が 入っている。
-	+flag on, house.bs.3
+	: "よく見たら　はこがある。"
+	: "あけた。"
+	: ".....。"
+	: "黄色い水晶が はいっている。"
+	+aflag on, house.bs.3
 	+pfreeze off
 +end
 
 #house_bs_3
-	: 本棚には技術書やゲームの攻略本がしまってある。
+	: "本棚には　技術書や　ゲームの攻略本が　しまってある。"
 	+pfreeze off
 +end
 
 #house_clock
 	+pfreeze on
-	: 時計は<time_h>時を指している。
+	: "時計は　<time_h>時を　指している。"
 	+pfreeze off
 +end
 
 
 #house_exit
 	+pfreeze on
-	+phide
-	
 	+bgmstopasync 0.2
 	+fade out, 0.2
+	+phide
 	+move "demo"
 	+bgmplay "port_town.day"
 	+pshow -24, -48
