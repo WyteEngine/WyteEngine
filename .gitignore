@@ -37,3 +37,6 @@ sysinfo.txt
 # macos filesystem generated meta files
 .DS_Store
 
+# Wyte Ignore
+/Screenshots
+/Build
