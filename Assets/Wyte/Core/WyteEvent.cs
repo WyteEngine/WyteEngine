@@ -13,4 +13,8 @@ public class WyteEvent : SingletonBaseBehaviour<WyteEvent>
 	public delegate void SaveEventHandler(GameMaster wyte);
 	public SaveEventHandler Save;
 	public SaveEventHandler GameReset;
+
+	public delegate void MapChangedEventHandler(MapProperty map);
+	public MapChangedEventHandler MapChanged;
+
 }

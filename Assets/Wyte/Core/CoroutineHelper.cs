@@ -21,9 +21,14 @@ public class CoroutineHelper : BaseBehaviour
 		}
 	}
 
-	protected virtual void Awake()
+	protected void Awake()
 	{
 		CheckInstance();
+	}
+
+	protected void Start()
+	{
+		
 	}
 
 	/// <summary>

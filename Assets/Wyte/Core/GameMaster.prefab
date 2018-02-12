@@ -52,7 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c79f6f2f24add5438c91bcf60fdf2ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BootstrapLabel: boot
+  BootstrapLabel: boot_house
+  playerPrefab: {fileID: 1168604540035812, guid: c4d66b37ecaf53c44bf9351039088a9c,
+    type: 2}
 --- !u!114 &114474641796728052
 MonoBehaviour:
   m_ObjectHideFlags: 1

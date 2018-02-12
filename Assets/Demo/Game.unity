@@ -209,7 +209,7 @@ Prefab:
     - target: {fileID: 114881398057360454, guid: 55b00b6eb56704f3baf436e470be9457,
         type: 2}
       propertyPath: Maps.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4731588324428012, guid: 55b00b6eb56704f3baf436e470be9457, type: 2}
       propertyPath: m_LocalPosition.x
@@ -248,6 +248,18 @@ Prefab:
       propertyPath: Maps.Array.data[0]
       value: 
       objectReference: {fileID: 114436918323598446, guid: 8ab750d67c102e34da28c56d5df940ba,
+        type: 2}
+    - target: {fileID: 114881398057360454, guid: 55b00b6eb56704f3baf436e470be9457,
+        type: 2}
+      propertyPath: Maps.Array.data[1]
+      value: 
+      objectReference: {fileID: 114573873098691312, guid: 6b5f53f5ea662419fb5a7830b35c2bb4,
+        type: 2}
+    - target: {fileID: 114881398057360454, guid: 55b00b6eb56704f3baf436e470be9457,
+        type: 2}
+      propertyPath: Maps.Array.data[2]
+      value: 
+      objectReference: {fileID: 114432708186900162, guid: 0904589575a674111826f03e18a9548d,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55b00b6eb56704f3baf436e470be9457, type: 2}
@@ -314,7 +326,7 @@ Prefab:
     - target: {fileID: 114547587107821684, guid: d3e90c533927e4304bbe56f30b7e4997,
         type: 2}
       propertyPath: Songs.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114475544680987162, guid: d3e90c533927e4304bbe56f30b7e4997,
         type: 2}
@@ -462,6 +474,25 @@ Prefab:
         type: 2}
       propertyPath: Songs.Array.data[0].loop
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114547587107821684, guid: d3e90c533927e4304bbe56f30b7e4997,
+        type: 2}
+      propertyPath: Songs.Array.data[4].id
+      value: ruins
+      objectReference: {fileID: 0}
+    - target: {fileID: 114547587107821684, guid: d3e90c533927e4304bbe56f30b7e4997,
+        type: 2}
+      propertyPath: Songs.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1010a415542f4443e8df95b8f8e02026, type: 3}
+    - target: {fileID: 114547587107821684, guid: d3e90c533927e4304bbe56f30b7e4997,
+        type: 2}
+      propertyPath: Songs.Array.data[4].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059653036557298, guid: d3e90c533927e4304bbe56f30b7e4997, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d3e90c533927e4304bbe56f30b7e4997, type: 2}
@@ -623,6 +654,16 @@ Prefab:
       propertyPath: Haribote
       value: 
       objectReference: {fileID: 1007376147}
+    - target: {fileID: 114212446494559468, guid: 8eb2ff481c9324d4680c8969e0dbeb44,
+        type: 2}
+      propertyPath: cursorSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 224321532620224448, guid: 8eb2ff481c9324d4680c8969e0dbeb44,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8eb2ff481c9324d4680c8969e0dbeb44, type: 2}
   m_IsPrefabParent: 0
@@ -776,12 +817,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114426115041763256, guid: 5a26eeba5b9d4433481e8e4b6311396c,
-        type: 2}
-      propertyPath: playerPrefab
-      value: 
-      objectReference: {fileID: 1168604540035812, guid: c4d66b37ecaf53c44bf9351039088a9c,
-        type: 2}
     - target: {fileID: 114426115041763256, guid: 5a26eeba5b9d4433481e8e4b6311396c,
         type: 2}
       propertyPath: BootstrapLabel
