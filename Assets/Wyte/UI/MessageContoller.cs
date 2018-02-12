@@ -23,10 +23,10 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 
 	[SerializeField]
 	float speed = 1 / 16f;
-	string[] cursorTemp = @"\
-|
-/
--".Replace("\r\n", "\n").Split('\n');
+	string[] cursorTemp = @"＼
+｜
+／
+―".Replace("\r\n", "\n").Split('\n');
 	string Cursor => cursorTemp[(int)(Time.time * cursorSpeed) % cursorTemp.Length];
 
 	protected override void Awake()
