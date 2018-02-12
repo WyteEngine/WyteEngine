@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 [RequireComponent(typeof(Text))]
 public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
@@ -12,6 +13,9 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 	string textTemp;
 
 	[SerializeField]
+	float cursorSpeed = 8;
+
+	[SerializeField]
 	GameObject UISmartDevice;
 
 	[SerializeField]
@@ -19,8 +23,11 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 
 	[SerializeField]
 	float speed = 1 / 16f;
-	char[] cursorTemp = { '▁', '▄', '█', '▄' };
-	char Cursor => cursorTemp[(int)(Time.time * 10) % cursorTemp.Length];
+	string[] cursorTemp = @"\
+|
+/
+-".Replace("\r\n", "\n").Split('\n');
+	string Cursor => cursorTemp[(int)(Time.time * cursorSpeed) % cursorTemp.Length];
 
 	protected override void Awake()
 	{
@@ -57,6 +64,10 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 			.Replace("<pname>", GameMaster.Instance.Player?.Name ?? "null")
 			.Replace("<plife>", GameMaster.Instance.Player?.Life.ToString())
 			.Replace("<pmaxlife>", GameMaster.Instance.Player?.MaxLife.ToString())
+			.Replace("<time_h>", DateTime.Now.Hour.ToString())
+			.Replace("<time_m>", DateTime.Now.Minute.ToString())
+			.Replace("<time_s>", DateTime.Now.Second.ToString())
+			.Replace("<time>", DateTime.Now.ToString("T"))
 			.Replace("<<>", "<")
 			.Replace("<>>", ">");
 		bool prevTouch = true;
