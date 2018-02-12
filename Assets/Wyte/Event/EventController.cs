@@ -188,7 +188,7 @@ public class UnityNRuntime
 	{
 		ProgramCounter = 0;
 		NullCheck(code);
-
+		label = GetLabelString(label);
 		if (!string.IsNullOrWhiteSpace(label))
 			if (code.Labels.ContainsKey(label))
 				ProgramCounter = code.Labels[label];
