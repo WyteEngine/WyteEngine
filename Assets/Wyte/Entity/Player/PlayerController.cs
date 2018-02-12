@@ -123,11 +123,14 @@ public class PlayerController : LivableEntity
 
 
 	bool GetJumpKeyPushed(bool down = false) =>
-		(IsSmartDevice 
+		IsSmartDevice 
 		// Android iOS など
-		&& GamePadBehaviour.Instance.Get(GamePadButtons.Action, down)) 
+		? GamePadBehaviour.Instance.Get(GamePadButtons.Action, down)
 		// PC
-		|| (down ? Input.GetKeyDown(KeyBind.Jump) : Input.GetKey(KeyBind.Jump));
+		: (down ? Input.GetKeyDown(KeyBind.Jump) : Input.GetKey(KeyBind.Jump));
+
+	bool EventKeyPushed =>
+		IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Screen) : Input.GetKeyDown(KeyBind.Up);
 
 	/// <summary>
 	/// キー入力
@@ -215,9 +218,11 @@ public class PlayerController : LivableEntity
 		if (rightSpeed != 0.0f)
 			lastDir = (rightSpeed == 0) ? lastDir : rightSpeed;
 
+		// 死亡時は動けない
 		if (isDeath)
 			return;
 
+		// プレイヤーフリーズ時は動けない
 		if (!Wyte.CanMove)
 			return;
 		
@@ -230,10 +235,8 @@ public class PlayerController : LivableEntity
 
 		rigid.velocity = new Vector2(dir, rigid.velocity.y);
 
-		if (IsCeiling() && !prevIsCeiling)
-			Sfx.Play("player.land");
-
-		if (IsGrounded() && !prevIsGrounded)
+		// 着地音
+		if ((IsCeiling() && !prevIsCeiling) || (IsGrounded() && !prevIsGrounded))
 			Sfx.Play("player.land");
 
 		if (IsJumping && !GetJumpKeyPushed())

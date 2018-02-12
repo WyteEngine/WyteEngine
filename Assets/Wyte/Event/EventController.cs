@@ -34,36 +34,45 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			.Register("fade", FadeController.Instance.Fade)
 			// Fade Asynchronously
 			.Register("fadeasync", FadeController.Instance.FadeAsync)
+
 			// Play BGM
 			.Register("bgmplay", Bgm.Play)
 			// Stop BGM
 			.Register("bgmstop", Bgm.Stop)
 			// Stop BGM Asynchronously
 			.Register("bgmstopasync", Bgm.StopAsync)
+
 			// Sound FX 
 			.Register("sfx", Sfx.Play)
 			// Alias
 			.Register("se", Sfx.Play)
+
 			// Map Moving
 			.Register("move", Map.Move)
-			 // Show Player
+
+			// Show Player
 			.Register("pshow", Wyte.PlayerShow)
 			 // Hide Player
 			.Register("phide", Wyte.PlayerHide)
+
 			// Edit Flag
 			.Register("flag", Flag.Flag)
 			// Event by Flag
 			.Register("onflag", Flag.OnFlag)
+
 			// Edit Skip Flag
 			.Register("sflag", Flag.SkipFlag)
 			// Event by Skip Flag
 			.Register("onsflag", Flag.OnSkipFlag)
+
 			// Say message
 			.Register("say", MessageContoller.Instance.Say)
+
 			// Freeze All
 			.Register("freeze", Wyte.Freeze)
 			// Freeze the Player
 			.Register("pfreeze", Wyte.PlayerFreeze)
+
 			// Switch to the PlayerCamera
 			.Register("playercamera", Camera.SwitchToPlayerCamera)
 			// Switch to the FreeCamera
