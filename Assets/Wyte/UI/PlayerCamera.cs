@@ -25,23 +25,27 @@ public class PlayerCamera : BaseBehaviour
 			offset = Vector3.zero;
 			player = null;
 		};
+
+		WyteEvent.Instance.MapChanged += (m) =>
+		{
+			offset = Vector3.zero;
+			player = null;
+		};
 	}
 
 	void LateUpdate()
 	{
 		if (!player)
 		{
+				
 			var g = GameObject.FindGameObjectWithTag("Player");
 			if (!g) return;
 			player = g.transform;
-			transform.position = new Vector3(0, 0, -1);
-			offset = Vector3.zero;
+			transform.position = player.position + Vector3.back;
+			offset = transform.position - player.position;
 		}
-		if (offset == Vector3.zero)
-		{
-			offset = transform.position - player.transform.position;
-		}
-		
+
+
 
 		var newPosition = transform.position;
 
@@ -49,7 +53,7 @@ public class PlayerCamera : BaseBehaviour
 		{
 			case CameraTarget.Player:
 				newPosition.x = player.transform.position.x + offset.x;
-				newPosition.y = player.transform.position.y + offset.y - windowRect.rect.height;
+				newPosition.y = player.transform.position.y + offset.y;
 				//if (newPosition.y < )
 				newPosition.z = player.transform.position.z + offset.z;
 				break;
