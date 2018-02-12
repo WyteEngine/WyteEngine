@@ -63,7 +63,11 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			// Freeze All
 			.Register("freeze", Wyte.Freeze)
 			// Freeze the Player
-			.Register("pfreeze", Wyte.PlayerFreeze);
+			.Register("pfreeze", Wyte.PlayerFreeze)
+			// Switch to the PlayerCamera
+			.Register("playercamera", Camera.SwitchToPlayerCamera)
+			// Switch to the FreeCamera
+			.Register("freecamera", Camera.SwitchToFreeCamera);
 
 
 		#endregion
