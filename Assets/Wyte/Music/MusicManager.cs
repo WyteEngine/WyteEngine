@@ -26,6 +26,8 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 
 	AudioSource source;
 
+	private string songName;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -34,6 +36,7 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 
 	void Start()
 	{
+		Debugger.DebugRendering += (d) => d.Append($"bgm:{songName ?? "none"} ");
 	}
 
 	public void Play(string id)
@@ -44,6 +47,7 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 		source.clip = targetSong.Clip;
 		source.volume = 1;
 		source.Play();
+		songName = id;
 	}
 
 	public void Play(int id)
@@ -86,6 +90,7 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 	public void Stop()
 	{
 		source.Stop();
+		songName = null;
 	}
 
 	/// <summary>

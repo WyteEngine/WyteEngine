@@ -69,6 +69,12 @@ public class PlayerController : LivableEntity
 	{
 		Init();
 		base.Start();
+		Debugger.DebugRendering += (d) =>
+		{
+			d.Append($"pp{(int)transform.position.x},{(int)transform.position.y} ")
+			 .Append($"pv{(int)rigid.velocity.x},{(int)rigid.velocity.y} ")
+			 .Append($"p{(isDeath ? "DEAD" : "ALIVE")} ");
+		};
 	}
 
 	/// <summary>

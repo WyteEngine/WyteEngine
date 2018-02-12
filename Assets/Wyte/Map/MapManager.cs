@@ -17,6 +17,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 		{
 			Unload();
 		};
+		Debugger.DebugRendering += (d) => d.Append($"map:{CurrentMap.name} ");
 	}
 
 	public void Move(string name)
