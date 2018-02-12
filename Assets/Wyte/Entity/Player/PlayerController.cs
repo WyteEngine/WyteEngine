@@ -85,6 +85,7 @@ public class PlayerController : LivableEntity
 		Animation();
 		// しないと CanMove でないときにｽｨｰってなる
 		rigid.velocity = new Vector2(0, rigid.velocity.y);
+
 		// 移動可能時に処理を行う
 		if (Wyte.CanMove)
 			InputKey();
@@ -136,7 +137,7 @@ public class PlayerController : LivableEntity
 		: (down ? Input.GetKeyDown(KeyBind.Jump) : Input.GetKey(KeyBind.Jump));
 
 	bool EventKeyPushed =>
-		IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Screen) : Input.GetKeyDown(KeyBind.Up);
+		IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Screen, true) : Input.GetKeyDown(KeyBind.Up);
 
 	/// <summary>
 	/// キー入力
@@ -223,10 +224,6 @@ public class PlayerController : LivableEntity
 
 		// 死亡時は動けない
 		if (isDeath)
-			return;
-
-		// プレイヤーフリーズ時は動けない
-		if (!Wyte.CanMove)
 			return;
 		
 		var dir = rightSpeed * charaMoveSpeed * DashMultiplier;
