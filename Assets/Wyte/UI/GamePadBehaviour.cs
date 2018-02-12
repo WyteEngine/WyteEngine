@@ -75,6 +75,10 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
 					if (!Escape) return false;
 					if (Escape.Overlaps(t.position)) return true;
 					break;
+				case GamePadButtons.Screen:
+					// パッドに触れていればtrue => falseならスクリーンに触れている => notをとる
+					if (!GetComponent<RectTransform>().Overlaps(t.position)) return true;
+					break;
 				default:
 					throw new System.ArgumentException("予期しないボタンの判定を試みました。");
 			}
@@ -101,7 +105,8 @@ public enum GamePadButtons
 	SliderDown,
 	SliderLeft,
 	SliderRight,
-	Escape
+	Escape,
+	Screen
 }
 
 internal static class Extension
@@ -111,6 +116,4 @@ internal static class Extension
 		return RectTransformUtility.RectangleContainsScreenPoint(r, point, Camera.main);
 		//return (rect.xMin < point.x) && (point.x < rect.xMax) && (rect.yMin < point.y) && (point.y < rect.yMax);
 	}
-
-	
 }

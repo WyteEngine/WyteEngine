@@ -142,14 +142,11 @@ public class PlayerController : LivableEntity
 		IsJumping &= (!IsGrounded() || (int)rigid.velocity.y != 0);
 		if (GetJumpKeyPushed(true))
 		{
-			if (currentNpc != null && currentNpc.EventWhen == EventCondition.Talked)
-			{
-				Novel.Run(currentNpc.Label);
-			}
-			else
-			{
-				Jump();
-			}
+			Jump();
+		}
+		if (EventKeyPushed && currentNpc != null)
+		{
+			Novel.Run(currentNpc.Label);
 		}
 		Move(KeyBind.Arrow.x);
 	}
