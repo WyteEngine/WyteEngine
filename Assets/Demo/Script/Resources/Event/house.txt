@@ -1,0 +1,102 @@
+// ----
+// House
+// ----
+
+#boot_house
+	+bgmplay "ruins" 
+	+move "house"
+	+pshow -112, -40
+	+fadeasync in, 0.2
++end
+
+#house_pc
+	+pfreeze on
+	: パソコンがある。
+
+	// フラグなし
+	house.pc.3+onflag #house_pc_3
+	house.pc.2+onflag #house_pc_2
+	house.pc.1+onflag #house_pc_1
+
+	: 触るのはやめておこう...。
+	+flag on, house.pc.1
+	+pfreeze off
++end
+	
+#house_pc_1
+	: やっぱり触っちゃおう。
+	: .....。
+	: スパゲッティと　虫だ。
+	+flag on, house.pc.2
+	+pfreeze off
++end
+
+#house_pc_2
+	: まだまだ触り足りない。
+	: .....。
+	: 痛いシナリオ集だ。 見るに堪えない。
+	+flag on, house.pc.3
+	+pfreeze off
++end
+
+#house_pc_3
+	: もう面白いものは ない。
+	+pfreeze off
++end
+
+#house_plant
+	+pfreeze on
+	: 観葉植物だ。手入れが行き届いている。
+	: ..... 行き届きすぎて 長方形。
+	+pfreeze off
+#end
+
+#house_bookshelf
+	+pfreeze on
+	house.bs.3+onflag #house_bs_3
+	house.bs.2+onflag #house_bs_2
+	house.bs.1+onflag #house_bs_1
+	+flag on, house.bs.1
+	+goto house_bs_3
++end
+
+#house_bs_1
+	: よく見たら箱がある。
+	: 開けた。
+	: .....。
+	: 黄色い玉が 入っている。
+	+flag on, house.bs.2
+	+pfreeze off
++end
+
+#house_bs_2
+	: よく見たら箱がある。
+	: 開けた。
+	: .....。
+	: 黄色い水晶が 入っている。
+	+flag on, house.bs.3
+	+pfreeze off
++end
+
+#house_bs_3
+	: 本棚には技術書やゲームの攻略本がしまってある。
+	+pfreeze off
++end
+
+#house_clock
+	: 時計は<time_h>時を指している。
++end
+
+
+#house_exit
+	+pfreeze on
+	+phide
+	
+	+bgmstopasync 0.2
+	+fade out, 0.2
+	+move "demo"
+	+bgmplay "port_town.day"
+	+pshow -24, -48
+	+fadeasync in, 0.2
+	+pfreeze off
++end
