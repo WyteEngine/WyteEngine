@@ -11,7 +11,7 @@ using System.Linq;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class PlayerController : BaseBehaviour
+public class PlayerController : LivableEntity
 {
 	[Header("GROUND_LAYER")]
 	public LayerMask groundLayer;
@@ -36,14 +36,13 @@ public class PlayerController : BaseBehaviour
 	public float charaCeilingBouness = -1.0f;
 
 
-	public NpcBehaviour CurrentNpc => currentNpc;
+	public IEventable CurrentNpc => currentNpc;
 
 	[Header("KEY_CONFIG")]
 	public float jumpThreshold = .5f;
 
 	private Rigidbody2D rigid;
 	private Animator animator;
-	private AudioSource asource;
 	private bool isDeath = false;
 	private float lastDir = 1.0f;
 	private float jumpTimer = 0;
@@ -53,7 +52,7 @@ public class PlayerController : BaseBehaviour
 	private string nowAnim;
 	private bool prevIsGrounded, prevIsCeiling;
 
-	private NpcBehaviour currentNpc;
+	private IEventable currentNpc;
 	/// <summary>
 	/// キャラの向き
 	/// </summary>
@@ -66,9 +65,10 @@ public class PlayerController : BaseBehaviour
 	/// <summary>
 	/// 開始処理
 	/// </summary>
-	void Start()
+	protected override void Start()
 	{
 		Init();
+		base.Start();
 	}
 
 	/// <summary>
@@ -93,7 +93,6 @@ public class PlayerController : BaseBehaviour
 	{
 		rigid = gameObject.GetComponent<Rigidbody2D>();
 		animator = gameObject.GetComponent<Animator>();
-		asource = gameObject.GetComponent<AudioSource>();
 
 		rigid.freezeRotation = true;
 		rigid.gravityScale = charaGravityScale;
@@ -219,7 +218,7 @@ public class PlayerController : BaseBehaviour
 		if (isDeath)
 			return;
 
-		if (!GameMaster.Instance.CanMove)
+		if (!Wyte.CanMove)
 			return;
 		
 		var dir = rightSpeed * charaMoveSpeed * DashMultiplier;
@@ -242,28 +241,30 @@ public class PlayerController : BaseBehaviour
 
 		if (IsCeiling())
 			rigid.velocity = new Vector2(rigid.velocity.x, charaCeilingBouness);
-		
+
 		if (transform.position.y < MapManager.Instance.CurrentMap.Hell)
-			StartCoroutine(Death());
+			Kill(Map.CurrentMap);
 
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		var npc = collision.GetComponent<NpcBehaviour>();
+		var npc = collision.GetComponent<IEventable>();
 		if (npc != null)
-			currentNpc = npc;
-		// タッチするだけで発動するイベントはここで処理
-		if (npc.EventWhen == EventCondition.Touched)
 		{
-			Novel.Run(npc.Label);
-			currentNpc = null;
+			currentNpc = npc;
+			// 触れるだけで発動するイベントはここで処理
+			if (currentNpc.EventWhen == EventCondition.Touched)
+			{
+				Novel.Run(currentNpc.Label);
+				currentNpc = null;
+			}
 		}
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		if (currentNpc == collision.GetComponent<NpcBehaviour>())
+		if (currentNpc == collision.GetComponent<IEventable>())
 		{
 			currentNpc = null;
 		}
@@ -305,10 +306,7 @@ public class PlayerController : BaseBehaviour
 	Vector3 KickRA => transform.position + new Vector3((charaWidth2 / 2), charaHead / 2);
 	Vector3 KickRB => transform.position + new Vector3((charaWidth2 / 2), charaFoot / 2);
 
-	/// <summary>
-	/// 死んだとき
-	/// </summary>
-	public IEnumerator Death()
+	protected override IEnumerator OnDeath(Object killer)
 	{
 		isDeath = true;
 

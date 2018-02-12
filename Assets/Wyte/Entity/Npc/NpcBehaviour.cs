@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// NPC なオブジェクトにアタッチします。
 /// </summary>
-public class NpcBehaviour : BaseBehaviour {
+public class NpcBehaviour : LivableEntity, IEventable {
 
 	[SerializeField]
 	[Tooltip("アクション時に実行するイベント ラベル。")]
@@ -19,15 +19,6 @@ public class NpcBehaviour : BaseBehaviour {
 
 	public EventCondition EventWhen => eventWhen;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
 
 /// <summary>
