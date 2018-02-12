@@ -3,6 +3,8 @@ Wyte Engine
 
 [日本語](README-ja.md) ・ English
 
+![ScreenShot](Docs/ss.png)
+
 Wyte Engine is a 2D horizontal-scrolling action-adventure game assets for Unity3D.
 
 Features

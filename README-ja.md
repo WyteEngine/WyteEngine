@@ -3,6 +3,8 @@ Wyte Engine
 
 日本語 ・ [English](README.md)
 
+![スクリーンショット](Docs/ss.png)
+
 Wyte Engine(ホワイトエンジン)は，横スクロールで，2Dなアクションアドベンチャーゲームを作るための，Unity3D アセットです．
 
 機能
