@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FPSCounter : MonoBehaviour {
+public class FPSCounter : MonoBehaviour
+{
 
 	int cnt;
 	float time;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start()
+	{
+
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
-		time += Time.deltaTime;
+	void Update()
+	{
 		if (time > 1)
 		{
 			GetComponent<Text>().text = $"fps{cnt.ToString()}";
 			time = cnt = 0;
+			return;
 		}
 		cnt++;
+		time += Time.deltaTime;
 	}
 }
