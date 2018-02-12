@@ -47,7 +47,7 @@
 #house_plant
 	+pfreeze on
 	: 観葉植物だ。手入れが行き届いている。
-	: ..... 行き届きすぎて 長方形。
+	: ..... 行き届きすぎて 角ばっている。
 	+pfreeze off
 #end
 
@@ -84,7 +84,9 @@
 +end
 
 #house_clock
+	+pfreeze on
 	: 時計は<time_h>時を指している。
+	+pfreeze off
 +end
 
 
