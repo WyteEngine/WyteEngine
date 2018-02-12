@@ -127,7 +127,7 @@ public class UnityNRuntime
 	{
 		commands = new Dictionary<string, UnityNCommand>();
 		// combined text asset
-		var text = string.Join("¥n", assets.Select(a => a.text));
+		var text = string.Join("\n", assets.Select(a => a.text));
 		code = NParser.Parse(text);
 		outErr = errorCommand;
 		goSubStack = new Stack<int>();
