@@ -31,6 +31,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 		currentMapObject = Instantiate(map.gameObject) as GameObject;
 		CurrentMap = map;
 		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().backgroundColor = map.BackColor;
+		WyteEvent.Instance.MapChanged?.Invoke(map);
 	}
 
 	public void Unload()
