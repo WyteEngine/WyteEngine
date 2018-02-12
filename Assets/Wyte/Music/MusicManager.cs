@@ -77,6 +77,12 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 		}
 	}
 
+	public IEnumerator StopAsync(string t, string[] a)
+	{
+		StartCoroutine(Stop(t, a));
+		yield break;
+	}
+
 	public void Stop()
 	{
 		source.Stop();

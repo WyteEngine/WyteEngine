@@ -32,10 +32,14 @@ public class EventController : SingletonBaseBehaviour<EventController>
 		runtime
 			// Fade
 			.Register("fade", FadeController.Instance.Fade)
+			// Fade Asynchronously
+			.Register("fadeasync", FadeController.Instance.FadeAsync)
 			// Play BGM
 			.Register("bgmplay", Bgm.Play)
 			// Stop BGM
 			.Register("bgmstop", Bgm.Stop)
+			// Stop BGM Asynchronously
+			.Register("bgmstopasync", Bgm.StopAsync)
 			// Sound FX 
 			.Register("sfx", Sfx.Play)
 			// Alias

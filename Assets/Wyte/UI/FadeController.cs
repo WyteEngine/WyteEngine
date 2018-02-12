@@ -73,4 +73,12 @@ public class FadeController : SingletonBaseBehaviour<FadeController> {
 				break;
 		}
 	}
+
+
+	public IEnumerator FadeAsync(string t, string[] a)
+	{
+		StartCoroutine(Fade(t, a));
+		yield break;
+	}
+
 }
