@@ -344,7 +344,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u30B7\u30E7\u30C3\u30C8\n\u5EFA\u8A2D\u4E88\u5B9A\u5730"
+  m_Text: 00:00:00
 --- !u!114 &114184465332384572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -404,7 +404,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <
+  m_Text: "\u2190"
 --- !u!114 &114212446494559468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -416,6 +416,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb35d7cfa6f24ccda10d5e428a76aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursorSpeed: 10
+  UISmartDevice: {fileID: 1793005353796008}
+  UIPersonalComputer: {fileID: 1808354916251094}
   speed: 0.0625
 --- !u!114 &114252234225429376
 MonoBehaviour:
@@ -446,7 +449,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1.5
   m_Text: 
@@ -530,6 +533,7 @@ MonoBehaviour:
   SliderLeft: {fileID: 0}
   SliderRight: {fileID: 0}
   Escape: {fileID: 224532520974044284}
+  Haribote: {fileID: 114042310063781646}
 --- !u!114 &114400340475314236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -725,7 +729,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '>'
+  m_Text: "\u2192"
 --- !u!114 &114766806917749446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -769,8 +773,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "[\u2190][\u2192] \u79FB\u52D5\u3000[SHIFT] \u30C0\u30C3\u30B7\u30E5\n[Z]
-    \u30B8\u30E3\u30F3\u30D7/\u5BFE\u8A71\u3000[X] \u30B7\u30E7\u30C3\u30C8(\u672A\u5B9F\u88C5\u3060\u3088)"
+  m_Text: "[\u2190][\u2192]\u79FB\u52D5\u3000[\u2191]\u5BFE\u8A71\u3000[SHIFT]\u30C0\u30C3\u30B7\u30E5\n[Z]\u30B8\u30E3\u30F3\u30D7\u3000[X]\u30B7\u30E7\u30C3\u30C8
+    [ESC]\u521D\u671F\u5316"
 --- !u!114 &114919582221204324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -965,8 +969,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224210611181463440}
-  - {fileID: 224413106022469252}
   - {fileID: 224461688935064094}
+  - {fileID: 224413106022469252}
   m_Father: {fileID: 224269440368084528}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1080,10 +1084,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224941828068919554}
-  - {fileID: 224654233875159742}
   - {fileID: 224854222895177452}
+  - {fileID: 224654233875159742}
   m_Father: {fileID: 224097088818877336}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1102,7 +1106,7 @@ RectTransform:
   m_Children:
   - {fileID: 224475400033793662}
   m_Father: {fileID: 224097088818877336}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1176,7 +1180,7 @@ RectTransform:
   - {fileID: 224522164385809976}
   - {fileID: 224029611668344132}
   m_Father: {fileID: 224413106022469252}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.58, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1231,7 +1235,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224413106022469252}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.42, y: 0}
   m_AnchorMax: {x: 0.56, y: 1}
