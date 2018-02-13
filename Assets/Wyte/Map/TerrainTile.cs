@@ -1,5 +1,3 @@
-﻿// コードは以下のURLから拝借しました。
-// https://qiita.com/ruccho_vector/items/5a7b2a62839176eb4a2b
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,21 +15,20 @@ namespace UnityEngine.Tilemaps
 		[SerializeField]
 		public Sprite[] m_Sprites;
 
-		public override void RefreshTile(Vector3Int position, ITilemap tilemap)
+		public override void RefreshTile(Vector3Int location, ITilemap tileMap)
 		{
 			for (int yd = -1; yd <= 1; yd++)
 				for (int xd = -1; xd <= 1; xd++)
 				{
-					Vector3Int loc = new Vector3Int(position.x + xd, position.y + yd, position.z);
-					if (TileValue(tilemap, loc))
-						tilemap.RefreshTile(loc);
+					Vector3Int position = new Vector3Int(location.x + xd, location.y + yd, location.z);
+					if (TileValue(tileMap, position))
+						tileMap.RefreshTile(position);
 				}
 		}
 
-		public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
+		public override void GetTileData(Vector3Int location, ITilemap tileMap, ref TileData tileData)
 		{
-			UpdateTile(position, tilemap, ref tileData);
-			return;
+			UpdateTile(location, tileMap, ref tileData);
 		}
 
 		private void UpdateTile(Vector3Int location, ITilemap tileMap, ref TileData tileData)
@@ -60,7 +57,7 @@ namespace UnityEngine.Tilemaps
 				tileData.sprite = m_Sprites[index];
 				tileData.transform = GetTransform((byte)mask);
 				tileData.color = Color.white;
-				tileData.flags = (TileFlags.LockTransform | TileFlags.LockColor);
+				tileData.flags = TileFlags.LockTransform | TileFlags.LockColor;
 				tileData.colliderType = Tile.ColliderType.Sprite;
 			}
 		}
@@ -174,14 +171,14 @@ namespace UnityEngine.Tilemaps
 	[CustomEditor(typeof(TerrainTile))]
 	public class TerrainTileEditor : Editor
 	{
-		private TerrainTile Tile { get { return (target as TerrainTile); } }
+		private TerrainTile tile { get { return (target as TerrainTile); } }
 
 		public void OnEnable()
 		{
-			if (Tile.m_Sprites == null || Tile.m_Sprites.Length != 15)
+			if (tile.m_Sprites == null || tile.m_Sprites.Length != 15)
 			{
-				Tile.m_Sprites = new Sprite[15];
-				EditorUtility.SetDirty(Tile);
+				tile.m_Sprites = new Sprite[15];
+				EditorUtility.SetDirty(tile);
 			}
 		}
 
@@ -195,23 +192,23 @@ namespace UnityEngine.Tilemaps
 			EditorGUIUtility.labelWidth = 210;
 
 			EditorGUI.BeginChangeCheck();
-			Tile.m_Sprites[0] = (Sprite)EditorGUILayout.ObjectField("Filled", Tile.m_Sprites[0], typeof(Sprite), false, null);
-			Tile.m_Sprites[1] = (Sprite)EditorGUILayout.ObjectField("Three Sides", Tile.m_Sprites[1], typeof(Sprite), false, null);
-			Tile.m_Sprites[2] = (Sprite)EditorGUILayout.ObjectField("Two Sides and One Corner", Tile.m_Sprites[2], typeof(Sprite), false, null);
-			Tile.m_Sprites[3] = (Sprite)EditorGUILayout.ObjectField("Two Adjacent Sides", Tile.m_Sprites[3], typeof(Sprite), false, null);
-			Tile.m_Sprites[4] = (Sprite)EditorGUILayout.ObjectField("Two Opposite Sides", Tile.m_Sprites[4], typeof(Sprite), false, null);
-			Tile.m_Sprites[5] = (Sprite)EditorGUILayout.ObjectField("One Side and Two Corners", Tile.m_Sprites[5], typeof(Sprite), false, null);
-			Tile.m_Sprites[6] = (Sprite)EditorGUILayout.ObjectField("One Side and One Lower Corner", Tile.m_Sprites[6], typeof(Sprite), false, null);
-			Tile.m_Sprites[7] = (Sprite)EditorGUILayout.ObjectField("One Side and One Upper Corner", Tile.m_Sprites[7], typeof(Sprite), false, null);
-			Tile.m_Sprites[8] = (Sprite)EditorGUILayout.ObjectField("One Side", Tile.m_Sprites[8], typeof(Sprite), false, null);
-			Tile.m_Sprites[9] = (Sprite)EditorGUILayout.ObjectField("Four Corners", Tile.m_Sprites[9], typeof(Sprite), false, null);
-			Tile.m_Sprites[10] = (Sprite)EditorGUILayout.ObjectField("Three Corners", Tile.m_Sprites[10], typeof(Sprite), false, null);
-			Tile.m_Sprites[11] = (Sprite)EditorGUILayout.ObjectField("Two Adjacent Corners", Tile.m_Sprites[11], typeof(Sprite), false, null);
-			Tile.m_Sprites[12] = (Sprite)EditorGUILayout.ObjectField("Two Opposite Corners", Tile.m_Sprites[12], typeof(Sprite), false, null);
-			Tile.m_Sprites[13] = (Sprite)EditorGUILayout.ObjectField("One Corner", Tile.m_Sprites[13], typeof(Sprite), false, null);
-			Tile.m_Sprites[14] = (Sprite)EditorGUILayout.ObjectField("Empty", Tile.m_Sprites[14], typeof(Sprite), false, null);
+			tile.m_Sprites[0] = (Sprite)EditorGUILayout.ObjectField("Filled", tile.m_Sprites[0], typeof(Sprite), false, null);
+			tile.m_Sprites[1] = (Sprite)EditorGUILayout.ObjectField("Three Sides", tile.m_Sprites[1], typeof(Sprite), false, null);
+			tile.m_Sprites[2] = (Sprite)EditorGUILayout.ObjectField("Two Sides and One Corner", tile.m_Sprites[2], typeof(Sprite), false, null);
+			tile.m_Sprites[3] = (Sprite)EditorGUILayout.ObjectField("Two Adjacent Sides", tile.m_Sprites[3], typeof(Sprite), false, null);
+			tile.m_Sprites[4] = (Sprite)EditorGUILayout.ObjectField("Two Opposite Sides", tile.m_Sprites[4], typeof(Sprite), false, null);
+			tile.m_Sprites[5] = (Sprite)EditorGUILayout.ObjectField("One Side and Two Corners", tile.m_Sprites[5], typeof(Sprite), false, null);
+			tile.m_Sprites[6] = (Sprite)EditorGUILayout.ObjectField("One Side and One Lower Corner", tile.m_Sprites[6], typeof(Sprite), false, null);
+			tile.m_Sprites[7] = (Sprite)EditorGUILayout.ObjectField("One Side and One Upper Corner", tile.m_Sprites[7], typeof(Sprite), false, null);
+			tile.m_Sprites[8] = (Sprite)EditorGUILayout.ObjectField("One Side", tile.m_Sprites[8], typeof(Sprite), false, null);
+			tile.m_Sprites[9] = (Sprite)EditorGUILayout.ObjectField("Four Corners", tile.m_Sprites[9], typeof(Sprite), false, null);
+			tile.m_Sprites[10] = (Sprite)EditorGUILayout.ObjectField("Three Corners", tile.m_Sprites[10], typeof(Sprite), false, null);
+			tile.m_Sprites[11] = (Sprite)EditorGUILayout.ObjectField("Two Adjacent Corners", tile.m_Sprites[11], typeof(Sprite), false, null);
+			tile.m_Sprites[12] = (Sprite)EditorGUILayout.ObjectField("Two Opposite Corners", tile.m_Sprites[12], typeof(Sprite), false, null);
+			tile.m_Sprites[13] = (Sprite)EditorGUILayout.ObjectField("One Corner", tile.m_Sprites[13], typeof(Sprite), false, null);
+			tile.m_Sprites[14] = (Sprite)EditorGUILayout.ObjectField("Empty", tile.m_Sprites[14], typeof(Sprite), false, null);
 			if (EditorGUI.EndChangeCheck())
-				EditorUtility.SetDirty(Tile);
+				EditorUtility.SetDirty(tile);
 
 			EditorGUIUtility.labelWidth = oldLabelWidth;
 		}
