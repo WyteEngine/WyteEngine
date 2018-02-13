@@ -15,7 +15,6 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 
 	public Vector3 FreePosition { get; private set; }
 
-	[SerializeField]
 	private RectTransform windowRect;
 
 	void Start()
