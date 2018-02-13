@@ -706,6 +706,11 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114825228385998984, guid: 8eb2ff481c9324d4680c8969e0dbeb44,
+        type: 2}
+      propertyPath: m_Text
+      value: "[\u2190][\u2192]\u79FB\u52D5\u3000[\u2191]\u30A4\u30D9\u30F3\u30C8\u5B9F\u884C\u3000[SHIFT]\u30C0\u30C3\u30B7\u30E5\n[Z]\u30B8\u30E3\u30F3\u30D7/\u5BFE\u8A71\u3000[X]\u30B7\u30E7\u30C3\u30C8(\u672A\u5B9F\u88C5\u3060\u3088)"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8eb2ff481c9324d4680c8969e0dbeb44, type: 2}
   m_IsPrefabParent: 0
