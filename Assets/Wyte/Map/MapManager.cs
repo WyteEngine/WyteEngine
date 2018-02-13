@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MapManager : SingletonBaseBehaviour<MapManager>
 {
@@ -10,6 +11,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 	private GameObject currentMapObject;
 
 	public MapProperty CurrentMap { get; private set; }
+	public Rect CurrentMapSize { get; private set; }
 
 	private void Start()
 	{
@@ -17,7 +19,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 		{
 			Unload();
 		};
-		Debugger.DebugRendering += (d) => d.Append($"map:{CurrentMap.name} ");
+		Debugger.DebugRendering += (d) => d.Append($"map:{CurrentMap.name} msz{CurrentMapSize.min},{CurrentMapSize.max} ");
 	}
 
 	public void Move(string name)
@@ -31,6 +33,26 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 			Destroy(currentMapObject);
 		currentMapObject = Instantiate(map.gameObject) as GameObject;
 		CurrentMap = map;
+		var tmaps = map.gameObject.GetComponentsInChildren<Tilemap>();
+		var cs = map.gameObject.GetComponent<Grid>().cellSize;
+		var rect = Rect.zero;
+		foreach (var tmap in tmaps)
+		{
+			tmap.CompressBounds();
+			var b = tmap.cellBounds;
+			float x = cs.x, y = cs.y;
+			var r = Rect.MinMaxRect(b.xMin * x, b.yMin * y, b.xMax * x, b.yMax * y);
+
+			// 取得したものが大きければその分広げる
+			rect.xMin = r.xMin < rect.xMin ? r.xMin : rect.xMin;
+			rect.yMin = r.yMin < rect.yMin ? r.yMin : rect.yMin;
+			rect.xMax = rect.xMax < r.xMax ? r.xMax : rect.xMax;
+			rect.yMax = rect.yMax < r.yMax ? r.yMax : rect.yMax;
+		}
+
+
+		CurrentMapSize = rect;
+
 		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().backgroundColor = map.BackColor;
 		WyteEvent.Instance.MapChanged?.Invoke(map);
 	}

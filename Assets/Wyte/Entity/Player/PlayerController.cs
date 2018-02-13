@@ -256,6 +256,19 @@ public class PlayerController : LivableEntity
 		if (transform.position.y < MapManager.Instance.CurrentMap.Hell)
 			Kill(Map.CurrentMap);
 
+		// 左端処理
+		if (transform.position.x < Map.CurrentMapSize.xMin)
+		{
+			transform.position = new Vector3(Map.CurrentMapSize.xMin, transform.position.y, transform.position.z);
+			rigid.velocity = new Vector2(rigid.velocity.x < 0 ? 0 : rigid.velocity.x, rigid.velocity.y);
+		}
+
+		// 右端処理
+		if (transform.position.x > Map.CurrentMapSize.xMax)
+		{
+			transform.position = new Vector3(Map.CurrentMapSize.xMax, transform.position.y, transform.position.z);
+			rigid.velocity = new Vector2(rigid.velocity.x > 0 ? 0 : rigid.velocity.x, rigid.velocity.y);
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

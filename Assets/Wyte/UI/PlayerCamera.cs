@@ -17,6 +17,10 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 
 	private RectTransform windowRect;
 
+	private Camera theCamera;
+
+	private Vector3 camMin, camMax;
+
 	void Start()
 	{
 		if (windowRect == null)
@@ -31,6 +35,11 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 		{
 			offset = Vector3.zero;
 			player = null;
+		};
+		theCamera = GetComponent<Camera>();
+		Debugger.DebugRendering += (d) =>
+		{
+			d.Append($"cam{camMin},{camMax} ");
 		};
 	}
 
@@ -58,8 +67,37 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 				break;
 		}
 
+		camMin = theCamera.ViewportToWorldPoint(Vector3.zero);
+		camMax = theCamera.ViewportToWorldPoint(Vector3.one);
+		var camSize = camMax - camMin;
+
+		if (Map.CurrentMapSize != Rect.zero)
+		{
+			// 座標候補における左端(中心-全体サイズ/2) が，マップの左端より小さくなったらスナップする
+			if (newPosition.x - camSize.x / 2 < Map.CurrentMapSize.xMin)
+				newPosition.x = Map.CurrentMapSize.xMin + camSize.x / 2;
+
+			// 座標候補における右端(中心+全体サイズ/2) が，マップの右端より大きくなったらスナップする
+			if (newPosition.x + camSize.x / 2 > Map.CurrentMapSize.xMax)
+				newPosition.x = Map.CurrentMapSize.xMax - camSize.x / 2;
+
+			// 座標候補における上端(中心-全体サイズ/2) が，マップの上端より小さくなったらスナップする
+			if (newPosition.y - camSize.y / 2 < Map.CurrentMapSize.yMin)
+				newPosition.y = Map.CurrentMapSize.yMin + camSize.y / 2;
+
+			// 座標候補における下端(中心+全体サイズ/2) が，マップの下端より大きくなったらスナップする
+			if (newPosition.y + camSize.y / 2 > Map.CurrentMapSize.yMax)
+				newPosition.y = Map.CurrentMapSize.yMax - camSize.y / 2;
+		}
 		transform.position = Vector3.Lerp(transform.position, newPosition, 5f * Time.deltaTime);
 	}
+
+	//void OnDrawGizmos()
+	//{
+	//	var cam = GetComponent<Camera>();
+	//	Gizmos.color = Color.red;
+	//	Gizmos.DrawLine(cam.ViewportToWorldPoint(Vector2.zero), cam.ViewportToWorldPoint(Vector2.one));
+	//}
 
 	private float TryParse(string numeric)
 	{
