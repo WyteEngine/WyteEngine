@@ -80,6 +80,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	{
 		if (playerTemp != null)
 			Destroy(playerTemp);
+		playerTemp = null;
 		yield break;
 	}
 
