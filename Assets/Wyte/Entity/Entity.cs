@@ -13,8 +13,9 @@ public abstract class Entity : BaseBehaviour
 		get { return spriteTag; }
 		set { spriteTag = value; }
 	}
+
+	[Header("Event")]
 	[SerializeField]
-	[Header("Entity")]
 	protected string spriteTag;
 
 	public bool Dead { get; protected set; }
