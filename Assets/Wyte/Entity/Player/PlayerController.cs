@@ -104,9 +104,9 @@ public class PlayerController : LivableEntity
 	/// <summary>
 	/// 移動
 	/// </summary>
-	public void Move(float rightSpeed)
+	public override void Move(float rightSpeed, bool hold = true)
 	{
-		base.Move(rightSpeed);
+		base.Move(rightSpeed, hold);
 
 		// 左端処理
 		if (transform.position.x < Map.CurrentMapSize.xMin)
