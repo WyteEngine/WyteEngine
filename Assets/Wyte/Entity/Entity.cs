@@ -31,6 +31,8 @@ public abstract class Entity : BaseBehaviour
 	protected virtual void Start()
 	{
 		Health = MaxHealth;
+		if (Health == 0)
+			Kill(null);
 	}
 
 	protected void Update()
