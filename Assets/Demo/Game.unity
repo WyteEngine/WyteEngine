@@ -418,22 +418,22 @@ Prefab:
     - target: {fileID: 114475544680987162, guid: d3e90c533927e4304bbe56f30b7e4997,
         type: 2}
       propertyPath: Effects.Array.data[3].id
-      value: npc.saying
+      value: entity.npc.saying
       objectReference: {fileID: 0}
     - target: {fileID: 114475544680987162, guid: d3e90c533927e4304bbe56f30b7e4997,
         type: 2}
       propertyPath: Effects.Array.data[2].id
-      value: player.land
+      value: entity.player.land
       objectReference: {fileID: 0}
     - target: {fileID: 114475544680987162, guid: d3e90c533927e4304bbe56f30b7e4997,
         type: 2}
       propertyPath: Effects.Array.data[1].id
-      value: player.jump
+      value: entity.player.jump
       objectReference: {fileID: 0}
     - target: {fileID: 114475544680987162, guid: d3e90c533927e4304bbe56f30b7e4997,
         type: 2}
       propertyPath: Effects.Array.data[0].id
-      value: player.death
+      value: entity.player.death
       objectReference: {fileID: 0}
     - target: {fileID: 20336434455120676, guid: d3e90c533927e4304bbe56f30b7e4997,
         type: 2}

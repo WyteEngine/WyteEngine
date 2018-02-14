@@ -75,7 +75,7 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 		{
 			textTemp += c;
 			// タッチ時は早くする
-			Sfx.Play("npc.saying");
+			Sfx.Play("entity.npc.saying");
 			yield return new WaitForSeconds(speed / (IsTouched ? 2 : 1));
 		}
 
