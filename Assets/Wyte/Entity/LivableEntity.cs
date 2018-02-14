@@ -91,7 +91,7 @@ public abstract class LivableEntity : SpriteEntity
 	public virtual void Move(float rightSpeed, bool hold = true)
 	{
 		rigid.velocity = new Vector2(rightSpeed, rigid.velocity.y);
-		direction = (int)rightSpeed < 0 ? SpriteDirection.Left : SpriteDirection.Right;
+		direction = (int)rightSpeed < 0 ? SpriteDirection.Left : (int)rightSpeed > 0 ? SpriteDirection.Right : direction;
 		// 着地音
 		if ((IsCeiling() && !prevIsCeiling) || (IsGrounded() && !prevIsGrounded))
 			Sfx.Play(LandSfxId);
