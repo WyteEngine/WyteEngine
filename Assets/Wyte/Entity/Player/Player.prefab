@@ -117,24 +117,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c667eccc40973774994d4d6b3f563139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  charaImageDir: 0
-  animNameJump: Jump
-  animNameIdle: Idle
-  animNameWalk: Walk
+  spriteTag: 
+  animation: {fileID: 0}
+  Direction: 0
   charaScale: 1
   charaHead: 9
   charaFoot: -10
   charaWidth: 10
   charaWidth2: 18
   charaGravityScale: 16
-  charaMoveSpeed: 80
-  charaDashMultiplier: 2
   charaJumpScale: 128
   charaCeilingBouness: -1
-  jumpThreshold: 1
+  jumpAnimationId: entity.player.jump
+  stayAnimationId: entity.player.stay
+  walkAnimationId: entity.player.walk
+  charaMoveSpeed: 80
+  charaDashMultiplier: 2
 --- !u!212 &212157916433937384
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -169,7 +167,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 9ff000c578de7724386e22903dd6a0b4, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -177,5 +175,5 @@ SpriteRenderer:
   m_Size: {x: 16, y: 16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0

@@ -7,39 +7,43 @@ using UnityEngine;
 /// </summary>
 public class NpcBehaviour : LivableEntity, IEventable {
 
+	[Header("Event")]
 	[SerializeField]
 	[Tooltip("アクション時に実行するイベント ラベル。")]
-	private string label;
-
+	string label;
 	public string Label => label;
 
 	[SerializeField]
 	[Tooltip("イベントの発火条件。")]
-	private EventCondition eventWhen;
-
+	EventCondition eventWhen;
 	public EventCondition EventWhen => eventWhen;
 
-}
+	[Header("Animation Id")]
+	[SerializeField]
+	string stayAnimId;
+	[SerializeField]
+	string jumpAnimId;
+	[SerializeField]
+	string walkAnimId;
 
-/// <summary>
-/// Novel イベントの発生条件。
-/// </summary>
-public enum EventCondition
-{
-	/// <summary>
-	/// 話しかけた時。
-	/// </summary>
-	Talked,
-	/// <summary>
-	/// イベントを実行しません。
-	/// </summary>
-	None,
-	/// <summary>
-	/// プレイヤーが触れた時。
-	/// </summary>
-	Touched,
-	/// <summary>
-	/// 攻撃された時。
-	/// </summary>
-	Punched
+	[Header("Sound FX Id")]
+	[SerializeField]
+	string landSfxId;
+	[SerializeField]
+	string jumpSfxId;
+	[SerializeField]
+	string deathSfxId;
+
+	[Header("Entity Setting")]
+	[SerializeField]
+	float gravityScale;
+
+	public override string WalkAnimationId => walkAnimId;
+	public override string StayAnimationId => stayAnimId;
+	public override string JumpAnimationId => jumpAnimId;
+	public override string LandSfxId => landSfxId;
+	public override string JumpSfxId => jumpSfxId;
+	public override string DeathSfxId => deathSfxId;
+
+	public override float GravityScale => gravityScale;
 }
