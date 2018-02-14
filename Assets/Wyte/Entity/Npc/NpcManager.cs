@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
-public class SpriteManager : SingletonBaseBehaviour<SpriteManager>
+public class NpcManager : SingletonBaseBehaviour<NpcManager>
 {
-
 	// Use this for initialization
 	void Start()
 	{
@@ -14,6 +12,6 @@ public class SpriteManager : SingletonBaseBehaviour<SpriteManager>
 	// Update is called once per frame
 	void Update()
 	{
-
+			
 	}
 }
