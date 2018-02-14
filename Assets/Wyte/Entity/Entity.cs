@@ -26,7 +26,7 @@ public abstract class Entity : BaseBehaviour
 	/// 死んでいる途中であるかどうか取得します．
 	/// </summary>
 	/// <value>死んでいる途中であれば<c>true</c>，違えば<c>false</c>．</value>
-	public bool Dying { get; private set; }
+	public bool Dying { get; protected set; }
 
 	protected virtual void Start()
 	{
