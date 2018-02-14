@@ -25,7 +25,7 @@ public enum EventCondition
 	/// </summary>
 	Touched,
 	/// <summary>
-	/// 攻撃された時。
+	/// 死亡(Health == 0)時．
 	/// </summary>
-	Punched
+	Dead
 }

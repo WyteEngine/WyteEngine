@@ -18,6 +18,19 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	EventCondition eventWhen;
 	public EventCondition EventWhen => eventWhen;
 
+	[SerializeField]
+	protected string flagId;
+
+	/// <summary>
+	/// 表示設定の元になるフラグIDを取得または設定します．．
+	/// </summary>
+	/// <value>The flag identifier.</value>
+	public string FlagId
+	{
+		get { return flagId; }
+		set { flagId = value; }
+	}
+
 	[Header("Animation Id")]
 	[SerializeField]
 	string stayAnimId;
@@ -46,4 +59,12 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	public override string DeathSfxId => deathSfxId;
 
 	public override float GravityScale => gravityScale;
+
+	protected override IEnumerator OnDeath(Object killer)
+	{
+		if (!string.IsNullOrWhiteSpace(label))
+			Novel.Run(label);
+		
+		yield return new WaitWhile(() => Novel.Runtime.IsRunning);
+	}
 }
