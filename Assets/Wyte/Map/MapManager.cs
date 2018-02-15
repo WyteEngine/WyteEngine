@@ -65,7 +65,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 
 	public IEnumerator Move(string _, params string[] args)
 	{
-		Move(UnityNRuntime.CombineAll(args));
+		Move(NovelHelper.CombineAll(args));
 		yield break;
 	}
 

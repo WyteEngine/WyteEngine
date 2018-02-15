@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Novel.Exceptions;
 using System;
+using static NovelHelper;
 
 public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 {
@@ -90,21 +91,6 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 				newPosition.y = Map.CurrentMapSize.yMax - camSize.y / 2;
 		}
 		transform.position = Vector3.Lerp(transform.position, newPosition, 5f * Time.deltaTime);
-	}
-
-	//void OnDrawGizmos()
-	//{
-	//	var cam = GetComponent<Camera>();
-	//	Gizmos.color = Color.red;
-	//	Gizmos.DrawLine(cam.ViewportToWorldPoint(Vector2.zero), cam.ViewportToWorldPoint(Vector2.one));
-	//}
-
-	private float TryParse(string numeric)
-	{
-		float ret;
-		if (!float.TryParse(numeric, out ret))
-			throw new NRuntimeException("型が一致しません．");
-		return ret;
 	}
 
 	public IEnumerator SwitchToPlayerCamera(string _, string[] args)

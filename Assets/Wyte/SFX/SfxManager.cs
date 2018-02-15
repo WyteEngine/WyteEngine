@@ -48,7 +48,7 @@ public class SfxManager : SingletonBaseBehaviour<SfxManager>
 
 	public IEnumerator Play(string tag, string[] args)
 	{
-		Play(UnityNRuntime.CombineAll(args));
+		Play(NovelHelper.CombineAll(args));
 		yield break;
 	}
 

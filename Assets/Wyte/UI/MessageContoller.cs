@@ -56,7 +56,7 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 
 	public IEnumerator Say(string sprite, params string[] args)
 	{
-		var tmp = UnityNRuntime.CombineAll(args);
+		var tmp = NovelHelper.CombineAll(args);
 		// 話者がいる場合は表示
 		// hack 今後もっとUIをよくする
 		textTemp = string.IsNullOrEmpty(sprite) ? "" : sprite + " : ";

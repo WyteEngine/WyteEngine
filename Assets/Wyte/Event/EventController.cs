@@ -10,6 +10,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Novel.Exceptions;
+using static NovelHelper;
 
 /// <summary>
 /// Novel スクリプトを用いてゲームを制御します。
@@ -52,7 +53,7 @@ public class EventController : SingletonBaseBehaviour<EventController>
 
 			// Show Player
 			.Register("pshow", Wyte.PlayerShow)
-			 // Hide Player
+			// Hide Player
 			.Register("phide", Wyte.PlayerHide)
 
 			// Edit Flag
@@ -262,23 +263,6 @@ public class UnityNRuntime
 
 	#region 組み込みコマンド用ヘルパーメソッド
 
-	/// <summary>
-	/// ラベル文字列を整形します．
-	/// </summary>
-	/// <returns>The label string.</returns>
-	/// <param name="label">Label.</param>
-	static string GetLabelString(string label)
-	{
-		// null or empty チェック
-		if (string.IsNullOrEmpty(label))
-			throw new ArgumentNullException(nameof(label));
-
-		// 仕様上，#をつけてもつけなくてもよい
-		if (label[0] == '#')
-			label = label.Remove(0, 1);
-		return label;
-	}
-
 	int GetLine(string label)
 	{
 		// Nullチェックと整形
@@ -288,13 +272,6 @@ public class UnityNRuntime
 			throw new NRuntimeException($"ラベル \"{label}\"が存在しません．");
 		return code.Labels[label];
 	}
-
-	/// <summary>
-	/// 問答無用で文字列配列をそのまま連結します．引数の区切りがいらない場合に便利です．
-	/// </summary>
-	/// <returns>連結された文字列．</returns>
-	/// <param name="strings">連結してほしい文字列を含む配列．</param>
-	public static string CombineAll(string[] strings) => string.Join("", strings);
 
 	#endregion
 
@@ -349,4 +326,39 @@ public class UnityNRuntime
 	}
 	#endregion
 
+}
+
+public static class NovelHelper
+{
+	public static float TryParse(string numeric)
+	{
+		float ret;
+		if (!float.TryParse(numeric, out ret))
+			throw new NRuntimeException("型が一致しません．");
+		return ret;
+	}
+
+	/// <summary>
+	/// 問答無用で文字列配列をそのまま連結します．引数の区切りがいらない場合に便利です．
+	/// </summary>
+	/// <returns>連結された文字列．</returns>
+	/// <param name="strings">連結してほしい文字列を含む配列．</param>
+	public static string CombineAll(string[] strings) => string.Join("", strings);
+
+	/// <summary>
+	/// ラベル文字列を整形します．
+	/// </summary>
+	/// <returns>The label string.</returns>
+	/// <param name="label">Label.</param>
+	public static string GetLabelString(string label)
+	{
+		// null or empty チェック
+		if (string.IsNullOrEmpty(label))
+			throw new ArgumentNullException(nameof(label));
+
+		// 仕様上，#をつけてもつけなくてもよい
+		if (label[0] == '#')
+			label = label.Remove(0, 1);
+		return label;
+	}
 }

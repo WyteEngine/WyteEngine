@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Novel.Exceptions;
+using static NovelHelper;
 
 [System.Serializable]
 public struct MusicData
@@ -62,7 +63,7 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 
 	public IEnumerator Play(string t, string[] a)
 	{
-		Play(UnityNRuntime.CombineAll(a));
+		Play(CombineAll(a));
 		yield break;
 	}
 
@@ -74,9 +75,7 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 		}
 		else
 		{
-			float i;
-			if (!float.TryParse(UnityNRuntime.CombineAll(a), out i))
-				throw new NRuntimeException("時間が不正です。");
+			float i = TryParse(CombineAll(a));
 			yield return Stop(i);
 		}
 	}
