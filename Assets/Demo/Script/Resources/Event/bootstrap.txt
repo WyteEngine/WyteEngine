@@ -4,12 +4,7 @@
 
 #boot
 	+pfreeze on
-
-	mes+onsflag #skip
-
-// デモマップへの移動
-#skip
-	+sflag on, mes
+	+debug "test", "", , " ",  , test2
 	+move "demo"
 	+bgmplay "port_town.day"
 	+pshow -109.9, -56
