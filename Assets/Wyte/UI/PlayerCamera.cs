@@ -26,13 +26,13 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 	{
 		if (windowRect == null)
 			windowRect = GameObject.FindGameObjectWithTag("UIWindow").GetComponent<RectTransform>();
-		WyteEvent.Instance.GameReset += (wyte) =>
+		Wyte.GameReset += (wyte) =>
 		{
 			offset = Vector3.zero;
 			player = null;
 		};
 
-		WyteEvent.Instance.MapChanged += (m) =>
+		Map.MapChanged += (m) =>
 		{
 			offset = Vector3.zero;
 			player = null;

@@ -14,7 +14,7 @@ public class FadeController : SingletonBaseBehaviour<FadeController> {
 	private void Start()
 	{
 		image = GetComponent<Image>();
-		WyteEvent.Instance.GameReset += (wyte) =>
+		Wyte.GameReset += (wyte) =>
 		{
 			FadeOutAsync(0);
 		};

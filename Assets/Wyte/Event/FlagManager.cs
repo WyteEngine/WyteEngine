@@ -31,13 +31,13 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 		skipFlags = new FlagMap();
 		areaFlags = new FlagMap();
 
-		WyteEvent.Instance.Save += (wyte) =>
+		Wyte.GameSave += (wyte) =>
 		{
 			SaveDataHelper.Save("flag.json", flags);
 			// スキップフラグはセーブされない．
 		};
 
-		WyteEvent.Instance.MapChanged += (wyte) =>
+		Map.MapChanged += (wyte) =>
 		{
 			// さようなら．
 			areaFlags.Clear();

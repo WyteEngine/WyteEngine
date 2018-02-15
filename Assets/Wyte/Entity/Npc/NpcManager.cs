@@ -25,7 +25,7 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		mappedEntity = new List<NpcBehaviour>();
 		managedEntity = new List<NpcBehaviour>();
 
-		Event.MapChanged += (map) =>
+		Map.MapChanged += (map) =>
 		{
 			// マップエンティティのリセット
 			mappedEntity.Clear();
