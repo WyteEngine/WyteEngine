@@ -789,7 +789,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteTag: 
   animation: {fileID: 0}
-  Direction: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   charaScale: 1
   charaHead: 1
   charaFoot: -1
@@ -800,6 +802,7 @@ MonoBehaviour:
   charaCeilingBouness: -1
   label: '#house_bookshelf'
   eventWhen: 0
+  flagId: 
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
@@ -820,7 +823,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteTag: 
   animation: {fileID: 0}
-  Direction: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   charaScale: 1
   charaHead: 1
   charaFoot: -1
@@ -831,6 +836,7 @@ MonoBehaviour:
   charaCeilingBouness: -1
   label: '#house_exit'
   eventWhen: 2
+  flagId: 
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
@@ -851,7 +857,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteTag: 
   animation: {fileID: 0}
-  Direction: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   charaScale: 1
   charaHead: 1
   charaFoot: -1
@@ -862,6 +870,7 @@ MonoBehaviour:
   charaCeilingBouness: -1
   label: '#house_pc'
   eventWhen: 0
+  flagId: 
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
@@ -882,7 +891,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteTag: 
   animation: {fileID: 0}
-  Direction: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   charaScale: 1
   charaHead: 1
   charaFoot: -1
@@ -893,6 +904,7 @@ MonoBehaviour:
   charaCeilingBouness: -1
   label: '#house_clock'
   eventWhen: 0
+  flagId: 
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
@@ -913,7 +925,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteTag: 
   animation: {fileID: 0}
-  Direction: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   charaScale: 1
   charaHead: 1
   charaFoot: -1
@@ -924,6 +938,7 @@ MonoBehaviour:
   charaCeilingBouness: -1
   label: '#house_plant'
   eventWhen: 0
+  flagId: 
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 

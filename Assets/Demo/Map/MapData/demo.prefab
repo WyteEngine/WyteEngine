@@ -485,7 +485,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteTag: 
   animation: {fileID: 0}
-  Direction: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   charaScale: 1
   charaHead: 1
   charaFoot: -1
@@ -496,6 +498,7 @@ MonoBehaviour:
   charaCeilingBouness: -1
   label: door
   eventWhen: 0
+  flagId: 
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
@@ -516,7 +519,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteTag: 
   animation: {fileID: 0}
-  Direction: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   charaScale: 1
   charaHead: 1
   charaFoot: -1
@@ -527,6 +532,7 @@ MonoBehaviour:
   charaCeilingBouness: -1
   label: creator
   eventWhen: 0
+  flagId: 
   stayAnimId: entity.npc.creator.walk
   jumpAnimId: 
   walkAnimId: 
