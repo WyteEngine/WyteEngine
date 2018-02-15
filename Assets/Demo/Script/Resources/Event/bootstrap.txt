@@ -23,7 +23,11 @@
 	+bgmstopasync 0.2
 	+fade out, 0.2
 	+phide
+
+	+bgmstop
+	wrong_cat+onflag #door_skip
 	+bgmplay "ruins" 
+#door_skip
 	+move "house"
 	+pshow -112, -40
 	+fadeasync in, 0.2
@@ -60,13 +64,17 @@
 	:"あの。"
 	:"えっと　変なものとか　なかったよね...？"
 	:"......。"
-	:"なら　よかったけど...。"
+	:"え？　ねこが？"
+	:"...数ヶ月前に　飼っていたよ。"
+	:"でも　亡くなってしまった。"
+	:"それが　どうかしたのかい？"
 	+pfreeze off
 +end
 
 #told_to_creator
 	+pfreeze on
-	:"ドアの　鍵を　しめておくべき　だったよ。"
+	//:"ドアの　鍵を　しめておくべき　だったよ。"
+	:"僕は　元気だよ。"
 	+pfreeze off
 +end
 

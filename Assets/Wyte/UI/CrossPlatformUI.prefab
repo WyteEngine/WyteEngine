@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.047058824, b: 0.3764706, a: 1}
+  m_Color: {r: 0.15686275, g: 0.3019608, b: 0.5176471, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -753,7 +753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.15686275, g: 0.3019608, b: 0.5176471, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -767,14 +767,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: "[\u2190][\u2192]\u79FB\u52D5\u3000[\u2191]\u5BFE\u8A71\u3000[SHIFT]\u30C0\u30C3\u30B7\u30E5\n[Z]\u30B8\u30E3\u30F3\u30D7\u3000[X]\u30B7\u30E7\u30C3\u30C8
-    [ESC]\u521D\u671F\u5316"
+    m_LineSpacing: 1.5
+  m_Text: "[ESC]\u521D\u671F\u5316\u3000[\u2190][\u2192]\u79FB\u52D5\u3000[\u2191]\u5BFE\u8A71\n[SHIFT]\u30C0\u30C3\u30B7\u30E5\u3000[Z]\u30B8\u30E3\u30F3\u30D7\u3000[X]\u30B7\u30E7\u30C3\u30C8 "
 --- !u!114 &114919582221204324
 MonoBehaviour:
   m_ObjectHideFlags: 1
