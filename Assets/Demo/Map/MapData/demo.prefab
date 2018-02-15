@@ -484,6 +484,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteTag: 
+  flagId: 
+  visiblity: 0
   animation: {fileID: 0}
   groundLayer:
     serializedVersion: 2
@@ -498,7 +500,6 @@ MonoBehaviour:
   charaCeilingBouness: -1
   label: door
   eventWhen: 0
-  flagId: 
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
@@ -518,6 +519,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteTag: 
+  flagId: 
+  visiblity: 0
   animation: {fileID: 0}
   groundLayer:
     serializedVersion: 2
@@ -532,7 +535,6 @@ MonoBehaviour:
   charaCeilingBouness: -1
   label: creator
   eventWhen: 0
-  flagId: 
   stayAnimId: entity.npc.creator.walk
   jumpAnimId: 
   walkAnimId: 
