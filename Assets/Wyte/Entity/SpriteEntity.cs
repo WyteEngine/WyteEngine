@@ -19,7 +19,7 @@ public class SpriteEntity : Entity
 	/// <value>アニメーションしていればtrue，していなければfalse．</value>
 	public bool IsAnimating { get; private set; }
 
-	public WyteAnimation.AnimData CurrentAnim => Animation[animPtr];
+	public WyteAnimation.AnimData CurrentAnim => Animation != null && animPtr < Animation.Count ? Animation[animPtr] : null;
 
 	protected SpriteDirection direction;
 
