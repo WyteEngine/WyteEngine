@@ -3,6 +3,7 @@ using UnityEngine;
 using Novel.Exceptions;
 using System;
 using UnityEngine.SceneManagement;
+using UObject = UnityEngine.Object;
 
 public class GameMaster : SingletonBaseBehaviour<GameMaster>
 {
@@ -107,7 +108,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	{
 		try
 		{
-			WyteEvent.Instance.Save?.Invoke(this);
+			GameSave?.Invoke(this);
 		}
 		catch (Exception ex)
 		{
@@ -117,7 +118,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		return MessageContoller.Instance.Say("", "セーブしました。");
 
 	}
-#endregion
+	#endregion
 
 	void Start()
 	{
@@ -167,9 +168,18 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		if (playerTemp != null)
 			Destroy(playerTemp);
 		IsNotFreezed = CanMove = true;
-		WyteEvent.Instance.GameReset?.Invoke(this);
+		GameReset?.Invoke(this);
 		booted = false;
 	}
+
+	public delegate void PlayerDeathEventHandler(UObject player, UObject enemy, WyteEventArgs e);
+	public event PlayerDeathEventHandler PlayerDead;
+	public event PlayerDeathEventHandler PlayerDying;
+
+
+	public delegate void SaveEventHandler(GameMaster wyte);
+	public event SaveEventHandler GameSave;
+	public event SaveEventHandler GameReset;
 }
 
 public class PlayerData
@@ -186,4 +196,13 @@ public class PlayerData
 	}
 
 	public PlayerData(string name, int maxLife) : this(name, maxLife, maxLife) { }
+}
+
+public class WyteEventArgs : EventArgs
+{
+	/// <summary>
+	/// このイベントをキャンセルするかどうか取得します．
+	/// </summary>
+	/// <value><c>true</c> if cancel; otherwise, <c>false</c>.</value>
+	public bool Cancel { get; set; }
 }

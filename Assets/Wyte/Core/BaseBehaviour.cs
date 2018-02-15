@@ -26,7 +26,6 @@ public abstract class BaseBehaviour : MonoBehaviour
 	protected CoroutineHelper Coroutine => CoroutineHelper.Instance;
 	protected MapManager Map => MapManager.Instance;
 	protected PlayerCamera Camera => PlayerCamera.Instance;
-	protected WyteEvent Event => WyteEvent.Instance;
 	protected FPSCounter Debugger => FPSCounter.Instance;
 	protected NpcManager Npc => NpcManager.Instance;
 	protected AnimationManager AnimMan => AnimationManager.Instance;

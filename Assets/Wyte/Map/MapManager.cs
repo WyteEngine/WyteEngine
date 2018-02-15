@@ -15,7 +15,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 
 	private void Start()
 	{
-		WyteEvent.Instance.GameReset += (wyte) =>
+		Wyte.GameReset += (wyte) =>
 		{
 			Unload();
 		};
@@ -54,7 +54,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 		CurrentMapSize = rect;
 
 		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().backgroundColor = map.BackColor;
-		WyteEvent.Instance.MapChanged?.Invoke(map);
+		MapChanged?.Invoke(map);
 	}
 
 	public void Unload()
@@ -68,4 +68,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 		Move(UnityNRuntime.CombineAll(args));
 		yield break;
 	}
+
+	public delegate void MapChangedEventHandler(MapProperty map);
+	public event MapChangedEventHandler MapChanged;
 }
