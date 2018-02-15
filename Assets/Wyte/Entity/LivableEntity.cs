@@ -37,9 +37,9 @@ public abstract class LivableEntity : SpriteEntity
 	[SerializeField]
 	protected float charaWidth2 = 1.0f;
 	[SerializeField]
-	protected float charaGravityScale = 1.0f;
+	protected float charaGravityScale = 16.0f;
 	[SerializeField]
-	protected float charaJumpScale = 10.0f;
+	protected float charaJumpScale = 128.0f;
 	[SerializeField]
 	protected float charaCeilingBouness = -1.0f;
 
