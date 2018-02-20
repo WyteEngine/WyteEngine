@@ -121,10 +121,12 @@ public class PlayerController : LivableEntity
 		StartCoroutine(Bgm.Stop(0.5f));
 		Sfx.Play(DeathSfxId);
 		ChangeSprite("entity.player.drown");
-		for (int y = (int)transform.position.y; y < transform.position.y + 300; y += 4)
+		var targetY = transform.position.y + 300;
+		for (int y = (int)transform.position.y; y < targetY; y += 4)
 		{
-			transform.Rotate(Vector3.forward * 4);
+			transform.Rotate(Vector3.forward * 180 * Time.deltaTime);
 			transform.position = new Vector3(transform.position.x, y, transform.position.z);
+			yield return null;
 		}
 		yield return new WaitForSeconds(3);
 		Wyte.Initalize();
