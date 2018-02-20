@@ -45,7 +45,18 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 
 	}
 
-	private void FlagImpl(FlagMap flagDic, string[] args)
+	void Update()
+	{
+		if (Wyte.IsDebugMode && Input.GetKeyDown(KeyCode.F4))
+		{
+			Flags.Clear();
+			SkipFlags.Clear();
+			AreaFlags.Clear();
+			Debug.Log("<color=yellow>フラグを削除しました．</color>", this);
+		}
+	}
+
+	void FlagImpl(FlagMap flagDic, string[] args)
 	{
 		if (args.Length < 2)
 			throw new NRuntimeException("引数が足りません。");

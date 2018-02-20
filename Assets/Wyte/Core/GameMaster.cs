@@ -45,6 +45,14 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 
 	private bool canMove;
 
+	public string DebugModeHelp => "F1高速字送り{0} F2スクリプトリロード F3情報 F4フラグリセット";
+
+	[SerializeField]
+	[Tooltip("Unity EditorまたはDevelopment Build時にデバッグプレイをおこなうかどうか．")]
+	private bool requestDebugMode;
+
+	public bool IsDebugMode { get; private set; }
+
 	/// <summary>
 	/// プレイヤーが移動可能かどうか。
 	/// </summary>
@@ -135,8 +143,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		// Novel Bootstrap
 		if (!booted)
 		{
-			Novel.Run(BootstrapLabel);
-			booted = true;
+			StartCoroutine(Boot());
 		}
 
 		// Clossplatform UI Visible
@@ -152,12 +159,28 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		}
 	}
 	bool escaping;
+
 	IEnumerator Init()
 	{
 		escaping = true;
 		yield return Freeze(null, "on");
 		yield return MessageContoller.Instance.Say(null, "初期化します。");
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+
+	IEnumerator Boot()
+	{
+		booted = true;
+
+		if (!IsDebugMode && requestDebugMode && ( Application.isEditor || Debug.isDebugBuild ))
+		{
+			IsDebugMode = true;
+			yield return Freeze(null, "on");
+			yield return MessageContoller.Instance?.Say(null, "デバッグモードを　起動します。\n注意! これは　開発者向けの　機能です。");
+			yield return Freeze(null, "off");
+		}
+	
+		Novel.Run(BootstrapLabel);
 	}
 
 	//todo 必要ならescapeもキーバインドつける

@@ -29,6 +29,8 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 ―".Replace("\r\n", "\n").Split('\n');
 	string Cursor => cursorTemp[(int)(Time.time * cursorSpeed) % cursorTemp.Length];
 
+	bool quickEnabled;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -45,6 +47,17 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 
 	private void Update()
 	{
+		if (Wyte.IsDebugMode)
+		{
+			// デバッグテキスト
+			UIPersonalComputer.GetComponentInChildren<Text>().text = string.Format(Wyte.DebugModeHelp, quickEnabled ? "○" : "×");
+			if (Input.GetKeyDown(KeyCode.F1))
+			{
+				quickEnabled = !quickEnabled;
+				Debug.Log($"<color=yellow>テキスト早送りを{(quickEnabled ? "有効化" : "無効化")}しました．</color>", this);
+			}
+		}
+
 		text.text = textTemp;
 		if (textTemp.Length > 0 && text != null)
 			text.text += Cursor;
@@ -74,9 +87,12 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 		foreach (char c in tmp)
 		{
 			textTemp += c;
-			// タッチ時は早くする
-			Sfx.Play("entity.npc.saying");
-			yield return new WaitForSeconds(speed / (IsTouched ? 2 : 1));
+			if (!quickEnabled)
+			{
+				Sfx.Play("entity.npc.saying");
+				// タッチ時は早くする
+				yield return new WaitForSeconds(speed / (IsTouched ? 2 : 1));
+			}
 		}
 
 		// 前回タッチされてなく、かつタッチされていれば終了 = 押しっぱなしで進まないようにする

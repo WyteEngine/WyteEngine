@@ -37,7 +37,11 @@ public class FPSCounter : SingletonBaseBehaviour<FPSCounter>
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.F3))
+		{
 			isDebugMode = !isDebugMode;
+
+			Debug.Log($"<color=yellow>デバッグ情報表示を{(isDebugMode ? "有効化" : "無効化")}しました．</color>", this);
+		}
 
 		string output = "";
 		if (isDebugMode)

@@ -20,16 +20,16 @@ public class EventController : SingletonBaseBehaviour<EventController>
 	UnityNRuntime runtime;
 	public UnityNRuntime Runtime => runtime;
 
+	IEnumerable<TextAsset> Load() => Resources.LoadAll("Event", typeof(TextAsset)).Cast<TextAsset>();
+
 	// Use this for initialization
 	void Start()
 	{
-		// 裏でリソースをロードする
-		var assets = Resources.LoadAll("Event", typeof(TextAsset));
 		// ランタイムの用意
-		runtime = new UnityNRuntime(assets.Cast<TextAsset>(), MessageContoller.Instance.Say);
+		runtime = new UnityNRuntime(Load(), MessageContoller.Instance.Say);
 
 		#region WyteEngine Novel API の登録
-
+		// hack マネージャーの読み込みがまともになり次第ちゃんとする
 		runtime
 			// Fade
 			.Register("fade", FadeController.Instance.Fade)
@@ -93,7 +93,12 @@ public class EventController : SingletonBaseBehaviour<EventController>
 	// Update is called once per frame
 	void Update()
 	{
-
+		// スクリプトリロード
+		if (Wyte.IsDebugMode && Input.GetKeyDown(KeyCode.F2))
+		{
+			runtime.Reload(Load());
+			Debug.Log("<color=yellow>スクリプトを再読込しました．</color>", this);
+		}
 	}
 
 }
@@ -146,8 +151,7 @@ public class UnityNRuntime
 	{
 		commands = new Dictionary<string, UnityNCommand>();
 		// combined text asset
-		var text = string.Join("\n", assets.Select(a => a.text));
-		code = NParser.Parse(text);
+		Reload(assets);
 		outErr = errorCommand;
 		goSubStack = new Stack<int>();
 
@@ -159,7 +163,13 @@ public class UnityNRuntime
 		commands["gosub"] = Gosub;
 		commands["return"] = Return;
 		#endregion
+	}
 
+	public void Reload(IEnumerable<TextAsset> assets)
+	{
+		// combined text asset
+		var text = string.Join("\n", assets.Select(a => a.text));
+		code = NParser.Parse(text);
 	}
 
 
