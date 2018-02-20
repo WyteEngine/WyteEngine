@@ -84,9 +84,19 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			// Switch to the PlayerCamera
 			.Register("playercamera", Camera.SwitchToPlayerCamera)
 			// Switch to the FreeCamera
-			.Register("freecamera", Camera.SwitchToFreeCamera);
+			.Register("freecamera", Camera.SwitchToFreeCamera)
 
-
+			// Set a NPC
+			.Register("spset", Npc.SpSet)
+			// Move the NPC to specified location
+			.Register("spofs", Npc.SpOfs)
+			// Change the Wyte Animation of the NPC
+			.Register("spchr", Npc.SpChr)
+			// Remove the NPC
+			.Register("spclr", Npc.SpClr)
+			// Let the NPC walk
+			.Register("spwalk", Npc.SpWalk)
+			.Register("speve", Npc.SpEvent);
 		#endregion
 
 	}

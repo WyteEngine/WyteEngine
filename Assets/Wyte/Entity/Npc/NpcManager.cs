@@ -94,6 +94,19 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		SpClr(this[tag]);
 	}
 
+	public NpcBehaviour SpEvent(NpcBehaviour sprite, string label)
+	{
+		sprite.Label = label;
+		return sprite;
+	}
+
+	public NpcBehaviour SpEvent(string tag, string eventId)
+	{
+		if (this[tag] == null)
+			throw new NRuntimeException($"NPC tag:{tag} は存在しません．");
+		return SpEvent(this[tag], eventId);
+	}
+
 	#region Novel API
 	// +spset <tag>, <charId>[, <x>, <y>]
 	public IEnumerator SpSet(string _, string[] args)
@@ -155,6 +168,63 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		}
 		SpChr(spTag, animId);
 		yield break;
+	}
+
+	// <tag>+spchr <animId>
+	// +spchr <tag>, <animId>
+	public IEnumerator SpEvent(string tag, string[] args)
+	{
+		string spTag, eventId;
+		if (!string.IsNullOrEmpty(tag))
+		{
+			spTag = tag;
+			NArgsAssert(args.Length == 1);
+			eventId = args[0];
+		}
+		else
+		{
+			NArgsAssert(args.Length == 2);
+			spTag = args[0];
+			eventId = args[1];
+		}
+		SpEvent(spTag, eventId);
+		yield break;
+	}
+
+	// <tag>+spwalk <distance>, <time>
+	// +spwalk <tag>, <distance>, <time>
+	public IEnumerator SpWalk(string tag, string[] args)
+	{
+		string spTag;
+		float distance, time;
+		NArgsAssert(args.Length >= 2);
+
+		if (!string.IsNullOrEmpty(tag))
+		{
+			spTag = tag;
+		}
+		else
+		{
+			spTag = args[0];
+			args = args.Skip(1).ToArray();
+		}
+		var npc = this[tag];
+		if (npc == null)
+			throw new NRuntimeException($"NPC tag:{tag} は存在しません．");			
+
+		NArgsAssert(args.Length == 2);
+
+		distance = TryParse(args[0]);
+		time = TryParse(args[1]);
+		// 速さ = 距離 / 時間
+		var speed = distance / time;
+		Debug.Log($"distance{distance} time{time} speed{speed}");
+		if (float.IsNaN(speed) || float.IsInfinity(speed))
+			yield break;
+		npc.Move(speed);
+		yield return new WaitForSeconds(time);
+		npc.Move(0);
+
 	}
 
 	// <tag>+spclr
