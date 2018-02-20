@@ -114,15 +114,12 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		SpSet(spTag, id, pos);
 		yield break;
 	}
-	#endregion
-
 	// <tag>+spofs <x>, <y>
 	// +spofs <tag>, <x>, <y>
 	public IEnumerator SpOfs(string tag, string[] args)
 	{
 		string spTag;
-		if (args.Length < 2)
-			throw new NRuntimeException("引数が足りません．");
+		NArgsAssert(args.Length >= 2);
 		if (!string.IsNullOrEmpty(tag))
 		{
 			spTag = tag;
@@ -132,8 +129,7 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 			spTag = args[0];
 			args = args.Skip(1).ToArray();
 		}
-		if (args.Length != 2)
-			throw new NRuntimeException("引数が一致しません．");
+		NArgsAssert(args.Length == 2);
 		var x = TryParse(args[0]);
 		var y = TryParse(args[1]);
 		SpOfs(spTag, new Vector2(x, y));
@@ -148,14 +144,12 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		if (!string.IsNullOrEmpty(tag))
 		{
 			spTag = tag;
-			if (args.Length != 1)
-				throw new NRuntimeException("引数が一致しません．");
+			NArgsAssert(args.Length == 1);
 			animId = args[0];
 		}
 		else
 		{
-			if (args.Length != 2)
-				throw new NRuntimeException("引数が一致しません．");
+			NArgsAssert(args.Length == 2);
 			spTag = args[0];
 			animId = args[1];
 		}
@@ -174,7 +168,7 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		SpClr(tag);
 		yield break;
 	}
-
+	#endregion
 
 	/// <summary>
 	/// バックグラウンドでEntityのガベージコレクションを行います．

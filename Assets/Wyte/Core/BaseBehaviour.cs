@@ -1,4 +1,5 @@
 using UnityEngine;
+using Novel.Exceptions;
 
 /// <summary>
 /// リソース読み込みなど、ゲーム起動時に利用可能になるまで時間がかかる処理を行うオブジェクトはこれを実装します。
@@ -34,4 +35,14 @@ public abstract class BaseBehaviour : MonoBehaviour
 	/// タッチパネルをサポートしているかどうか。
 	/// </summary>
 	protected bool IsSmartDevice => EnvironmentFlag.IsSmartDevice;
+
+	/// <summary>
+	/// 条件式が通らない場合エラーを返します．
+	/// </summary>
+	/// <param name="expr"></param>
+	protected void NArgsAssert(bool expr)
+	{
+		if (!expr)
+			throw new NRuntimeException("引数が一致しません．");
+	}
 }
