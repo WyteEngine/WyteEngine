@@ -19,6 +19,7 @@ Features
 - Event Scripting System (Powered by Novel Script)
 - Very powerful scripting API for Novel
 - C#-level Extension API
+- 2D-specialized 
 - Very Easy AI Construction API
 
 To use
@@ -27,6 +28,10 @@ To use
 **WARNING! This project is work in progress!**
 
 - The folder named `Assets/Wyte` is all components of the Wyte Engine. Copy that folder into your unity projects.
+- Add the following layer settings (case-sensitive.)
+	- User Layer 8: Ground
+	- User Layer 9: Player
+	- User Layer 10: NPC
 - `Assets/Demo` is the demo project for the Wyte Engine. Please refer it to use.
 
 I won't write more informations because this project is WIP.
@@ -37,6 +42,6 @@ No thanks yet. I'll write the contributing guideline ASAP.
 
 LICENSE
 ==========
-Under the MIT License. See [LICENSE](LICENSE).
-
-<s>(But I don't think my code is useful for supporting your game...)</s>
+Wyte assets are under the MIT License.
+**But I don't permit to use the Demo resources such as music and graphics because they are all rights reserved.**
+See [LICENSE](LICENSE).
