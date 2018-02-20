@@ -34,7 +34,7 @@ To use
 	- User Layer 10: NPC
 - `Assets/Demo` is the demo project for the Wyte Engine. Please refer it to use.
 
-I won't write more informations because this project is WIP.
+To get more informations, see the [Wiki(Japanese only)](/wiki).
 
 Contributing
 ==============
