@@ -30,9 +30,6 @@ public class PlayerController : LivableEntity
 	public override string JumpSfxId => "entity.player.jump";
 	public override string DeathSfxId => "entity.player.death";
 
-	public IEventable CurrentNpc => currentNpc;
-
-	private IEventable currentNpc;
 
 
 	/// <summary>
@@ -61,21 +58,21 @@ public class PlayerController : LivableEntity
 	{
 		base.OnFixedUpdate();
 
+		// しないと CanMove でないときにｽｨｰってなる
+		rigid.velocity = new Vector2(0, rigid.velocity.y);
+
 		// 移動可能時に処理を行う
 		if (Wyte.CanMove)
 			InputKey();
 	}
 
 	bool GetJumpKeyPushed(bool down = false) =>
-		IsSmartDevice 
+		IsSmartDevice
 		// Android iOS など
 		? GamePadBehaviour.Instance.Get(GamePadButtons.Action, down)
 		// PC
 		: (down ? Input.GetKeyDown(KeyBind.Jump) : Input.GetKey(KeyBind.Jump));
-
-	bool EventKeyPushed =>
-		IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Screen, true) : Input.GetKeyDown(KeyBind.Up);
-
+	
 	/// <summary>
 	/// キー入力
 	/// </summary>
@@ -85,10 +82,6 @@ public class PlayerController : LivableEntity
 		if (GetJumpKeyPushed(true))
 		{
 			Jump();
-		}
-		if (EventKeyPushed && currentNpc != null)
-		{
-			Novel.Run(currentNpc.Label);
 		}
 
 		AnimationMultiplier = DashMultiplier;
@@ -120,29 +113,6 @@ public class PlayerController : LivableEntity
 		{
 			transform.position = new Vector3(Map.CurrentMapSize.xMax, transform.position.y, transform.position.z);
 			rigid.velocity = new Vector2(rigid.velocity.x > 0 ? 0 : rigid.velocity.x, rigid.velocity.y);
-		}
-	}
-
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		var npc = collision.GetComponent<IEventable>();
-		if (npc != null)
-		{
-			currentNpc = npc;
-			// 触れるだけで発動するイベントはここで処理
-			if (currentNpc.EventWhen == EventCondition.Touched)
-			{
-				Novel.Run(currentNpc.Label);
-				currentNpc = null;
-			}
-		}
-	}
-
-	private void OnTriggerExit2D(Collider2D collision)
-	{
-		if (currentNpc == collision.GetComponent<IEventable>())
-		{
-			currentNpc = null;
 		}
 	}
 

@@ -11,11 +11,15 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	[SerializeField]
 	[Tooltip("アクション時に実行するイベント ラベル。")]
 	string label;
-	public string Label => label;
+	public string Label
+	{
+		get { return label; }
+		set { label = value; }
+	}
 
 	[SerializeField]
 	[Tooltip("イベントの発火条件。")]
-	EventCondition eventWhen;
+	EventCondition eventWhen = EventCondition.Talked;
 	public EventCondition EventWhen => eventWhen;
 
 	[Header("Animation Id")]
@@ -36,7 +40,7 @@ public class NpcBehaviour : LivableEntity, IEventable {
 
 	[Header("Entity Setting")]
 	[SerializeField]
-	float gravityScale;
+	float gravityScale = 16;
 
 	public override string WalkAnimationId => walkAnimId;
 	public override string StayAnimationId => stayAnimId;
@@ -47,6 +51,20 @@ public class NpcBehaviour : LivableEntity, IEventable {
 
 	public override float GravityScale => gravityScale;
 
+	protected new BoxCollider2D collider2D;
+	protected BoxCollider2D playerCollider;
+
+	/// <summary>
+	/// 前フレームでのプレイヤー衝突判定．
+	/// </summary>
+	protected bool prevIntersects;
+
+	protected override void Start()
+	{
+		base.Start();
+		collider2D = GetComponent<BoxCollider2D>();
+	}
+
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
@@ -56,15 +74,40 @@ public class NpcBehaviour : LivableEntity, IEventable {
 			charaWidth = charaWidth2 = sp.bounds.size.x;
 			charaHead = sp.bounds.max.y;
 			charaFoot = sp.bounds.min.y;
-			GetComponent<BoxCollider2D>().size = sp.bounds.size;
+			collider2D.size = sp.bounds.size;
+		}
+
+
+		CheckCollision();
+	}
+
+	protected void CheckCollision()
+	{
+		if (playerCollider == null)
+			playerCollider = Wyte.CurrentPlayer?.GetComponent<BoxCollider2D>();
+		if (playerCollider == null)
+			return;
+		if (!Wyte.CanMove)
+			return;
+		
+		var intersects = collider2D.bounds.Intersects(playerCollider.bounds);
+		if (intersects)
+		{
+			if ((EventKeyPushed && eventWhen == EventCondition.Talked) || !prevIntersects && eventWhen == EventCondition.Touched)
+				Novel.Run(label);
+			
+			prevIntersects = intersects;
 		}
 	}
 
 	protected override IEnumerator OnDeath(Object killer)
 	{
-		if (!string.IsNullOrWhiteSpace(label))
+		if (!string.IsNullOrWhiteSpace(label) && EventWhen == EventCondition.Dead)
 			Novel.Run(label);
 		
 		yield return new WaitWhile(() => Novel.Runtime.IsRunning);
 	}
+
+	bool EventKeyPushed => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Screen, true) : Input.GetKeyDown(KeyBind.Up);
+
 }

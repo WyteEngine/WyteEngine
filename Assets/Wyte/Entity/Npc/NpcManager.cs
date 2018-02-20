@@ -5,6 +5,7 @@ using Novel.Exceptions;
 using static NovelHelper;
 using System.Linq;
 using System;
+using UnityEngine.Experimental.UIElements;
 
 public class NpcManager : SingletonBaseBehaviour<NpcManager>
 {
@@ -48,7 +49,7 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 	{
 		var sprite = new GameObject(string.IsNullOrWhiteSpace(tag) ? "New Sprite" : tag, typeof(NpcBehaviour)).GetComponent<NpcBehaviour>();
 		sprite.Tag = tag;
-
+		sprite.gameObject.layer = LayerMask.NameToLayer("NPC");
 		return sprite;
 	}
 
@@ -84,7 +85,6 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 	public void SpClr(NpcBehaviour npc)
 	{
 		Destroy(npc);
-
 	}
 
 	public void SpClr(string tag)

@@ -71,8 +71,6 @@ public abstract class LivableEntity : SpriteEntity
 	{
 		base.OnFixedUpdate();
 
-		// しないと CanMove でないときにｽｨｰってなる
-		rigid.velocity = new Vector2(0, rigid.velocity.y);
 	}
 
 	/// <summary>
