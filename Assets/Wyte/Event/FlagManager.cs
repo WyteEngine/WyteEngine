@@ -67,10 +67,16 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 	{
 		if (labels.Length < 1)
 			return null;
+		var useGosub = false;
+		if (labels.Length >= 3)
+		{
+			useGosub = labels[0].ToLower() == "gosub";
+			labels = labels.Skip(1).ToArray();
+		}
 		if (flagDic[key])
-			return Novel.Runtime.Goto("", labels[0]);
+			return useGosub ? Novel.Runtime.Gosub("", labels[0]) : Novel.Runtime.Goto("", labels[0]);
 		if (labels.Length >= 2)
-			return Novel.Runtime.Goto("", labels[1]);
+			return useGosub ? Novel.Runtime.Gosub("", labels[1]) : Novel.Runtime.Goto("", labels[1]);
 		return null;
 
 	}
