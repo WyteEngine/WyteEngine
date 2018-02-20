@@ -36,8 +36,9 @@
 
 // 創始者イベント
 #creator
-	fool+onflag #fool
 	+pfreeze on
+	creator_warn+onaflag #creator_warn2
+	fool+onflag #fool
 	:"やあ！"
 	:"ぼくはね　この世界を　つくっている人　なんだ。"
 	+freecamera -24, -40
@@ -103,7 +104,23 @@
 #stupid_spelling
 	:"抵抗器は Register じゃなくて\nResistor なんだよね...。"
 	+pfreeze off
-+end#girl
++end
+
+#creator_warn
+	creator_warn+onaflag #creator_warn_skip
+	+pfreeze on
+	:"おーい！"
+	creator+spofs 544, 80
+	creator+spwalk 208, 1.5
+	:"そこは　危ないよ。"
+#creator_warn_2
+	:"下は　奈落さ。　落ちたら　ひとたまりも　ないぜ。"
+	+aflag on, "creator_warn"
+	+pfreeze off
+#creator_warn_skip
++end
+
+#girl
 	like_8bit+onflag #girl_like_8bit
 	unlike_8bit+onflag #girl_unlike_8bit
 
@@ -150,3 +167,11 @@
 #girl_bye
 	:"気が変わったら　また声かけてね。"
 +return
+
+#glitch
+	+pfreeze on
+	:"そこの　コンテナ　すごく　バグってるじゃん"
+	:"お前さあ　普通なら　ここに来れないと思うんだけど"
+	:"何したん？　俺　卑怯者は　大嫌いだからな"
+	+pfreeze off
++end
