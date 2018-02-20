@@ -4,7 +4,6 @@
 
 #boot
 	+pfreeze on
-	+debug "test", "", , " ",  , test2
 	+move "demo"
 	+bgmplay "port_town.day"
 	+pshow -109.9, -56
@@ -79,7 +78,7 @@
 	+pfreeze off
 +end
 
-// なかったことに
++creator_legacy
 	+pfreeze on
 	creators_surprise+onflag #auamazing
 	:やあ。
@@ -166,7 +165,7 @@
 
 #girl_bye
 	:"気が変わったら　また声かけてね。"
-+return
++return
 
 #glitch
 	+pfreeze on
@@ -174,4 +173,4 @@
 	:"お前さあ　普通なら　ここに来れないと思うんだけど"
 	:"何したん？　俺　卑怯者は　大嫌いだからな"
 	+pfreeze off
-+end
++end
