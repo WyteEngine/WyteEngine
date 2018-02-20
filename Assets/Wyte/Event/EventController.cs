@@ -38,6 +38,8 @@ public class EventController : SingletonBaseBehaviour<EventController>
 
 			// Play BGM
 			.Register("bgmplay", Bgm.Play)
+			// Change BGM with keeping its time sample
+			.Register("bgmchange", Bgm.Change)
 			// Stop BGM
 			.Register("bgmstop", Bgm.Stop)
 			// Stop BGM Asynchronously

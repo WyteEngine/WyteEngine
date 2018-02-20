@@ -40,11 +40,14 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 		Debugger.DebugRendering += (d) => d.Append($"bgm:{songName ?? "none"} ");
 	}
 
+	public MusicData Get(string id) => Songs.FirstOrDefault(m => m.Id == id);
+
 	public void Play(string id)
 	{
-		var targetSong = Songs.FirstOrDefault(m => m.Id == id);
+		var targetSong = Get(id);
 		Stop();
 		source.loop = targetSong.Loop;
+		source.timeSamples = 0;
 		source.clip = targetSong.Clip;
 		source.volume = 1;
 		source.Play();
@@ -61,9 +64,28 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 		Play(Songs[id].Id);
 	}
 
+	public void Change(string id)
+	{
+		var targetSong = Get(id);
+		var prevSample = source.timeSamples;
+		Stop();
+		source.clip = targetSong.Clip;
+		source.Play();
+		source.timeSamples = prevSample;
+		source.loop = targetSong.Loop;
+		source.volume = 1;
+		songName = id;
+	}
+
 	public IEnumerator Play(string t, string[] a)
 	{
 		Play(CombineAll(a));
+		yield break;
+	}
+
+	public IEnumerator Change(string t, string[] a)
+	{
+		Change(CombineAll(a));
 		yield break;
 	}
 
