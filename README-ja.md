@@ -34,7 +34,7 @@ Wyte Engine(ホワイトエンジン)は，横スクロールで，2Dなアク�
 	- User Layer 10: NPC
 - `Assets/Demo` は， Wyte Engine のデモプロジェクトです．その中に含まれる `Game.unity` を参考にしてください．
 
-このプロジェクトは開発中(WIP)なので，これ以上の情報は書きません．
+さらなる情報を得るために, [Wiki](https://github.com/WyteEngine/WyteEngine/wiki)をご覧ください.
 
 コントリビューション
 ==============
