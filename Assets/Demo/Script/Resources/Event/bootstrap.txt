@@ -103,4 +103,50 @@
 #stupid_spelling
 	:"抵抗器は Register じゃなくて\nResistor なんだよね...。"
 	+pfreeze off
++end#girl
+	like_8bit+onflag #girl_like_8bit
+	unlike_8bit+onflag #girl_unlike_8bit
+
+	+pfreeze on
+	:"あなた　8ビットが　好きそうな　顔してるわね。"
+	:"......。"
+	//選択肢未実装なんDA
+	+gosub #girl_8bit
+	+gosub #girl_bye
+	+pfreeze off
 +end
+
+#girl_like_8bit
+	+pfreeze on
+	:"やっぱり　8ビットは　お口に合わなかった？"
+	:"......。"
+	+gosub #girl_no8bit
+	+gosub #girl_bye
+	+pfreeze off
++end
+
+#girl_unlike_8bit
+	+pfreeze on
+	:"やっぱり　8ビットが　恋しくなった？"
+	:"......。"
+	+gosub #girl_8bit
+	+gosub #girl_bye
+	+pfreeze off
++end
+
+
+#girl_8bit
+	+bgmchange "port_town.8bit"
+	+flag on, like_8bit
+	+flag off, unlike_8bit
++return
+
+#girl_no8bit
+	+bgmchange "port_town.day"
+	+flag off, like_8bit
+	+flag on, unlike_8bit
++return
+
+#girl_bye
+	:"気が変わったら　また声かけてね。"
++return

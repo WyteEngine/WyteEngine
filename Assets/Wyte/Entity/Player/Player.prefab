@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61805790299435920}
   - component: {fileID: 212157916433937384}
   - component: {fileID: 114096308007625886}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteTag: 
+  flagId: 
+  visiblity: 0
   animation: {fileID: 0}
   groundLayer:
     serializedVersion: 2
