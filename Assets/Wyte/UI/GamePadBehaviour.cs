@@ -104,7 +104,7 @@ internal static class Extension
 {
 	public static bool Overlaps(this RectTransform r, Vector2 point)
 	{
-		return RectTransformUtility.RectangleContainsScreenPoint(r, point, Camera.main);
+		return RectTransformUtility.RectangleContainsScreenPoint(r, point);
 		//return (rect.xMin < point.x) && (point.x < rect.xMax) && (rect.yMin < point.y) && (point.y < rect.yMax);
 	}
 }
