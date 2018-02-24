@@ -3,10 +3,11 @@
 [ExecuteInEditMode]
 public class PixelPerfectCamera : MonoBehaviour
 {
-
-	public Vector2 displayArea = new Vector2(288, 512);
-	public float referencePixelsPerUnit = 100f;
-	private Vector2 lastScreenSize;
+	[SerializeField]
+	Vector2Int displayArea = new Vector2Int(288, 512);
+	[SerializeField]
+	float referencePixelsPerUnit = 100f;
+	Vector2Int lastScreenSize;
 
 	void Awake()
 	{
@@ -35,7 +36,9 @@ public class PixelPerfectCamera : MonoBehaviour
 		}
 
 		// Orthographic なカメラの Size を、ドット絵が綺麗に表示されるように調整する.
-		GetComponent<Camera>().orthographicSize = Screen.height / (referencePixelsPerUnit * coefficient * 2);   // orthographicSizeは高さの半分なので2で割る.
+		var s = Screen.height / (referencePixelsPerUnit * coefficient * 2);   // orthographicSizeは高さの半分なので2で割る.
+		if (s != 0)
+			GetComponent<Camera>().orthographicSize = s;
 
 		// 解像度の変化を感知するために現在の解像度を保存しておく.
 		lastScreenSize.x = Screen.width;
