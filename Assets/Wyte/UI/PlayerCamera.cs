@@ -46,6 +46,7 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 
 	void LateUpdate()
 	{
+		var z = transform.position.z;
 		if (!player)
 		{
 				
@@ -61,7 +62,8 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 		switch (Target)
 		{
 			case CameraTarget.Player:
-				newPosition = player.position + offset;
+				if (!player.GetComponent<PlayerController>().Dying && player.gameObject != null)
+					newPosition = player.position + offset;
 				break;
 			case CameraTarget.Free:
 				newPosition = FreePosition;
@@ -91,6 +93,7 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 				newPosition.y = Map.CurrentMapSize.yMax - camSize.y / 2;
 		}
 		transform.position = Vector3.Lerp(transform.position, newPosition, 5f * Time.deltaTime);
+		transform.position.Set(transform.position.x, transform.position.y, z);
 	}
 
 	public IEnumerator SwitchToPlayerCamera(string _, string[] args)
