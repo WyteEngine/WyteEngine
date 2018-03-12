@@ -73,16 +73,7 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 		// 話者がいる場合は表示
 		// hack 今後もっとUIをよくする
 		textTemp = string.IsNullOrEmpty(sprite) ? "" : sprite + " : ";
-		tmp = tmp
-			.Replace("<pname>", GameMaster.Instance.Player?.Name ?? "null")
-			.Replace("<plife>", GameMaster.Instance.Player?.Life.ToString())
-			.Replace("<pmaxlife>", GameMaster.Instance.Player?.MaxLife.ToString())
-			.Replace("<time_h>", DateTime.Now.Hour.ToString())
-			.Replace("<time_m>", DateTime.Now.Minute.ToString())
-			.Replace("<time_s>", DateTime.Now.Second.ToString())
-			.Replace("<time>", DateTime.Now.ToString("T"))
-			.Replace("<<>", "<")
-			.Replace("<>>", ">");
+	
 		bool prevTouch = true;
 		foreach (char c in tmp)
 		{

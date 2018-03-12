@@ -45,7 +45,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 
 	private bool canMove;
 
-	public string DebugModeHelp => "F1高速字送り{0} F2スクリプトリロード F3情報 F4フラグリセット";
+	public string DebugModeHelp => "F1高速字送り{0} F2スクリプトリロード F3情報 F4フラグリセット F5 FTSデバッグ";
 
 	[SerializeField]
 	[Tooltip("Unity EditorまたはDevelopment Build時にデバッグプレイをおこなうかどうか．")]
@@ -138,12 +138,49 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 
 	bool booted;
 
+	int ftsDebugCount;
+
 	void Update()
 	{
 		// Novel Bootstrap
 		if (!booted)
 		{
 			StartCoroutine(Boot());
+		}
+
+		if (IsDebugMode && Input.GetKeyDown(KeyCode.F5))
+		{
+			switch (ftsDebugCount)
+			{
+				case 0:
+					Debug.Log(TextComponent.Parse(@"ようこそ \c=red;ホワイトスペース\r;へ！"));
+					ftsDebugCount++;
+					break;
+				case 1:
+					Debug.Log(TextComponent.Parse(@"君の名前は \b;\var=pname; \r;じゃな？"));
+					ftsDebugCount++;
+					break;
+				case 2:
+					Debug.Log(TextComponent.Parse(@"このメッセージは \c=#007fff;\i;TextComponent\r;のデバッグ用じゃ．"));
+					ftsDebugCount++;
+					break;
+				case 3:
+					Debug.Log(new TextComponent(@"先程は\c=blue;static\r;メソッド，今このテキストは\c=red;インスタンス\r;で生成しておるぞ．"));
+					ftsDebugCount++;
+					break;
+				case 4:
+					Debug.Log(TextComponent.Parse(@"いま諸君は， \b;\var=map_name;\r;にいるはずじゃ． \c=green;\var=bgm_name;\r;が流れていれば間違いないぞ．"));
+					ftsDebugCount++;
+					break;
+				case 5:
+					Debug.Log(new TextComponent(@"\sz=5;おーい，きこえとるか？ \r;...\sz=20;きこえとったら返事せんかー！！！\r;"));
+					ftsDebugCount++;
+					break;
+				case 6:
+					Debug.Log(new TextComponent(@"ゴホン．これでデバッグは終わりにするぞ．それでは，冒険を楽しみたまえ．"));
+					ftsDebugCount = 0;
+					break;
+			}
 		}
 
 		// Clossplatform UI Visible
