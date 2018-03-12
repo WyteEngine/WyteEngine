@@ -153,27 +153,27 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 			switch (ftsDebugCount)
 			{
 				case 0:
-					Debug.Log(TextComponent.Parse(@"ようこそ \c=red;ホワイトスペース\r;へ！"));
+					Debug.Log(TextComponent.Parse(@"ようこそ $c=red;ホワイトスペース$r;へ！"));
 					ftsDebugCount++;
 					break;
 				case 1:
-					Debug.Log(TextComponent.Parse(@"君の名前は \b;\var=pname; \r;じゃな？"));
+					Debug.Log(TextComponent.Parse(@"君の名前は $b;$var=pname; $r;じゃな？"));
 					ftsDebugCount++;
 					break;
 				case 2:
-					Debug.Log(TextComponent.Parse(@"このメッセージは \c=#007fff;\i;TextComponent\r;のデバッグ用じゃ．"));
+					Debug.Log(TextComponent.Parse(@"このメッセージは $c=#007fff;$i;TextComponent$r;のデバッグ用じゃ．"));
 					ftsDebugCount++;
 					break;
 				case 3:
-					Debug.Log(new TextComponent(@"先程は\c=blue;static\r;メソッド，今このテキストは\c=red;インスタンス\r;で生成しておるぞ．"));
+					Debug.Log(new TextComponent(@"先程は$c=blue;static$r;メソッド，今このテキストは$c=red;インスタンス$r;で生成しておるぞ．"));
 					ftsDebugCount++;
 					break;
 				case 4:
-					Debug.Log(TextComponent.Parse(@"いま諸君は， \b;\var=map_name;\r;にいるはずじゃ． \c=green;\var=bgm_name;\r;が流れていれば間違いないぞ．"));
+					Debug.Log(TextComponent.Parse(@"いま諸君は， $b;$var=map_name;$r;にいるはずじゃ． $c=green;$var=bgm_name;$r;が流れていれば間違いないぞ．"));
 					ftsDebugCount++;
 					break;
 				case 5:
-					Debug.Log(new TextComponent(@"\sz=5;おーい，きこえとるか？ \r;...\sz=20;きこえとったら返事せんかー！！！\r;"));
+					Debug.Log(new TextComponent(@"$sz=5;おーい，きこえとるか？ $r;...$sz=20;きこえとったら返事せんかー！！！$r;"));
 					ftsDebugCount++;
 					break;
 				case 6:

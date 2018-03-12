@@ -43,10 +43,10 @@ public class TextComponent
 			{
 				case ParseState.PlainText:
 					// コマンドはじまりか？
-					if (c == '\\')
+					if (c == '$')
 					{
 						// エスケープか？
-						if (nc == '\\')
+						if (nc == '$')
 						{
 							// そのまま出力して1個飛ばす
 							i++;
@@ -116,6 +116,21 @@ public class TextComponent
 			case "c":
 				elem.Color = args;
 				break;
+			case "!b":
+				elem.Bold = false;
+				break;
+			case "!i":
+				elem.Italic = false;
+				break;
+			case "!c":
+				elem.Color = null;
+				break;
+			case "!sz":
+				elem.Size = 0;
+				break;
+			case "!spd":
+				elem.Speed = 1;
+				break;
 			case "sz":
 				int size;
 				if (!int.TryParse(args.Trim(), out size))
@@ -159,9 +174,9 @@ public class TextComponent
 				}
 				break;
 			default:
-				var raw = new StringBuilder().Append('\\').Append(name);
+				var raw = new StringBuilder().Append('$').Append(name);
 				if (!string.IsNullOrEmpty(args))
-					raw.Append('[').Append(args).Append(']');
+					raw.Append('=').Append(args);
 				raw.Append(';');
 				foreach (var c in raw.ToString())
 				{
@@ -233,13 +248,4 @@ public class TextComponent
 		PlainText, Name, Argument
 	}
 
-}
-
-public static class TextUtility
-{
-	public static string RemoveTags(string text) => Regex.Replace(text, @"<("".*? ""|'.*?'|[^'""])*?>", "");
-
-	public static string RemoveFTSCommands(string text) => Regex.Replace(text, @"\\[\w\d_]+?(?:\[.+\])?", "");
-
-	public static string ToSafeString(string text) => RemoveFTSCommands(RemoveTags(text));
 }
