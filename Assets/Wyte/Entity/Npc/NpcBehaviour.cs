@@ -96,8 +96,9 @@ public class NpcBehaviour : LivableEntity, IEventable {
 			if ((EventKeyPushed && eventWhen == EventCondition.Talked) || !prevIntersects && eventWhen == EventCondition.Touched)
 				Novel.Run(label);
 			
-			prevIntersects = intersects;
 		}
+		prevIntersects = intersects;
+
 	}
 
 	protected override IEnumerator OnDeath(Object killer)
