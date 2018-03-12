@@ -10,7 +10,7 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 
 	Text text;
 
-	string textTemp;
+	string buffer;
 
 	[SerializeField]
 	float cursorSpeed = 8;
@@ -36,7 +36,7 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 		base.Awake();
 
 		text = GetComponent<Text>();
-		textTemp = "";
+		buffer = "";
 	}
 
 	bool IsTouched => IsSmartDevice
@@ -58,8 +58,8 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 			}
 		}
 
-		text.text = textTemp;
-		if (textTemp.Length > 0 && text != null)
+		text.text = buffer;
+		if (buffer.Length > 0 && text != null)
 			text.text += Cursor;
 	}
 
@@ -67,33 +67,61 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 
 	public void ShowBox() => CurrentPad.SetActive(true);
 
+	bool prevTouch;
+
 	public IEnumerator Say(string sprite, params string[] args)
 	{
-		var tmp = NovelHelper.CombineAll(args);
+		var messageSource = NovelHelper.CombineAll(args);
 		// 話者がいる場合は表示
 		// hack 今後もっとUIをよくする
-		textTemp = string.IsNullOrEmpty(sprite) ? "" : sprite + " : ";
-	
-		bool prevTouch = true;
-		foreach (char c in tmp)
+		buffer = string.IsNullOrEmpty(sprite) ? "" : sprite + " : ";
+		messageSource = TextUtility.RemoveTags(messageSource);
+		TextElement[] mes;
+		try
 		{
-			textTemp += c;
-			if (!quickEnabled)
+			mes = new TextComponent(messageSource).Elements;
+		}
+		catch (FormatException ex)
+		{
+			mes = new TextComponent(@"$c=red;書式エラー: " + TextUtility.ToSafeString(ex.Message)).Elements;
+		}
+		foreach (var c in mes)
+		{
+
+			if (c.WaitTime > 0)
+			{
+				yield return new WaitForSeconds(c.WaitTime);
+			}
+
+			if (c.Nod)
+			{
+				yield return Nod();
+			}
+
+			buffer += c.ToString();
+			if (!quickEnabled && c.Speed != 0)
 			{
 				Sfx.Play("entity.npc.saying");
 				// タッチ時は早くする
-				yield return new WaitForSeconds(speed / (IsTouched ? 2 : 1));
+				yield return new WaitForSeconds(speed / Mathf.Abs(c.Speed) / (IsTouched ? 2 : 1));
 			}
 		}
 
+		yield return Nod();
+
+		buffer = "";
+
+	}
+
+	IEnumerator Nod()
+	{
+		prevTouch = true;
 		// 前回タッチされてなく、かつタッチされていれば終了 = 押しっぱなしで進まないようにする
 		while (!(!prevTouch && IsTouched))
 		{
 			prevTouch = IsTouched;
 			yield return null;
 		}
-		textTemp = "";
-
 	}
 
 
