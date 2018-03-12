@@ -36,7 +36,7 @@
 // 創始者イベント
 #creator
 	+pfreeze on
-	creator_warn+onaflag #creator_warn2
+	creator_warn+onaflag #creator_warn_2
 	fool+onflag #fool
 	:"やあ！"
 	:"ぼくはね　この世界を　つくっている人　なんだ。"
