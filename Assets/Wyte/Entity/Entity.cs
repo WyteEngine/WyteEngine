@@ -52,6 +52,12 @@ public abstract class Entity : BaseBehaviour
 	/// <value>死んでいる途中であれば<c>true</c>，違えば<c>false</c>．</value>
 	public bool Dying { get; protected set; }
 
+	/// <summary>
+	/// 死亡時に当たり判定がなくなるかどうかを取得します．
+	/// </summary>
+	/// <value><c>true</c> if destroy collider on dying; otherwise, <c>false</c>.</value>
+	public virtual bool DestroyColliderOnDying => true;
+
 	protected virtual void Start()
 	{
 		Health = MaxHealth;
@@ -147,6 +153,15 @@ public abstract class Entity : BaseBehaviour
 	IEnumerator Death(UObject killer)
 	{
 		Dying = true;
+
+		if (DestroyColliderOnDying)
+		{
+			// 死亡時に当たり判定を消す
+			Collider2D col;
+			if ((col = GetComponent<Collider2D>()) != null)
+				col.enabled = false;
+		}
+
 		yield return OnDeath(killer);
 		Dead = true;
 	}

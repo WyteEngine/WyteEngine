@@ -63,6 +63,14 @@ public abstract class LivableEntity : SpriteEntity
 		if (Map.CurrentMap != null && transform.position.y < Map.CurrentMapSize.yMin)
 			Kill(Map.CurrentMap);
 
+		if (Dying)
+		{
+			rigid.gravityScale = 0;
+			rigid.velocity.Set(rigid.velocity.x, 0);
+		}
+		else
+			rigid.gravityScale = GravityScale;
+
 		prevIsCeiling = IsCeiling();
 		prevIsGrounded = IsGrounded();
 	}
