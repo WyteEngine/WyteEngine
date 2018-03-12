@@ -136,7 +136,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		Player = new PlayerData("ホワイト", 20);
 	}
 
-	private bool booted;
+	bool booted;
 
 	void Update()
 	{

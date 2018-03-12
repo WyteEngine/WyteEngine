@@ -1,8 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Tilemaps;
-using UnityEngine.SceneManagement;
-using System.Linq;
 
 /// <summary>
 /// プレイヤーキャラの制御を行います．

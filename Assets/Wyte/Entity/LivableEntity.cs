@@ -70,7 +70,6 @@ public abstract class LivableEntity : SpriteEntity
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
-
 	}
 
 	/// <summary>
