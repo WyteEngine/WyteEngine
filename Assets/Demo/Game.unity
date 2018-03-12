@@ -301,6 +301,16 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114190129935795948, guid: 8eb2ff481c9324d4680c8969e0dbeb44,
+        type: 2}
+      propertyPath: m_Text
+      value: "\u2190"
+      objectReference: {fileID: 0}
+    - target: {fileID: 114314441343609944, guid: 8eb2ff481c9324d4680c8969e0dbeb44,
+        type: 2}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8eb2ff481c9324d4680c8969e0dbeb44, type: 2}
   m_IsPrefabParent: 0
@@ -548,6 +558,11 @@ Prefab:
         type: 2}
       propertyPath: requestDebugMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20578907749853858, guid: 552322c8bd187452cbcffac2f03cb98c,
+        type: 2}
+      propertyPath: orthographic size
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 552322c8bd187452cbcffac2f03cb98c, type: 2}
