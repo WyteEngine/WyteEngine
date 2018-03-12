@@ -29,6 +29,8 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 
 	private string songName;
 
+	public string SongName => songName;
+
 	protected override void Awake()
 	{
 		base.Awake();
