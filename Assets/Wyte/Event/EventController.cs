@@ -1,14 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 using Novel.Models;
 using Novel.Parsing;
-using Novel;
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
 using Novel.Exceptions;
 using static NovelHelper;
 

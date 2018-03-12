@@ -108,7 +108,6 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 			throw new NRuntimeException("引数が足りません．");
 		// フリーズ時に false になることに注意．
 		CanMove = a[0] != "on";
-		Debug.Log(canMove);
 		yield break;
 	}
 

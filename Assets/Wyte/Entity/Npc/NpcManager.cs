@@ -218,7 +218,6 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		time = TryParse(args[1]);
 		// 速さ = 距離 / 時間
 		var speed = distance / time;
-		Debug.Log($"distance{distance} time{time} speed{speed}");
 		if (float.IsNaN(speed) || float.IsInfinity(speed))
 			yield break;
 		npc.Move(speed);
