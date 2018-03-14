@@ -26,8 +26,4 @@ public class MapProperty : MonoBehaviour {
 	/// </summary>
 	public Wallpaper Foreground;
 
-	/// <summary>
-	/// プレイヤーが落下死判定となるY座標．
-	/// </summary>
-	public float Hell;
 }

@@ -775,7 +775,6 @@ MonoBehaviour:
     Image: {fileID: 0}
     ScrollSpeed: 0
     AutoScroll: 0
-  Hell: -214
 --- !u!114 &114458874562365074
 MonoBehaviour:
   m_ObjectHideFlags: 1
