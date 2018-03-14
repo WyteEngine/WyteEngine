@@ -99,7 +99,7 @@
 
 #house_clock
 	+pfreeze on
-	: "時計は　<time_h>時を　指している。"
+	: "時計は　$var=time_h;時を　指している。"
 	+pfreeze off
 +end
 
