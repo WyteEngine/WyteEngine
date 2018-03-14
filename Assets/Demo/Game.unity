@@ -522,6 +522,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114104794599357224, guid: 552322c8bd187452cbcffac2f03cb98c,
+        type: 2}
+      propertyPath: Maps.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4244630306695688, guid: 552322c8bd187452cbcffac2f03cb98c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -562,8 +567,14 @@ Prefab:
     - target: {fileID: 20578907749853858, guid: 552322c8bd187452cbcffac2f03cb98c,
         type: 2}
       propertyPath: orthographic size
-      value: 90
+      value: 107.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114104794599357224, guid: 552322c8bd187452cbcffac2f03cb98c,
+        type: 2}
+      propertyPath: Maps.Array.data[2]
+      value: 
+      objectReference: {fileID: 114692629626335366, guid: b0d2f8b759f474383b862c3413e3f386,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 552322c8bd187452cbcffac2f03cb98c, type: 2}
   m_IsPrefabParent: 0
