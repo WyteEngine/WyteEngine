@@ -26,45 +26,40 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
 	{
 		foreach (var t in Input.touches)
 		{
+			// down = true の場合，タッチ開始以外のフレームは無視
 			if (down && t.phase != TouchPhase.Began)
 				continue;
+
+			var rt = default(RectTransform);
+
 			switch (gpb)
 			{
 				case GamePadButtons.Left:
-					if (!Left) return false;
-					if (Left.Overlaps(t.position)) return true;
+					rt = left;
 					break;
 				case GamePadButtons.Right:
-					if (!Right) return false;
-					if (Right.Overlaps(t.position)) return true;
+					rt = right;
 					break;
 				case GamePadButtons.Action:
-					if (!Action) return false;
-					if (Action.Overlaps(t.position)) return true;
+					rt = action;
+					break;
+				case GamePadButtons.Slider:
+					rt = sliderHandle;
 					break;
 				case GamePadButtons.Menu:
-					if (!Menu) return false;
-					if (Menu.Overlaps(t.position)) return true;
-					break;
-				case GamePadButtons.SliderUp:
-					if (!SliderUp) return false;
-					if (SliderUp.Overlaps(t.position)) return true;
-					break;
-				case GamePadButtons.SliderDown:
-					if (!SliderDown) return false;
-					if (SliderDown.Overlaps(t.position)) return true;
-					break;
-				case GamePadButtons.SliderLeft:
-					if (!SliderLeft) return false;
-					if (SliderLeft.Overlaps(t.position)) return true;
-					break;
-				case GamePadButtons.SliderRight:
-					if (!SliderRight) return false;
-					if (SliderRight.Overlaps(t.position)) return true;
+					rt = menu;
 					break;
 				case GamePadButtons.Escape:
-					if (!Escape) return false;
-					if (Escape.Overlaps(t.position)) return true;
+					rt = escape;
+					break;
+				case GamePadButtons.ItemFrameSub1:
+					rt = itemSub1;
+					break;
+				case GamePadButtons.ItemFrameSub2:
+					rt = itemSub2;
+					break;
+				case GamePadButtons.ItemFrame:
+					rt = item;
 					break;
 				case GamePadButtons.Screen:
 					// パッドに触れていればtrue => falseならスクリーンに触れている => notをとる
@@ -73,6 +68,12 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
 				default:
 					throw new System.ArgumentException("予期しないボタンの判定を試みました。");
 			}
+
+			if (rt == null)
+				return false;
+
+			if (rt.Overlaps(t.position))
+				return true;
 		}
 		return false;
 	}
@@ -86,16 +87,17 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
 
 }
 
+
 public enum GamePadButtons
 {
 	Left,
 	Right,
 	Action,
 	Menu,
-	SliderUp,
-	SliderDown,
-	SliderLeft,
-	SliderRight,
+	ItemFrameSub1,
+	ItemFrameSub2,
+	ItemFrame,
+	Slider,
 	Escape,
 	Screen
 }
