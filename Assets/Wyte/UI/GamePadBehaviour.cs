@@ -5,8 +5,25 @@ using System;
 
 [DefaultExecutionOrder(-1000)]
 public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
+	[SerializeField]
+	RectTransform left;
+	[SerializeField]
+	RectTransform right;
+	[SerializeField]
+	RectTransform action;
+	[SerializeField]
+	RectTransform menu;
+	[SerializeField]
+	RectTransform sliderHandle;
+	[SerializeField]
+	RectTransform itemSub1;
+	[SerializeField]
+	RectTransform itemSub2;
+	[SerializeField]
+	RectTransform item;
+	[SerializeField]
+	RectTransform escape;
 
-	public RectTransform Left, Right, Action, Menu, SliderUp, SliderDown, SliderLeft, SliderRight, Escape;
 	public Text Haribote;
 
 	// Use this for initialization
