@@ -25,19 +25,57 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour>
 	[SerializeField]
 	RectTransform escape;
 
-	public Text Haribote;
+	[SerializeField]
+	Image sliderFill;
+
+	[SerializeField]
+	Sprite sliderFillDisabled;
+	[SerializeField]
+	Sprite sliderFillEnabled;
+
+	public bool ShotToggled { get; set; }
+
+	float baseYPos;
+
+	float sliderDisabledPos;
 
 	// Use this for initialization
-	void Start ()
+	void Start()
 	{
 		if (!IsSmartDevice)
 			gameObject.SetActive(false);
 		Input.multiTouchEnabled = true;
+		Input.simulateMouseWithTouches = true;
+		baseYPos = left.anchoredPosition.y;
+		sliderDisabledPos = sliderHandle.anchoredPosition.x;
 	}
 
 	// Update is called once per frame
-	void Update() {
-		Haribote.text = Application.platform.ToString();
+	void Update()
+	{
+		ButtonAnimation(left, GamePadButtons.Left);
+		ButtonAnimation(right, GamePadButtons.Right);
+		ButtonAnimation(action, GamePadButtons.Action);
+
+		// トグル
+		ShotToggled ^= Get(GamePadButtons.Slider, true);
+
+		// トグル表示
+		if (ShotToggled)
+		{
+			sliderFill.sprite = sliderFillEnabled;
+			sliderHandle.anchoredPosition = new Vector2(sliderDisabledPos + 16, sliderHandle.anchoredPosition.y);
+		}
+		else
+		{
+			sliderFill.sprite = sliderFillDisabled;
+			sliderHandle.anchoredPosition = new Vector2(sliderDisabledPos, sliderHandle.anchoredPosition.y);
+		}
+	}
+
+	public void ButtonAnimation(RectTransform r, GamePadButtons judgement)
+	{
+		r.anchoredPosition = new Vector2(r.anchoredPosition.x, baseYPos - (Get(judgement) ? 2 : 0));
 	}
 
 	public bool Get(GamePadButtons gpb, bool down = false)
