@@ -120,7 +120,6 @@
 +end
 
 #girl
-	+goto #wyteday
 	like_8bit+onflag #girl_like_8bit
 	unlike_8bit+onflag #girl_unlike_8bit
 
@@ -130,22 +129,6 @@
 	//選択肢未実装なんDA
 	+gosub #girl_8bit
 	+gosub #girl_bye
-	+pfreeze off
-+end
-
-#wyteday
-	+pfreeze on
-	:"今日は 何の日か 知ってる？"
-	:"うふふ"
-	:"Happy $c=#7f7f7f;Wyte$!c; Day!"
-	+bgmstopasync 0.2
-	+fade out, 0.2
-	+phide
-	+bgmstop
-	+bgmplay "hometown" 
-	+move "wyteday"
-	+pshow 0, 0
-	+fadeasync in, 0.2
 	+pfreeze off
 +end
 
