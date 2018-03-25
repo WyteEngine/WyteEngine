@@ -4,7 +4,8 @@ using UnityEngine.UI;
 using System;
 
 [DefaultExecutionOrder(-1000)]
-public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
+public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour>
+{
 	[SerializeField]
 	RectTransform left;
 	[SerializeField]
@@ -83,7 +84,7 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
 					if (!GetComponent<RectTransform>().Overlaps(t.position)) return true;
 					break;
 				default:
-					throw new System.ArgumentException("予期しないボタンの判定を試みました。");
+					throw new ArgumentException("予期しないボタンの判定を試みました。");
 			}
 
 			if (rt == null)
@@ -94,13 +95,6 @@ public class GamePadBehaviour : SingletonBaseBehaviour<GamePadBehaviour> {
 		}
 		return false;
 	}
-
-	/*private void OnGUI()
-	{
-		GUILayout.Label($@"{Input.touchCount}
-------
-{string.Join("\n", Input.touches.Select(t => t.position.ToString()))}");
-	}*/
 
 }
 
@@ -119,7 +113,9 @@ public enum GamePadButtons
 	Screen
 }
 
-internal static class Extension
+
+
+static class Extension
 {
 	public static bool Overlaps(this RectTransform r, Vector2 point)
 	{
