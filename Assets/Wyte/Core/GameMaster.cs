@@ -127,6 +127,14 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	}
 	#endregion
 
+	protected override void Awake()
+	{
+		base.Awake();
+
+		// Fix to 60fps
+		Application.targetFrameRate = 60;
+	}
+
 	void Start()
 	{
 		IsNotFreezed = true;
