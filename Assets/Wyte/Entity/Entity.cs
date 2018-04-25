@@ -44,7 +44,7 @@ public abstract class Entity : BaseBehaviour
 
 	public bool Dead { get; protected set; }
 	public virtual int MaxHealth => 1;
-		public int Health { get; protected set; }
+	public int Health { get; protected set; }
 
 	/// <summary>
 	/// 死んでいる途中であるかどうか取得します．
@@ -57,6 +57,20 @@ public abstract class Entity : BaseBehaviour
 	/// </summary>
 	/// <value><c>true</c> if destroy collider on dying; otherwise, <c>false</c>.</value>
 	public virtual bool DestroyColliderOnDying => true;
+	
+	private float godTime;
+
+	/// <summary>
+	/// 残り無敵時間を取得または設定します．0のときは無敵ではありません．
+	/// </summary>
+	public float GodTime
+	{
+		get { return godTime; }
+		set
+		{
+			godTime = value < 0 ? 0 : value;
+		}
+	}
 
 	protected virtual void Start()
 	{
@@ -92,6 +106,7 @@ public abstract class Entity : BaseBehaviour
 		// 死んでいれば供養
 		if (Dead)
 			Destroy(this);
+		GodTime -= Time.deltaTime;
 	}
 
 	protected void FixedUpdate()
@@ -129,7 +144,10 @@ public abstract class Entity : BaseBehaviour
 
 	public void Damage(UObject interacter, int atk)
 	{
+		if (GodTime > 0)
+			return;
 		Health -= atk;
+		GodTime = 4;
 		if (Health < 0)
 		{
 			Health = 0;
