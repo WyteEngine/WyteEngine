@@ -30,6 +30,7 @@ public abstract class BaseBehaviour : MonoBehaviour
 	protected FPSCounter Debugger => FPSCounter.Instance;
 	protected NpcManager Npc => NpcManager.Instance;
 	protected AnimationManager AnimMan => AnimationManager.Instance;
+	protected ItemManager ItemMan => ItemManager.Instance;
 
 	/// <summary>
 	/// タッチパネルをサポートしているかどうか。
