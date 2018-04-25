@@ -11,6 +11,22 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1513601514454106}
   m_IsPrefabParent: 1
+--- !u!1 &1017709839141348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4839628567508190}
+  - component: {fileID: 114001612162900770}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1048123328412460
 GameObject:
   m_ObjectHideFlags: 1
@@ -237,6 +253,7 @@ Transform:
   - {fileID: 4042293625529268}
   - {fileID: 4300855174348740}
   - {fileID: 4473679286933456}
+  - {fileID: 4839628567508190}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -318,6 +335,19 @@ Transform:
   m_Father: {fileID: 4244630306695688}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4839628567508190
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1017709839141348}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4244630306695688}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4931942233954274
 Transform:
   m_ObjectHideFlags: 1
@@ -366,7 +396,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 90
+  orthographic size: 140.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -549,6 +579,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114001612162900770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1017709839141348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5141680a419642a79150be45f14473e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114104794599357224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -563,6 +604,7 @@ MonoBehaviour:
   Maps:
   - {fileID: 114436918323598446, guid: 8ab750d67c102e34da28c56d5df940ba, type: 2}
   - {fileID: 114573873098691312, guid: 6b5f53f5ea662419fb5a7830b35c2bb4, type: 2}
+  - {fileID: 114692629626335366, guid: b0d2f8b759f474383b862c3413e3f386, type: 2}
 --- !u!114 &114255745403849868
 MonoBehaviour:
   m_ObjectHideFlags: 1
