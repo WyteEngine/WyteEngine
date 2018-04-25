@@ -81,24 +81,32 @@ public class NpcBehaviour : LivableEntity, IEventable {
 		CheckCollision();
 	}
 
-	protected void CheckCollision()
+	protected virtual void CheckCollision()
 	{
-		if (playerCollider == null)
-			playerCollider = Wyte.CurrentPlayer?.GetComponent<BoxCollider2D>();
-		if (playerCollider == null)
-			return;
-		if (!Wyte.CanMove)
-			return;
-		
-		var intersects = collider2D.bounds.Intersects(playerCollider.bounds);
+		var intersects = IsCollidedWithPlayer();
+
 		if (intersects)
 		{
 			if ((EventKeyPushed && eventWhen == EventCondition.Talked) || !prevIntersects && eventWhen == EventCondition.Touched)
 				Novel.Run(label);
-			
 		}
 		prevIntersects = intersects;
+	}
 
+	protected virtual bool IsCollidedWithPlayer()
+	{
+		if (playerCollider == null)
+			playerCollider = Wyte.CurrentPlayer?.GetComponent<BoxCollider2D>();
+		// プレイヤーが存在しなければ常にfalse
+		if (playerCollider == null)
+			return false;
+
+		// 動けないのに死んだら理不尽だ
+		if (!Wyte.CanMove)
+			return false;
+		
+		return collider2D.bounds.Intersects(playerCollider.bounds);
+		
 	}
 
 	protected override IEnumerator OnDeath(Object killer)
