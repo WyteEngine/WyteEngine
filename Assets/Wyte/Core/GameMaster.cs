@@ -4,6 +4,7 @@ using Novel.Exceptions;
 using System;
 using UnityEngine.SceneManagement;
 using UObject = UnityEngine.Object;
+using UnityEngine.Serialization;
 
 public class GameMaster : SingletonBaseBehaviour<GameMaster>
 {
@@ -13,13 +14,16 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	/// </summary>
 	[Tooltip("ゲーム内ではじめに実行するイベントのラベル名．")]
 	[SerializeField]
-	public string BootstrapLabel;
+	[FormerlySerializedAs("BootstrapLabel")]
+	string bootstrapLabel;
+
+	public string BootstrapLabel => bootstrapLabel;
 
 	/// <summary>
 	/// Gets or sets the name of the player.
 	/// </summary>
 	/// <value>The name of the player.</value>
-	[System.Obsolete("Use Player.Name Instead.")]
+	[Obsolete("Use Player.Name Instead.")]
 	public string PlayerName => Player?.Name ?? "Null";
 
 	/// <summary>
@@ -30,7 +34,6 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 
 	[SerializeField]
 	GameObject playerPrefab;
-
 
 	public PlayerController CurrentPlayer => playerTemp == null ? null : playerTemp.GetComponent<PlayerController>();
 
@@ -227,6 +230,8 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		Novel.Run(BootstrapLabel);
 	}
 
+
+
 	//todo 必要ならescapeもキーバインドつける
 	bool Escape => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Escape, true) : Input.GetKeyDown(KeyCode.Escape);
 
@@ -247,29 +252,4 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	public delegate void SaveEventHandler(GameMaster wyte);
 	public event SaveEventHandler GameSave;
 	public event SaveEventHandler GameReset;
-}
-
-public class PlayerData
-{
-	public string Name { get; set; }
-	public int Life { get; set; }
-	public int MaxLife { get; set; }
-
-	public PlayerData(string name, int life, int mlife)
-	{
-		Name = name;
-		Life = life;
-		MaxLife = mlife;
-	}
-
-	public PlayerData(string name, int maxLife) : this(name, maxLife, maxLife) { }
-}
-
-public class WyteEventArgs : EventArgs
-{
-	/// <summary>
-	/// このイベントをキャンセルするかどうか取得します．
-	/// </summary>
-	/// <value><c>true</c> if cancel; otherwise, <c>false</c>.</value>
-	public bool Cancel { get; set; }
 }
