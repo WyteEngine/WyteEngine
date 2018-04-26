@@ -2,16 +2,16 @@ using System;
 
 public class ActionNode : AINodeBase
 {
-	private readonly Action action;
+	private readonly Action<Entity> action;
 
-	public ActionNode(Action act)
+	public ActionNode(Action<Entity> act)
 	{
 		action = act;
 	}
 
-	public override bool Run()
+	public override bool Run(Entity context)
 	{
-		action();
+		action(context);
 		return true;
 	}
 }

@@ -2,12 +2,12 @@ public class SequenceNode : AINodeBase
 {
 	private readonly AINodeBase[] nodes;
 
-	public override bool Run()
+	public override bool Run(Entity context)
 	{
 		var flag = true;
 		foreach (var node in nodes)
 		{
-			if (!node.Run())
+			if (!node.Run(context))
 			{
 				flag = false;
 				break;

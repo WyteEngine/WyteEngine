@@ -5,7 +5,7 @@ public class IfNode : AINodeBase
 	{
 		condition = c;
 	}
-	public override bool Run() => condition();
+	public override bool Run(Entity context) => condition(context);
 }
 
-public delegate bool Condition();
+public delegate bool Condition(Entity context);

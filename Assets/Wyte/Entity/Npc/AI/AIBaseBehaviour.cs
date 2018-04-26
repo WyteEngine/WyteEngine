@@ -2,7 +2,14 @@ using UnityEngine;
 
 public abstract class AIBaseBehaviour : BaseBehaviour
 {
-	public virtual AINodeBase OnUpdate { get; }
+	public AINodeBase OnUpdate { get; protected set; }
 	
-	public virtual AINodeBase OnCollidedWithPlayer { get; }
+	public AINodeBase OnCollidedWithPlayer { get; protected set; }
+
+	protected virtual void Awake()
+	{
+		OnInitialize();
+	}
+
+	protected virtual void OnInitialize() { }
 }
