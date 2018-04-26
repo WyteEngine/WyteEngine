@@ -94,7 +94,7 @@ public class NpcBehaviour : LivableEntity, IEventable {
 
 		if (intersects)
 		{
-			if ((EventKeyPushed && eventWhen == EventCondition.Talked) || !prevIntersects && eventWhen == EventCondition.Touched)
+			if (!string.IsNullOrWhiteSpace(label) && (EventKeyPushed && eventWhen == EventCondition.Talked) || !prevIntersects && eventWhen == EventCondition.Touched)
 				Novel.Run(label);
 		}
 		prevIntersects = intersects;
