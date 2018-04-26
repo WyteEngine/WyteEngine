@@ -54,6 +54,8 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	protected new BoxCollider2D collider2D;
 	protected BoxCollider2D playerCollider;
 
+	protected AIBaseBehaviour[] OwnAIs;
+
 	/// <summary>
 	/// 前フレームでのプレイヤー衝突判定．
 	/// </summary>
@@ -63,6 +65,7 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	{
 		base.Start();
 		collider2D = GetComponent<BoxCollider2D>();
+		OwnAIs = GetComponents<AIBaseBehaviour>();
 	}
 
 	protected override void OnUpdate()
@@ -77,6 +80,10 @@ public class NpcBehaviour : LivableEntity, IEventable {
 			collider2D.size = sp.bounds.size;
 		}
 
+		foreach (var ai in OwnAIs)
+		{
+			ai.OnUpdate.Run();
+		}
 
 		CheckCollision();
 	}
@@ -91,6 +98,14 @@ public class NpcBehaviour : LivableEntity, IEventable {
 				Novel.Run(label);
 		}
 		prevIntersects = intersects;
+		
+		if (IsCollidedWithPlayer())
+		{
+			foreach (var ai in OwnAIs)
+			{
+				ai.OnCollidedWithPlayer.Run();
+			}
+		}
 	}
 
 	protected virtual bool IsCollidedWithPlayer()
