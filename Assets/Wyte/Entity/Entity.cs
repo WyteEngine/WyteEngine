@@ -148,7 +148,7 @@ public abstract class Entity : BaseBehaviour
 			return;
 		Health -= atk;
 		GodTime = 4;
-		if (Health < 0)
+		if (Health <= 0)
 		{
 			Health = 0;
 			// 殺人容疑
