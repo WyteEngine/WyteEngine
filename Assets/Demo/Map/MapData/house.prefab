@@ -950,23 +950,17 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  charaScale: 1
-  charaHead: 1
-  charaFoot: -1
-  charaWidth: 1
-  charaWidth2: 1
-  charaGravityScale: 1
-  charaJumpScale: 10
-  charaCeilingBouness: -1
   label: '#house_bookshelf'
   eventWhen: 0
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
+  killedAnimId: 
+  steppedAnimId: 
   landSfxId: 
   jumpSfxId: 
   deathSfxId: 
-  gravityScale: 0
+  gravityScaleMultiplier: 0
 --- !u!114 &114108312003593856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -985,23 +979,17 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  charaScale: 1
-  charaHead: 1
-  charaFoot: -1
-  charaWidth: 1
-  charaWidth2: 1
-  charaGravityScale: 1
-  charaJumpScale: 10
-  charaCeilingBouness: -1
   label: '#house_exit'
   eventWhen: 2
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
+  killedAnimId: 
+  steppedAnimId: 
   landSfxId: 
   jumpSfxId: 
   deathSfxId: 
-  gravityScale: 0
+  gravityScaleMultiplier: 0
 --- !u!114 &114228083749227682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1020,23 +1008,17 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  charaScale: 1
-  charaHead: 1
-  charaFoot: -1
-  charaWidth: 1
-  charaWidth2: 1
-  charaGravityScale: 1
-  charaJumpScale: 10
-  charaCeilingBouness: -1
   label: '#house_pc'
   eventWhen: 0
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
+  killedAnimId: 
+  steppedAnimId: 
   landSfxId: 
   jumpSfxId: 
   deathSfxId: 
-  gravityScale: 0
+  gravityScaleMultiplier: 0
 --- !u!114 &114237137131682612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1055,23 +1037,17 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  charaScale: 1
-  charaHead: 1
-  charaFoot: -1
-  charaWidth: 1
-  charaWidth2: 1
-  charaGravityScale: 16
-  charaJumpScale: 128
-  charaCeilingBouness: -1
   label: cat
   eventWhen: 0
   stayAnimId: entity.npc.cat.talk
   jumpAnimId: 
   walkAnimId: 
+  killedAnimId: 
+  steppedAnimId: 
   landSfxId: 
   jumpSfxId: 
   deathSfxId: 
-  gravityScale: 0
+  gravityScaleMultiplier: 0
 --- !u!114 &114415544651589440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1090,23 +1066,17 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  charaScale: 1
-  charaHead: 1
-  charaFoot: -1
-  charaWidth: 1
-  charaWidth2: 1
-  charaGravityScale: 1
-  charaJumpScale: 10
-  charaCeilingBouness: -1
   label: '#house_clock'
   eventWhen: 0
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
+  killedAnimId: 
+  steppedAnimId: 
   landSfxId: 
   jumpSfxId: 
   deathSfxId: 
-  gravityScale: 0
+  gravityScaleMultiplier: 0
 --- !u!114 &114496441547556436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1125,23 +1095,17 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  charaScale: 1
-  charaHead: 1
-  charaFoot: -1
-  charaWidth: 1
-  charaWidth2: 1
-  charaGravityScale: 1
-  charaJumpScale: 10
-  charaCeilingBouness: -1
   label: '#house_plant'
   eventWhen: 0
   stayAnimId: 
   jumpAnimId: 
   walkAnimId: 
+  killedAnimId: 
+  steppedAnimId: 
   landSfxId: 
   jumpSfxId: 
   deathSfxId: 
-  gravityScale: 0
+  gravityScaleMultiplier: 0
 --- !u!114 &114573873098691312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1180,23 +1144,17 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  charaScale: 1
-  charaHead: 1
-  charaFoot: -1
-  charaWidth: 1
-  charaWidth2: 1
-  charaGravityScale: 16
-  charaJumpScale: 128
-  charaCeilingBouness: -1
   label: rip_cat
   eventWhen: 0
   stayAnimId: entity.npc.gravestone
   jumpAnimId: 
   walkAnimId: 
+  killedAnimId: 
+  steppedAnimId: 
   landSfxId: 
   jumpSfxId: 
   deathSfxId: 
-  gravityScale: 0
+  gravityScaleMultiplier: 0
 --- !u!212 &212004542642994176
 SpriteRenderer:
   m_ObjectHideFlags: 1

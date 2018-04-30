@@ -396,7 +396,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 140.5
+  orthographic size: 90
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Maps:
-  - {fileID: 114436918323598446, guid: 8ab750d67c102e34da28c56d5df940ba, type: 2}
+  - {fileID: 114914426379626872, guid: 8ab750d67c102e34da28c56d5df940ba, type: 2}
   - {fileID: 114573873098691312, guid: 6b5f53f5ea662419fb5a7830b35c2bb4, type: 2}
   - {fileID: 114692629626335366, guid: b0d2f8b759f474383b862c3413e3f386, type: 2}
 --- !u!114 &114255745403849868
@@ -636,6 +636,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 3f4e4b80147a18341bf01b4d0126cad8, type: 3}
   - id: entity.npc.saying
     clip: {fileID: 8300000, guid: 9367d857475824cadbcabf1d541bdc89, type: 3}
+  - id: entity.player.step
+    clip: {fileID: 8300000, guid: 8dca816fffa7c4f96859fe2a9f1c4718, type: 3}
 --- !u!114 &114454142614170586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -761,6 +763,12 @@ MonoBehaviour:
     Value: {fileID: 11400000, guid: c58169724871f4785bd58686df552c34, type: 2}
   - Key: entity.npc.creator.stay
     Value: {fileID: 11400000, guid: b601e9e7c2ca540048febd409fb0bacd, type: 2}
+  - Key: entity.npc.bunyo.walk
+    Value: {fileID: 11400000, guid: e25c2b83dd8f24429b5604652ea418b2, type: 2}
+  - Key: entity.npc.bunyo.dead
+    Value: {fileID: 11400000, guid: 33ea37f88b1e8444db98c155ed1dc468, type: 2}
+  - Key: entity.npc.bunyo.crushed
+    Value: {fileID: 11400000, guid: ef670d975625d4213a46f8f2e1a33e19, type: 2}
 --- !u!114 &114977966309422568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -772,7 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c79f6f2f24add5438c91bcf60fdf2ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BootstrapLabel: boot
+  bootstrapLabel: boot
   playerPrefab: {fileID: 1168604540035812, guid: c4d66b37ecaf53c44bf9351039088a9c,
     type: 2}
   requestDebugMode: 1

@@ -109,11 +109,10 @@
 	creator_warn+onaflag #creator_warn_skip
 	+pfreeze on
 	:"おーい！"
-	creator+spofs 544, 80
-	creator+spwalk 208, 1.5
-	:"そこは　危ないよ。"
+	creator+spofs 616, 48
+	creator+spwalk 138, 2
 #creator_warn_2
-	:"下は　奈落さ。　落ちたら　ひとたまりも　ないぜ。"
+	:"モンスターが　大量発生しているんだ。危ないから　近づかないほうがいい。"
 	+aflag on, "creator_warn"
 	+pfreeze off
 #creator_warn_skip
