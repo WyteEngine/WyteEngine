@@ -52,7 +52,8 @@ public class FPSCounter : SingletonBaseBehaviour<FPSCounter>
 		}
 		else
 		{
-			output = FpsString;
+			// Non-debug-mode fps display has no longer supported
+			output = "";
 		}
 		GetComponent<Text>().text = output;
 
