@@ -35,6 +35,12 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	[SerializeField]
 	GameObject playerPrefab;
 
+	[SerializeField]
+	GameObject itemBar;
+
+	[SerializeField]
+	GameObject gamePad;
+
 	public PlayerController CurrentPlayer => playerTemp == null ? null : playerTemp.GetComponent<PlayerController>();
 
 	GameObject playerTemp;
@@ -55,6 +61,15 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	private bool requestDebugMode;
 
 	public bool IsDebugMode { get; private set; }
+
+	[SerializeField]
+	private bool guiEnabled = true;
+
+	public bool GuiEnabled
+	{
+		get { return guiEnabled; }
+		set { guiEnabled = value; }
+	}
 
 	/// <summary>
 	/// プレイヤーが移動可能かどうか。
@@ -128,6 +143,26 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		return MessageContoller.Instance.Say("", "セーブしました。");
 
 	}
+
+	public IEnumerator Gui(string t, params string[] a)
+	{
+		NArgsAssert(a.Length == 1);
+		switch (a[0].ToLower())
+		{
+			case "on":
+				gamePad.SetActive(true);
+				itemBar.SetActive(true);
+				break;
+			case "off":
+				gamePad.SetActive(false);
+				itemBar.SetActive(false);
+				break;
+			default:
+				throw new NRuntimeException("引数にはonまたはoffを指定してください．");
+		}
+		yield break;
+	}
+
 	#endregion
 
 	protected override void Awake()
@@ -139,6 +174,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		// Fix to 60fps
 		Application.targetFrameRate = 60;
 #endif
+		StartCoroutine(Gui(null, GuiEnabled ? "on" : "off"));
 	}
 
 	void Start()
@@ -197,11 +233,14 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		}
 
 		// Clossplatform UI Visible
-		if (CanMove)
-			MessageContoller.Instance.ShowBox();
-		else
-			MessageContoller.Instance.HideBox();
-
+		if (GuiEnabled)
+		{
+			if (CanMove)
+				MessageContoller.Instance.ShowBox();
+			else
+				MessageContoller.Instance.HideBox();
+		}
+		
 		// Initialize
 		if (Escape && !escaping)
 		{

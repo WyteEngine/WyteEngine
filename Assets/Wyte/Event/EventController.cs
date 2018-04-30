@@ -72,6 +72,9 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			// Say message
 			.Register("say", MessageContoller.Instance.Say)
 
+			// Set GUI　visiblity
+			.Register("gui", Wyte.Gui)
+
 			// Freeze All
 			.Register("freeze", Wyte.Freeze)
 			// Freeze the Player
