@@ -12,6 +12,9 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 	[SerializeField]
 	RectTransform host;
 
+	[SerializeField]
+	Font[] fonts;
+
 	/// <summary>
 	/// ホストが存在しなければ例外をスローします．
 	/// </summary>
@@ -25,7 +28,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 
 	}
 
-	public void Create(string id, string text, string locationMode = "middle_center", Vector2 point = default(Vector2), TextAnchor textAlignment = TextAnchor.MiddleCenter, Color color = default(Color))
+	public void Create(string id, string text, string locationMode = "middle_center", Vector2 point = default(Vector2), TextAnchor textAlignment = TextAnchor.MiddleCenter, int fontId = 0, int size = 13, Color color = default(Color))
 	{
 		Assert();
 		// 既にあれば上書きする
@@ -41,7 +44,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		map[id].Rect.SetParent(host);
 
 		Move(id, point, locationMode);
-		Modify(id, text, textAlignment, color);
+		Modify(id, text, textAlignment, fontId, size, color);
 
 	}
 
@@ -61,7 +64,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		}
 	}
 
-	public void Modify(string id, string text, TextAnchor? textAlignment = null, Color? color = null)
+	public void Modify(string id, string text, TextAnchor? textAlignment = null, int? fontId = null, int? size = null, Color? color = null)
 	{
 		Assert(id);
 		
@@ -71,6 +74,8 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 
 		obj.alignment = textAlignment.HasValue ? textAlignment.Value : obj.alignment;
 		obj.color = color.HasValue ? color.Value : obj.color;
+		obj.font = fontId.HasValue ? fonts[fontId.Value] : obj.font;
+		obj.fontSize = size.HasValue ? size.Value : obj.fontSize;
 	}
 
 	public void Delete(string id)
@@ -106,6 +111,8 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		var mode = default(string);
 		var point = default(Vector2);
 		var align = TextAnchor.MiddleCenter;
+		var fontId = 0;
+		var size = 0;
 		var color = Color.black;
 
 		// テキスト
@@ -131,11 +138,21 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		}
 		if (args.Length > 5)
 		{
+			// フォントID
+			NArgsAssert(int.TryParse(args[5], out fontId) && fontId < fonts.Length);
+		}
+		if (args.Length > 6)
+		{
+			// サイズ
+			NArgsAssert(int.TryParse(args[6], out size));
+		}
+		if (args.Length > 7)
+		{
 			// 色
 			NArgsAssert(ColorUtility.TryParseHtmlString(args[5], out color));
 		}
 
-		Create(id, text, mode, point, align, color);
+		Create(id, text, mode, point, align, fontId, size, color);
 
 		yield break;
 	}
@@ -177,23 +194,39 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		NArgsAssert(args.Length >= 1);
 		var mode = default(TextAnchor?);
 		var color = default(Color?);
+		var fontId = default(int?);
+		var size = default(int?);
 		// テキスト
 		var text = args[0];
 		
 		// 座標モード
-		if (args.Length >= 2)
+		if (args.Length > 1)
 		{
 			mode = TextAlignmentStringToEnum(args[1]);
 		}
 
-		if (args.Length >= 3)
+		if (args.Length > 2)
+		{
+			int i;
+			NArgsAssert(int.TryParse(args[2], out i));
+			fontId = i;
+		}
+
+		if (args.Length > 3)
+		{
+			int i;
+			NArgsAssert(int.TryParse(args[3], out i));
+			size = i;
+		}
+
+		if (args.Length > 4)
 		{
 			Color col;
-			NArgsAssert(ColorUtility.TryParseHtmlString("", out col));
+			NArgsAssert(ColorUtility.TryParseHtmlString(args[4], out col));
 			color = col;
 		}
 
-		Modify(id, text, mode, color);
+		Modify(id, text, mode, fontId, size, color);
 		yield break;
 	}
 
