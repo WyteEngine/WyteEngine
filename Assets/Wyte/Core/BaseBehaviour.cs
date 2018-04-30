@@ -31,6 +31,7 @@ public abstract class BaseBehaviour : MonoBehaviour
 	protected NpcManager Npc => NpcManager.Instance;
 	protected AnimationManager AnimMan => AnimationManager.Instance;
 	protected ItemManager ItemMan => ItemManager.Instance;
+	protected TextManager TextMan => TextManager.Instance;
 
 	/// <summary>
 	/// タッチパネルをサポートしているかどうか。
