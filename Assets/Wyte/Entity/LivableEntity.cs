@@ -20,38 +20,34 @@ public abstract class LivableEntity : SpriteEntity
 
 	public bool IsJumping { get; protected set; }
 
+	public Vector2 Velocity { get; set; }
+	
 	protected Rigidbody2D rigid;
 
 	[SerializeField]
 	protected LayerMask groundLayer;
 
-	[Header("CHARACTER_STATUS")]
-	[SerializeField]
 	protected float charaScale = 1.0f;
-	[SerializeField]
 	protected float charaHead = 1.0f;
-	[SerializeField]
 	protected float charaFoot = -1.0f;
-	[SerializeField]
 	protected float charaWidth = 1.0f;
-	[SerializeField]
 	protected float charaWidth2 = 1.0f;
-	[SerializeField]
-	protected float charaGravityScale = 16.0f;
-	[SerializeField]
+	protected float charaGravityScale = 148.0f;
 	protected float charaJumpScale = 128.0f;
-	[SerializeField]
 	protected float charaCeilingBouness = -1.0f;
 
 	protected bool prevIsGrounded, prevIsCeiling;
-
+	
+	protected new BoxCollider2D collider2D;
+	
 	protected override void Start()
 	{
 		base.Start();
 
 		rigid = gameObject.GetComponent<Rigidbody2D>();
+		collider2D = GetComponent<BoxCollider2D>();
 		rigid.freezeRotation = true;
-		rigid.gravityScale = GravityScale;
+		rigid.gravityScale = 0;
 	}
 
 	protected override void OnUpdate()
@@ -59,17 +55,19 @@ public abstract class LivableEntity : SpriteEntity
 		base.OnUpdate();
 		Animate();
 
+		var sp = CurrentAnim?.Sprite;
+		if (sp != null)
+		{
+			charaWidth = sp.bounds.size.x * 0.625f;
+			charaWidth2 = sp.bounds.size.x * 1.125f;
+			charaHead = (sp.bounds.size.y / 2) * 1.2857143f;
+			charaFoot = (sp.bounds.size.y / 2) * -1.25f;
+			collider2D.size = sp.bounds.size;
+		}
+
 		// 落下死
 		if (Map.CurrentMap != null && transform.position.y < Map.CurrentMapSize.yMin)
 			Kill(Map.CurrentMap);
-
-		if (Dying)
-		{
-			rigid.gravityScale = 0;
-			rigid.velocity.Set(rigid.velocity.x, 0);
-		}
-		else
-			rigid.gravityScale = GravityScale;
 
 		prevIsCeiling = IsCeiling();
 		prevIsGrounded = IsGrounded();
@@ -78,6 +76,22 @@ public abstract class LivableEntity : SpriteEntity
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
+		
+		if (Dying)
+		{
+			Velocity.Set(0, 0);
+		}
+		
+		if (Velocity.y < 0 && IsGrounded())
+		{
+			Velocity = new Vector2(Velocity.x, 0);
+		}
+		if (!IsGrounded())
+		{
+			Velocity -= new Vector2(0, GravityScale * Time.fixedDeltaTime);
+		}
+		// todo あとでもっとマシに
+		rigid.velocity = Velocity;
 	}
 
 	/// <summary>
@@ -87,7 +101,7 @@ public abstract class LivableEntity : SpriteEntity
 	{
 		if (IsJumping)
 			ChangeSprite(JumpAnimationId);
-		else if ((int)Mathf.Round(rigid.velocity.x) == 0)
+		else if ((int)Mathf.Round(Velocity.x) == 0)
 			ChangeSprite(StayAnimationId);
 		else
 			ChangeSprite(WalkAnimationId);
@@ -95,17 +109,17 @@ public abstract class LivableEntity : SpriteEntity
 
 	public virtual void Move(float rightSpeed, bool hold = true)
 	{
-		rigid.velocity = new Vector2(rightSpeed, rigid.velocity.y);
+		Velocity = new Vector2(rightSpeed, Velocity.y);
 		direction = (int)rightSpeed < 0 ? SpriteDirection.Left : (int)rightSpeed > 0 ? SpriteDirection.Right : direction;
 		// 着地音
 		if ((IsCeiling() && !prevIsCeiling) || (IsGrounded() && !prevIsGrounded))
 			Sfx.Play(LandSfxId);
 
 		if (IsJumping && hold)
-			rigid.velocity -= new Vector2(0, charaGravityScale * .4f);
+			Velocity -= new Vector2(0, charaGravityScale * 0.05f);
 
 		if (IsCeiling())
-			rigid.velocity = new Vector2(rigid.velocity.x, charaCeilingBouness);
+			Velocity = new Vector2(Velocity.x, charaCeilingBouness);
 	}
 
 	/// <summary>
@@ -115,21 +129,12 @@ public abstract class LivableEntity : SpriteEntity
 	{
 		if (IsGrounded())
 		{
-			var nowVec = rigid.velocity;
-			rigid.velocity = new Vector3(nowVec.x, charaJumpScale);
+			var nowVec = Velocity;
+			Velocity = new Vector3(nowVec.x, charaJumpScale);
 			IsJumping = true;
 			Sfx.Play(JumpSfxId);
 		}
 
-		/*else if (CanKickLeft())
-		{
-			rigid
-		}
-		else if (CanKickRight())
-		{
-			rigid.AddForce((Vector2.left + Vector2.up) * 3000);
-		}*/
-		//TODO: プレイヤーの左右移動に加速度を取り入れ、外部からの圧力を無視しないようにする
 	}
 
 	/// <summary>
