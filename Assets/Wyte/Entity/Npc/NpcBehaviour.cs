@@ -46,6 +46,12 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	[SerializeField]
 	float gravityScaleMultiplier = 1;
 
+	public float GravityScaleMultiplier
+	{
+		get { return gravityScaleMultiplier; }
+		set { gravityScaleMultiplier = value; }
+	}
+
 	public override string WalkAnimationId => walkAnimId;
 	public override string StayAnimationId => stayAnimId;
 	public override string JumpAnimationId => jumpAnimId;
