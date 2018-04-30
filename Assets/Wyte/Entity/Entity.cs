@@ -105,7 +105,7 @@ public abstract class Entity : BaseBehaviour
 			OnUpdate();
 		// 死んでいれば供養
 		if (Dead)
-			Destroy(this);
+			Destroy(this.gameObject);
 		GodTime -= Time.deltaTime;
 	}
 
