@@ -127,6 +127,15 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		SpSet(spTag, id, pos);
 		yield break;
 	}
+
+	// +spsetf <tag>, <charId>[, <x>, <y>]
+	public IEnumerator SpSetF(string _, string[] args)
+	{
+		yield return SpSet(_, args);
+		this[args[0]].GravityScaleMultiplier = 0;
+	}
+
+
 	// <tag>+spofs <x>, <y>
 	// +spofs <tag>, <x>, <y>
 	public IEnumerator SpOfs(string tag, string[] args)

@@ -84,6 +84,8 @@ public class EventController : SingletonBaseBehaviour<EventController>
 
 			// Set a NPC
 			.Register("spset", Npc.SpSet)
+			// Set a non-gravity object (simple sprite)
+			.Register("spsetf", Npc.SpSetF)
 			// Move the NPC to specified location
 			.Register("spofs", Npc.SpOfs)
 			// Change the Wyte Animation of the NPC
