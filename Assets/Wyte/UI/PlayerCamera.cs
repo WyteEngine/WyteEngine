@@ -16,16 +16,13 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 
 	public Vector3 FreePosition { get; private set; }
 
-	private RectTransform windowRect;
-
+	
 	private Camera theCamera;
 
 	private Vector3 camMin, camMax;
 
 	void Start()
 	{
-		if (windowRect == null)
-			windowRect = GameObject.FindGameObjectWithTag("UIWindow").GetComponent<RectTransform>();
 		Wyte.GameReset += (wyte) =>
 		{
 			offset = Vector3.zero;
