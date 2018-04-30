@@ -174,7 +174,6 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		// Fix to 60fps
 		Application.targetFrameRate = 60;
 #endif
-		StartCoroutine(Gui(null, GuiEnabled ? "on" : "off"));
 	}
 
 	void Start()
@@ -240,7 +239,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 			else
 				MessageContoller.Instance.HideBox();
 		}
-		
+
 		// Initialize
 		if (Escape && !escaping)
 		{
@@ -268,7 +267,9 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 			yield return MessageContoller.Instance?.Say(null, "デバッグモードを　起動します。\n注意! これは　開発者向けの　機能です。");
 			yield return Freeze(null, "off");
 		}
-	
+		
+		StartCoroutine(Gui(null, GuiEnabled ? "on" : "off"));
+
 		Novel.Run(BootstrapLabel);
 	}
 

@@ -35,13 +35,12 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		if (map.ContainsKey(id))
 			Delete(id);
 		
-		map[id] = new TextObject(new GameObject(id, typeof(Text), typeof(RectTransform)));
-		
+		map[id] = new TextObject(new GameObject(id, typeof(Text)));
 		// テキストのサイズを自動調整するコンポーネント
 		var fitter = map[id].Object.AddComponent<ContentSizeFitter>();
 		fitter.horizontalFit = fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-		map[id].Rect.SetParent(host);
+		map[id].Rect.SetParent(host, false);
 
 		Move(id, point, locationMode);
 		Modify(id, text, textAlignment, fontId, size, color);
@@ -70,7 +69,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		
 		var obj = map[id].Text;
 
-		obj.text = text;
+		obj.text = TextComponent.Parse(text);
 
 		obj.alignment = textAlignment.HasValue ? textAlignment.Value : obj.alignment;
 		obj.color = color.HasValue ? color.Value : obj.color;
@@ -113,7 +112,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		var align = TextAnchor.MiddleCenter;
 		var fontId = 0;
 		var size = 0;
-		var color = Color.black;
+		var color = Color.white;
 
 		// テキスト
 		var text = args[0];
@@ -149,7 +148,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		if (args.Length > 7)
 		{
 			// 色
-			NArgsAssert(ColorUtility.TryParseHtmlString(args[5], out color));
+			NArgsAssert(ColorUtility.TryParseHtmlString(args[7], out color));
 		}
 
 		Create(id, text, mode, point, align, fontId, size, color);
@@ -160,6 +159,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 	public IEnumerator TxtOfs(string id, params string[] args)
 	{
 		id = GetTag(id, ref args);
+		Debug.Log("ハゲて死ね");
 		Assert(id);
 		NArgsAssert(args.Length >= 2);
 		string mode = null;
@@ -180,6 +180,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 			// 線形補間時間
 			NArgsAssert(float.TryParse(args[3], out lerpTime));
 		}
+
 
 		// 非同期で動かす
 		StartCoroutine(TxtMove(lerpTime, id, point, mode));
@@ -249,7 +250,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 				yield return null;
 			}
 		}
-
+		
 		Move(id, target, mode);
 	}
 
@@ -261,7 +262,7 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		if (string.IsNullOrEmpty(tag))
 		{
 			tag = args[0];
-			args = args.Take(1).ToArray();
+			args = args.Skip(1).ToArray();
 		}
 		return tag;
 	}
