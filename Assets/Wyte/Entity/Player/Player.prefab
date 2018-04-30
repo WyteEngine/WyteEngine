@@ -54,9 +54,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: f09b5342ba962c54d99da9c5ceefde16, type: 2}
   m_Interpolate: 1
@@ -106,14 +106,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  charaScale: 1
-  charaHead: 9
-  charaFoot: -10
-  charaWidth: 10
-  charaWidth2: 18
-  charaGravityScale: 16
-  charaJumpScale: 128
-  charaCeilingBouness: -1
   jumpAnimationId: entity.player.jump
   stayAnimationId: entity.player.stay
   walkAnimationId: entity.player.walk

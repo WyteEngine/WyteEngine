@@ -29,6 +29,10 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	string jumpAnimId;
 	[SerializeField]
 	string walkAnimId;
+	[SerializeField]
+	string killedAnimId;
+	[SerializeField]
+	string steppedAnimId;
 
 	[Header("Sound FX Id")]
 	[SerializeField]
@@ -40,7 +44,7 @@ public class NpcBehaviour : LivableEntity, IEventable {
 
 	[Header("Entity Setting")]
 	[SerializeField]
-	float gravityScale = 16;
+	float gravityScaleMultiplier = 1;
 
 	public override string WalkAnimationId => walkAnimId;
 	public override string StayAnimationId => stayAnimId;
@@ -49,9 +53,8 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	public override string JumpSfxId => jumpSfxId;
 	public override string DeathSfxId => deathSfxId;
 
-	public override float GravityScale => gravityScale;
+	public override float GravityScale => charaGravityScale * gravityScaleMultiplier;
 
-	protected new BoxCollider2D collider2D;
 	protected BoxCollider2D playerCollider;
 
 	protected AIBaseBehaviour[] OwnAIs;
@@ -64,25 +67,16 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	protected override void Start()
 	{
 		base.Start();
-		collider2D = GetComponent<BoxCollider2D>();
 		OwnAIs = GetComponents<AIBaseBehaviour>();
 	}
 
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
-		var sp = CurrentAnim?.Sprite;
-		if (sp != null)
-		{
-			charaWidth = charaWidth2 = sp.bounds.size.x;
-			charaHead = sp.bounds.max.y;
-			charaFoot = sp.bounds.min.y;
-			collider2D.size = sp.bounds.size;
-		}
-
+		
 		foreach (var ai in OwnAIs)
 		{
-			ai.OnUpdate.Run();
+			ai.OnUpdate?.Run(this);
 		}
 
 		CheckCollision();
@@ -99,11 +93,11 @@ public class NpcBehaviour : LivableEntity, IEventable {
 		}
 		prevIntersects = intersects;
 		
-		if (IsCollidedWithPlayer())
+		if (intersects)
 		{
 			foreach (var ai in OwnAIs)
 			{
-				ai.OnCollidedWithPlayer.Run();
+				ai.OnCollidedWithPlayer?.Run(this);
 			}
 		}
 	}
@@ -128,7 +122,16 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	{
 		if (!string.IsNullOrWhiteSpace(label) && EventWhen == EventCondition.Dead)
 			Novel.Run(label);
-		
+		else
+		{
+			if (killer == Wyte.CurrentPlayer)
+			{
+				// 踏まれた
+				ChangeSprite(steppedAnimId);
+				rigid.velocity = Velocity = Vector2.zero;
+				yield return new WaitForSeconds(3);
+			}
+		}
 		yield return new WaitWhile(() => Novel.Runtime.IsRunning);
 	}
 

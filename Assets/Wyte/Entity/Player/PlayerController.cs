@@ -46,21 +46,21 @@ public class PlayerController : LivableEntity
 	void Debugger_DebugRendering(System.Text.StringBuilder d)
 	{
 
-		d.Append($"pp{(int)transform.position.x},{(int)transform.position.y} ")
-		 .Append($"pv{(int)rigid.velocity.x},{(int)rigid.velocity.y} ")
-		 .Append($"p{(Dying ? "DEAD" : "ALIVE")} ");
+		d.AppendLine($"pp{(int)transform.position.x},{(int)transform.position.y}")
+		 .AppendLine($"pv{(int)rigid.velocity.x},{(int)rigid.velocity.y} ")
+		 .AppendLine($"p{(Dying ? "DEAD" : "ALIVE")} ");
 	}
 
 	protected override void OnFixedUpdate()
 	{
-		base.OnFixedUpdate();
-
 		// しないと CanMove でないときにｽｨｰってなる
-		rigid.velocity = new Vector2(0, rigid.velocity.y);
+		Velocity = new Vector2(0, Velocity.y);
 
 		// 移動可能時に処理を行う
 		if (Wyte.CanMove)
 			InputKey();
+	
+		base.OnFixedUpdate();
 	}
 
 	bool GetJumpKeyPushed(bool down = false) =>
@@ -75,7 +75,7 @@ public class PlayerController : LivableEntity
 	/// </summary>
 	void InputKey()
 	{
-		IsJumping &= (!IsGrounded() || (int)rigid.velocity.y != 0);
+		IsJumping &= (!IsGrounded() || (int)Velocity.y != 0);
 		if (GetJumpKeyPushed(true))
 		{
 			Jump();
@@ -102,15 +102,20 @@ public class PlayerController : LivableEntity
 		if (transform.position.x < Map.CurrentMapSize.xMin)
 		{
 			transform.position = new Vector3(Map.CurrentMapSize.xMin, transform.position.y, transform.position.z);
-			rigid.velocity = new Vector2(rigid.velocity.x < 0 ? 0 : rigid.velocity.x, rigid.velocity.y);
+			Velocity = new Vector2(Velocity.x < 0 ? 0 : Velocity.x, Velocity.y);
 		}
 
 		// 右端処理
 		if (transform.position.x > Map.CurrentMapSize.xMax)
 		{
 			transform.position = new Vector3(Map.CurrentMapSize.xMax, transform.position.y, transform.position.z);
-			rigid.velocity = new Vector2(rigid.velocity.x > 0 ? 0 : rigid.velocity.x, rigid.velocity.y);
+			Velocity = new Vector2(Velocity.x > 0 ? 0 : Velocity.x, Velocity.y);
 		}
+	}
+
+	protected override IEnumerator OnDamaged(Object interacter)
+	{
+		return base.OnDamaged(interacter);
 	}
 
 	protected override IEnumerator OnDeath(Object killer)
