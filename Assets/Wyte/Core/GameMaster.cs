@@ -133,9 +133,12 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	protected override void Awake()
 	{
 		base.Awake();
-
+#if UNITY_EDITOR
+		QualitySettings.vSyncCount = 1;
+#else
 		// Fix to 60fps
 		Application.targetFrameRate = 60;
+#endif
 	}
 
 	void Start()
