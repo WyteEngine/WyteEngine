@@ -92,9 +92,18 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			.Register("spclr", Npc.SpClr)
 			// Let the NPC walk
 			.Register("spwalk", Npc.SpWalk)
+			// Set a entity event
 			.Register("speve", Npc.SpEvent)
 			// Wait any input from a player
-			.Register("nod", (t, a) => MessageContoller.Instance.Nod());
+			.Register("nod", (t, a) => MessageContoller.Instance.Nod())
+			// Create a managed text object
+			.Register("txtset", TextMan.TxtSet)
+			// Change a specified object's position
+			.Register("txtofs", TextMan.TxtOfs)
+			// Change string, color xor alignment of a specified object.
+			.Register("txtmod", TextMan.TxtMod)
+			// Delete a text object
+			.Register("txtclr", TextMan.TxtClr);
 		#endregion
 
 	}
