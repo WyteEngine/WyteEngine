@@ -92,7 +92,9 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			.Register("spclr", Npc.SpClr)
 			// Let the NPC walk
 			.Register("spwalk", Npc.SpWalk)
-			.Register("speve", Npc.SpEvent);
+			.Register("speve", Npc.SpEvent)
+			// Wait any input from a player
+			.Register("nod", (t, a) => MessageContoller.Instance.Nod());
 		#endregion
 
 	}
@@ -277,6 +279,7 @@ public class UnityNRuntime
 			}
 			ProgramCounter++;
 		}
+		IsRunning = false;
 	}
 
 	#region 組み込みコマンド用ヘルパーメソッド

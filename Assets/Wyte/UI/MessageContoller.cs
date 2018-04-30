@@ -113,7 +113,7 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 
 	}
 
-	IEnumerator Nod()
+	public IEnumerator Nod()
 	{
 		prevTouch = true;
 		// 前回タッチされてなく、かつタッチされていれば終了 = 押しっぱなしで進まないようにする
