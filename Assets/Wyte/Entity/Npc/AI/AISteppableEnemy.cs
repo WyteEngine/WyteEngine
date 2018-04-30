@@ -13,6 +13,7 @@ public class AISteppableEnemy : AIBaseBehaviour
 		set { attack = value;}
 	}
 	
+
 	protected override void OnInitialize()
 	{
 		OnCollidedWithPlayer = new SelectorNode(
@@ -28,7 +29,9 @@ public class AISteppableEnemy : AIBaseBehaviour
 				// 相手が下降中かどうか判定
 				new IfNode(c => Wyte.CurrentPlayer.Velocity.y < 0),
 				// ダメージを受ける
-				new ActionNode(c => c.Damage(Wyte.CurrentPlayer, 1))
+				new ActionNode(c => c.Damage(Wyte.CurrentPlayer, 1)),
+				new ActionNode(c => Wyte.CurrentPlayer.Velocity += new Vector2(0, 128)),
+				new ActionNode(c => Sfx.Play("entity.player.step"))
 			)
 		);
 	}
