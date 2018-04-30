@@ -783,7 +783,10 @@ MonoBehaviour:
   bootstrapLabel: boot
   playerPrefab: {fileID: 1168604540035812, guid: c4d66b37ecaf53c44bf9351039088a9c,
     type: 2}
-  requestDebugMode: 1
+  itemBar: {fileID: 0}
+  gamePad: {fileID: 0}
+  requestDebugMode: 0
+  guiEnabled: 1
 --- !u!114 &114999604419861548
 MonoBehaviour:
   m_ObjectHideFlags: 1
