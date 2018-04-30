@@ -113,6 +113,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1453438723017826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4305603267654256}
+  - component: {fileID: 114304606367735602}
+  m_Layer: 0
+  m_Name: TextManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1513601514454106
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +270,7 @@ Transform:
   - {fileID: 4300855174348740}
   - {fileID: 4473679286933456}
   - {fileID: 4839628567508190}
+  - {fileID: 4305603267654256}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -269,6 +286,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4244630306695688}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4305603267654256
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1453438723017826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4244630306695688}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4399169282030590
 Transform:
@@ -638,6 +668,19 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9367d857475824cadbcabf1d541bdc89, type: 3}
   - id: entity.player.step
     clip: {fileID: 8300000, guid: 8dca816fffa7c4f96859fe2a9f1c4718, type: 3}
+--- !u!114 &114304606367735602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1453438723017826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051c108efa86141adbbb76a20deea6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  host: {fileID: 0}
+  fonts: []
 --- !u!114 &114454142614170586
 MonoBehaviour:
   m_ObjectHideFlags: 1
