@@ -97,7 +97,7 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			// Set a entity event
 			.Register("speve", Npc.SpEvent)
 			// Wait any input from a player
-			.Register("nod", (t, a) => MessageContoller.Instance.Nod())
+			.Register("nod", (t, a) => MessageContoller.Nod())
 			// Create a managed text object
 			.Register("txtset", TextMan.TxtSet)
 			// Change a specified object's position

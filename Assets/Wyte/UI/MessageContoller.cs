@@ -39,10 +39,10 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 		buffer = "";
 	}
 
-	bool IsTouched => IsSmartDevice
+	public static bool IsTouched => EnvironmentFlag.IsSmartDevice
 					? (Input.touchCount > 0)
-					: (Input.GetKey(KeyBind.Jump));
-
+					: (Input.GetKey(KeyBinding.Instance.Binding.Jump));
+					
 	GameObject CurrentPad => IsSmartDevice ? UISmartDevice : UIPersonalComputer;
 
 	private void Update()
@@ -113,9 +113,9 @@ public class MessageContoller : SingletonBaseBehaviour<MessageContoller>
 
 	}
 
-	public IEnumerator Nod()
+	public static IEnumerator Nod()
 	{
-		prevTouch = true;
+		var prevTouch = true;
 		// 前回タッチされてなく、かつタッチされていれば終了 = 押しっぱなしで進まないようにする
 		while (!(!prevTouch && IsTouched))
 		{
