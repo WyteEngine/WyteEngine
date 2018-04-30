@@ -170,6 +170,39 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 		yield break;
 	}
 
+	public IEnumerator TxtMod(string id, params string[] args)
+	{
+		id = GetTag(id, ref args);
+		
+		NArgsAssert(args.Length >= 1);
+		var mode = default(TextAnchor?);
+		var color = default(Color?);
+		// テキスト
+		var text = args[0];
+		
+		// 座標モード
+		if (args.Length >= 2)
+		{
+			mode = TextAlignmentStringToEnum(args[1]);
+		}
+
+		if (args.Length >= 3)
+		{
+			Color col;
+			NArgsAssert(ColorUtility.TryParseHtmlString("", out col));
+			color = col;
+		}
+
+		Modify(id, text, mode, color);
+		yield break;
+	}
+
+	public IEnumerator TxtClr(string id, params string[] args)
+	{
+		Delete(GetTag(id, ref args));
+		yield break;
+	}
+
 	private IEnumerator TxtMove(float lerpTime, string id, Vector2 target, string mode)
 	{
 		if (lerpTime > 0)
