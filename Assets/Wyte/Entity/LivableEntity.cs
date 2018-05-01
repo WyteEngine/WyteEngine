@@ -59,7 +59,7 @@ public abstract class LivableEntity : SpriteEntity
 		if (sp != null)
 		{
 			charaWidth = sp.bounds.size.x * 0.625f;
-			charaWidth2 = sp.bounds.size.x * 1.125f;
+			charaWidth2 = sp.bounds.size.x * 1.2f;
 			charaHead = (sp.bounds.size.y / 2) * 1.2857143f;
 			charaFoot = (sp.bounds.size.y / 2) * -1.25f;
 			collider2D.size = sp.bounds.size;
@@ -92,6 +92,15 @@ public abstract class LivableEntity : SpriteEntity
 		}
 		// todo あとでもっとマシに
 		rigid.velocity = Velocity;
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = CanKickLeft() ? Color.red : Color.blue;
+		Gizmos.DrawLine(KickLA, KickLB);
+		
+		Gizmos.color = CanKickRight() ? Color.red : Color.blue;
+		Gizmos.DrawLine(KickRA, KickRB);
 	}
 
 	/// <summary>
