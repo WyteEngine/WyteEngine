@@ -25,22 +25,25 @@ public class AIWalkAndWrapOnTheWall : AIBaseBehaviour
 	protected override void OnInitialize()
 	{
 		LivableEntity le = null;
-		OnUpdate = new SelectorNode(new SequenceNode(
-				new IfNode(c => c is LivableEntity),
-				new ActionNode(c => le = c as LivableEntity),
-				new ActionNode(c => le.Move(ActualSpeed))
-			),
+		OnUpdate = new SelectorNode(
 			new SequenceNode(
 				new IfNode(c => c is LivableEntity),
 				new ActionNode(c => le = c as LivableEntity),
 				new IfNode(c => le.CanKickRight()),
+				new IfNode(c => isRight),
 				new ActionNode(c => isRight = false)
 			),
 			new SequenceNode(
 				new IfNode(c => c is LivableEntity),
 				new ActionNode(c => le = c as LivableEntity),
 				new IfNode(c => le.CanKickLeft()),
+				new IfNode(c => !isRight),
 				new ActionNode(c => isRight = true)
+			),
+			new SequenceNode(
+				new IfNode(c => c is LivableEntity),
+				new ActionNode(c => le = c as LivableEntity),
+				new ActionNode(c => le.Move(ActualSpeed))
 			),
 			new SequenceNode(
 				new IfNode(c => c is LivableEntity),
