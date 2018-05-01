@@ -20,7 +20,7 @@ public class AISteppableEnemy : AIBaseBehaviour
 			// 相手を殴る
 			new SequenceNode(
 				// プレイヤーが下降中でないか判定
-				new IfNode(c => Wyte.CurrentPlayer.Velocity.y >= 0),
+				new IfNode(c => Wyte.CurrentPlayer.Velocity.y >= 0 && !c.Dying),
 				// ダメージを与える
 				new ActionNode(c => Wyte.CurrentPlayer.Damage(c, Attack))
 			),
