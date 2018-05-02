@@ -181,7 +181,7 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		IsNotFreezed = true;
 		CanMove = true;
 		// hack 後々ちゃんと書き直す
-		Player = new PlayerData("ホワイト", 20);
+		Player = new PlayerData("ホワイト", 4);
 	}
 
 	bool booted;
