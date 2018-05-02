@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 /// プレイヤーキャラの制御を行います．
@@ -53,8 +54,11 @@ public class PlayerController : LivableEntity
 			hpGauge.Progress = HealthRatio;
 		
 		if (hpNumeric != null)
-			hpNumeric.text = $"{Health, 3}/{MaxHealth, 3}";
-	} 
+			hpNumeric.text = $"{ToFullWidthString(Health, 3)}／{ToFullWidthString(MaxHealth, 3)}";
+	}
+
+	private string ToFullWidthString(int value, int padding = 0)
+		=> string.Concat(value.ToString().Select(c => char.IsDigit(c) ? (char)(c - '0' + '０') : c)).PadLeft(padding);
 
 	private void OnDestroy()
 	{
