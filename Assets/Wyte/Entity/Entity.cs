@@ -46,6 +46,8 @@ public abstract class Entity : BaseBehaviour
 	public virtual int MaxHealth => 1;
 	public int Health { get; protected set; }
 
+	public float HealthRatio => Health / (float)MaxHealth;
+
 	/// <summary>
 	/// 死んでいる途中であるかどうか取得します．
 	/// </summary>

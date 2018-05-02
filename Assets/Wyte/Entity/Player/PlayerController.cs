@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 /// <summary>
@@ -19,6 +20,9 @@ public class PlayerController : LivableEntity
 	[SerializeField]
 	protected float charaDashMultiplier = 2.0f;
 
+	Gauge hpGauge;
+	Text hpNumeric;
+
 	public override string JumpAnimationId => jumpAnimationId;
 	public override string StayAnimationId => stayAnimationId;
 	public override string WalkAnimationId => walkAnimationId;
@@ -27,16 +31,30 @@ public class PlayerController : LivableEntity
 	public override string JumpSfxId => "entity.player.jump";
 	public override string DeathSfxId => "entity.player.death";
 
+	private int maxHealth;
 
+	public override int MaxHealth => maxHealth;
 
 	/// <summary>
 	/// 開始処理
 	/// </summary>
 	protected override void Start()
 	{
+		maxHealth = Wyte.Player.MaxLife;
+		hpGauge = GameObject.FindGameObjectWithTag("HpGauge").GetComponent<Gauge>();
+		hpNumeric = GameObject.FindGameObjectWithTag("HpNumeric").GetComponent<Text>();
 		base.Start();
 		Debugger.DebugRendering += Debugger_DebugRendering;
 	}
+
+	protected void UpdateUI()
+	{
+		if (hpGauge != null)
+			hpGauge.Progress = HealthRatio;
+		
+		if (hpNumeric != null)
+			hpNumeric.text = $"{Health, 3}/{MaxHealth, 3}";
+	} 
 
 	private void OnDestroy()
 	{
@@ -59,7 +77,8 @@ public class PlayerController : LivableEntity
 		// 移動可能時に処理を行う
 		if (Wyte.CanMove)
 			InputKey();
-	
+		
+		UpdateUI();
 		base.OnFixedUpdate();
 	}
 
@@ -124,10 +143,14 @@ public class PlayerController : LivableEntity
 		Sfx.Play(DeathSfxId);
 		ChangeSprite("entity.player.drown");
 		var targetY = transform.position.y + 300;
+		
+		UpdateUI();		
+
 		for (int y = (int)transform.position.y; y < targetY; y += 4)
 		{
 			transform.Rotate(Vector3.forward * 180 * Time.deltaTime);
 			transform.position = new Vector3(transform.position.x, y, transform.position.z);
+			
 			yield return null;
 		}
 		yield return new WaitForSeconds(3);

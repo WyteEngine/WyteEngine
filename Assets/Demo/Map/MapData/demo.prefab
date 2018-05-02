@@ -1084,7 +1084,7 @@ MonoBehaviour:
   animation: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1280
   label: 
   eventWhen: 0
   stayAnimId: entity.npc.bunyo.walk
@@ -1113,7 +1113,7 @@ MonoBehaviour:
   animation: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1280
   label: 
   eventWhen: 0
   stayAnimId: entity.npc.bunyo.walk
@@ -1167,7 +1167,7 @@ MonoBehaviour:
   animation: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1280
   label: 
   eventWhen: 0
   stayAnimId: entity.npc.bunyo.walk
@@ -1256,7 +1256,7 @@ MonoBehaviour:
   landSfxId: 
   jumpSfxId: 
   deathSfxId: 
-  gravityScaleMultiplier: 1
+  gravityScaleMultiplier: 0
 --- !u!114 &114819853726039470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1287,7 +1287,7 @@ MonoBehaviour:
   animation: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1280
   label: 
   eventWhen: 0
   stayAnimId: entity.npc.bunyo.walk
@@ -1378,7 +1378,7 @@ MonoBehaviour:
   animation: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1280
   label: 
   eventWhen: 0
   stayAnimId: entity.npc.bunyo.walk
