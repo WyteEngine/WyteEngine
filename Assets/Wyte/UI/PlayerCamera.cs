@@ -10,7 +10,9 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 
 	public Transform player;
 
-	private Vector3 offset = Vector3.zero;
+	private static readonly Vector3 zero = new Vector3(0, 0, -1);
+
+	private Vector3 offset = zero;
 
 	public CameraTarget Target { get; set; } = CameraTarget.Player;
 
@@ -25,13 +27,13 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 	{
 		Wyte.GameReset += (wyte) =>
 		{
-			offset = Vector3.zero;
+			offset = zero;
 			player = null;
 		};
 
 		Map.MapChanged += (m) =>
 		{
-			offset = Vector3.zero;
+			offset = zero;
 			player = null;
 		};
 		theCamera = GetComponent<Camera>();
