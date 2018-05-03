@@ -1,0 +1,47 @@
+// Wyte Engine Slide for #shupaconf3
+// (C)2018 Xeltica - Project Wyte All rights reserved.
+
+#boot
+
++gosub #title
++gosub #introduce
++gosub #whatswyte
++end
+
+#title
+	+fade in, 0
+	+txtset title, "$b;Wyte Engine", "middle_center", 48, 8, "center", 1, 24, white
+	+txtset subtitle, "2018.4 Xeltica@$i;shupaconf3", "middle_center", 56, -24, "center", 1, 10, #7f7f7f
+	+nod
+	+txtclr title, subtitle
++return
+
+#introduce
+	+txtset title, "$b;自己紹介", top_left, 16, -16, "center", 1, 18, white
+	
+	+txtset name, "$b;名前:$!b; $c=#ff5f5f;ゼルチカ", "top_left", 32, -48, "center", 1, 11, white
+	+txtset birth, "$b;誕生日:$!b; $c=#ff7f3f;1998/11/29", "top_left", 32, -70, "center", 1, 11, white
+	+txtset hobby, "$b;趣味:$!b; $c=#ffff7f;ゲーム開発 / DTM", "top_left", 32, -92, "center", 1, 11, white
+	+txtset tw, "$b;Twitter:$!b; $c=#00aced;@Xelticat", "top_left", 32, -112, "center", 1, 11, white
+	+txtset web, "$b;Web:$!b; $c=#4f4fff;https://citringo.net/", "top_left", 32, -132, "center", 1, 11, white
+	
+	+nod
+	+txtclr title, name, birth, hobby, tw, web
++return
+
+#whatswyte
+	+txtset whats, "Wyte Engine ってなに？", middle_center, 0, 0, "center", 1, 24, white
+	+nod
+	+txtset whats, "Wyte Engine ってなに？", top_left, 16, -16, "center", 1, 18, white
+
+	+txtset unity, "on Unity", middle_center, 0, 0, center, 1, 24, white
+	+nod
+	+txtclr unity
+	+txtset p1, "アクション", middle_left, 50, -8, center, 1, 13, white
+	+txtset p2, "BGM&SE", middle_left, 130, -8, center, 1, 13, white
+	+txtset p3, "マップ制作", middle_left, 210, -8, center, 1, 13, white
+	+txtset p4, "イベント", middle_left, 90, -69, center, 1, 13, white
+	+txtset p5, "NPCのAI", middle_left, 170, -69, center, 1, 13, white
+	+nod
+	
+	+return
