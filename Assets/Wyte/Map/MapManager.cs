@@ -19,7 +19,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 		{
 			Unload();
 		};
-		Debugger.DebugRendering += (d) => d.Append($"map:{CurrentMap.name} msz{CurrentMapSize.min},{CurrentMapSize.max} ");
+		Debugger.DebugRendering += (d) => d.Append($"map:{CurrentMap?.name ?? "NULL"} msz{CurrentMapSize.min},{CurrentMapSize.max} ");
 	}
 
 	public void Move(string name)
