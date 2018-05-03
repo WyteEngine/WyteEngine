@@ -42,6 +42,11 @@
 	+txtset p3, "マップ制作", middle_left, 210, -8, center, 1, 13, white
 	+txtset p4, "イベント", middle_left, 90, -69, center, 1, 13, white
 	+txtset p5, "NPCのAI", middle_left, 170, -69, center, 1, 13, white
+	+spsetf p1, "slide.icon.walk", -70, -122
+	+spsetf p2, "slide.icon.music", 10, -122
+	+spsetf p3, "slide.icon.map", 90, -122
+	+spsetf p4, "slide.icon.talk", -30, -135
+	+spsetf p5, "slide.icon.ai", 50, -135
 	+nod
 	
 	+return
