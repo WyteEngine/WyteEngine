@@ -50,6 +50,7 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		var sprite = new GameObject(string.IsNullOrWhiteSpace(tag) ? "New Sprite" : tag, typeof(NpcBehaviour)).GetComponent<NpcBehaviour>();
 		sprite.Tag = tag;
 		sprite.gameObject.layer = LayerMask.NameToLayer("NPC");
+		managedEntity.Add(sprite);
 		return sprite;
 	}
 
