@@ -250,9 +250,13 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 
 	IEnumerator Init()
 	{
-		escaping = true;
-		yield return Freeze(null, "on");
-		yield return MessageContoller.Instance.Say(null, "初期化します。");
+		if (GuiEnabled)
+		{
+			escaping = true;
+			yield return Freeze(null, "on");
+			yield return MessageContoller.Instance.Say(null, "初期化します。");
+		}
+
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
