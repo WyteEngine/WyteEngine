@@ -232,7 +232,10 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 
 	public IEnumerator TxtClr(string id, params string[] args)
 	{
-		Delete(GetTag(id, ref args));
+		var texts = new List<string>(args);
+		if (!string.IsNullOrEmpty(id))
+			texts.Insert(0, id);
+		texts.ForEach(Delete);		
 		yield break;
 	}
 
