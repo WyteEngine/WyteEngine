@@ -159,7 +159,6 @@ public class TextManager : SingletonBaseBehaviour<TextManager>
 	public IEnumerator TxtOfs(string id, params string[] args)
 	{
 		id = GetTag(id, ref args);
-		Debug.Log("ハゲて死ね");
 		Assert(id);
 		NArgsAssert(args.Length >= 2);
 		string mode = null;
