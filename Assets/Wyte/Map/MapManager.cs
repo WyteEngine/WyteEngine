@@ -24,13 +24,22 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 
 	public void Move(string name)
 	{
+		if (string.IsNullOrEmpty(name))
+		{
+			Unload();
+			
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().backgroundColor = Color.black;
+			MapChanged?.Invoke(null);
+			return;
+		}
+
 		var map = Maps.FirstOrDefault(m => m.gameObject.name == name);
 
 		if (map == null) 
 			throw new ArgumentException($"{name} というマップが見つかりませんでした．");
 
-		if (currentMapObject)
-			Destroy(currentMapObject);
+		Unload();
+
 		currentMapObject = Instantiate(map.gameObject) as GameObject;
 		CurrentMap = map;
 		var tmaps = map.gameObject.GetComponentsInChildren<Tilemap>();
@@ -61,6 +70,7 @@ public class MapManager : SingletonBaseBehaviour<MapManager>
 	{
 		if (currentMapObject)
 			Destroy(currentMapObject);
+		currentMapObject = null;
 	}
 
 	public IEnumerator Move(string _, params string[] args)
