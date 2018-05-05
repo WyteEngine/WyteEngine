@@ -49,7 +49,7 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	public float GravityScaleMultiplier
 	{
 		get { return gravityScaleMultiplier; }
-		set { gravityScaleMultiplier = value; }
+		set { gravityScaleMultiplier = value; Velocity = new Vector2(Velocity.x, 0); }
 	}
 
 	public override string WalkAnimationId => walkAnimId;
