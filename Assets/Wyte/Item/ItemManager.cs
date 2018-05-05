@@ -2,11 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditorInternal;
-using System;
 #endif
 
 public class ItemManager : SingletonBaseBehaviour<ItemManager>
