@@ -125,7 +125,7 @@ public abstract class LivableEntity : SpriteEntity
 			Sfx.Play(LandSfxId);
 
 		if (IsJumping && hold)
-			Velocity -= new Vector2(0, charaGravityScale * 0.05f);
+			Velocity -= new Vector2(0, GravityScale * 0.05f);
 
 		if (IsCeiling())
 			Velocity = new Vector2(Velocity.x, charaCeilingBouness);
