@@ -62,7 +62,7 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 		{
 			case CameraTarget.Player:
 				if (!player.GetComponent<PlayerController>().Dying && player.gameObject != null)
-					newPosition = player.position + offset;
+					newPosition = player.position + offset + Vector3.down * 24;
 				break;
 			case CameraTarget.Free:
 				newPosition = FreePosition;
