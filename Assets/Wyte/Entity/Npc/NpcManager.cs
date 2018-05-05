@@ -85,7 +85,7 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 
 	public void SpClr(NpcBehaviour npc)
 	{
-		Destroy(npc);
+		Destroy(npc.gameObject);
 	}
 
 	public void SpClr(string tag)
