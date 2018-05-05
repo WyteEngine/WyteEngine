@@ -2,18 +2,28 @@
 // (C)2018 Xeltica - Project Wyte All rights reserved.
 
 #boot
-
+slide.finished+onsflag #load
 +gosub #title
++gosub #hashtag
 +gosub #introduce
 +gosub #whatswyte
-+end
++gosub #howto
++gosub #play
++goto #load
+
 
 #title
 	+fade in, 0
-	+txtset title, "$b;Wyte Engine", "middle_center", 48, 8, "center", 1, 24, white
-	+txtset subtitle, "2018.4 Xeltica@$i;shupaconf3", "middle_center", 56, -24, "center", 1, 10, #7f7f7f
+	+txtset title, "$b;Wyte Engine", "middle_center", 0, 8, "center", 1, 24, white
+	+txtset subtitle, "$i;2018.5.5 Xeltica & Project Wyte $c=yellow;#shupaconf3", "middle_center", 0, -24, "center", 1, 10, #7f7f7f
 	+nod
 	+txtclr title, subtitle
++return
+
+#hashtag
+	+txtset hashtag, "#WyteEngine", "middle_center", 0, 0, "center", 1, 24, #00aced
+	+nod
+	+txtclr hashtag
 +return
 
 #introduce
@@ -32,21 +42,199 @@
 #whatswyte
 	+txtset whats, "Wyte Engine ってなに？", middle_center, 0, 0, "center", 1, 24, white
 	+nod
-	+txtset whats, "Wyte Engine ってなに？", top_left, 16, -16, "center", 1, 18, white
-
-	+txtset unity, "on Unity", middle_center, 0, 0, center, 1, 24, white
+	+txtmod whats, "アクションゲームをつくれる！"
 	+nod
-	+txtclr unity
-	+txtset p1, "アクション", middle_left, 50, -8, center, 1, 13, white
-	+txtset p2, "BGM&SE", middle_left, 130, -8, center, 1, 13, white
-	+txtset p3, "マップ制作", middle_left, 210, -8, center, 1, 13, white
-	+txtset p4, "イベント", middle_left, 90, -69, center, 1, 13, white
-	+txtset p5, "NPCのAI", middle_left, 170, -69, center, 1, 13, white
-	+spsetf p1, "slide.icon.walk", -70, -122
-	+spsetf p2, "slide.icon.music", 10, -122
-	+spsetf p3, "slide.icon.map", 90, -122
-	+spsetf p4, "slide.icon.talk", -30, -135
-	+spsetf p5, "slide.icon.ai", 50, -135
+	+txtclr whats
+
+	+txtset p1, "アクション", middle_center, 0, 0, center, 1, 13, red
+	+txtset p2, "BGM", middle_center, 400, -80, center, 1, 13, orange
+	+txtset p3, "効果音", middle_center, 400, -80, center, 1, 13, yellow
+	+txtset p4, "マップ", middle_center, 400, -80, center, 1, 13, lime
+	+txtset p5, "AI", middle_center, 400, -80, center, 1, 13, green
+	+txtset p6, "アイテム", middle_center, 400, -80, center, 1, 13, cyan
+	+txtset p7, "イベント", middle_center, 400, -80, center, 1, 13, magenta
+
+	+nod
+
+	+txtofs p2, 0, -80, middle_center, 0.25
+	+wait 0.25
+	+txtofs p1, 0, 16, middle_center, 0.25
+	+txtofs p2, 0, 0, middle_center, 0.25
+	+nod
+
+	+txtofs p3, 0, -80, middle_center, 0.25
+	+wait 0.25
+	+txtofs p1, 0, 32, middle_center, 0.25
+	+txtofs p2, 0, 16, middle_center, 0.25
+	+txtofs p3, 0, 0, middle_center, 0.25
+	+nod
+
+	+txtofs p4, 0, -80, middle_center, 0.25
+	+wait 0.25
+	+txtofs p1, 0, 48, middle_center, 0.25
+	+txtofs p2, 0, 32, middle_center, 0.25
+	+txtofs p3, 0, 16, middle_center, 0.25
+	+txtofs p4, 0, 0, middle_center, 0.25
+	+nod
+
+	+txtofs p5, 0, -80, middle_center, 0.25
+	+wait 0.25
+	+txtofs p5, 0, -16, middle_center, 0.25
+	+nod
+
+	+txtofs p6, 0, -80, middle_center, 0.25
+	+wait 0.25
+	+txtofs p6, 0, -32, middle_center, 0.25
+	+nod
+
+	+txtofs p7, 0, -80, middle_center, 0.25
+	+wait 0.25
+	+txtofs p7, 0, -48, middle_center, 0.25
 	+nod
 	
-	+return
+	+txtofs p1, 0, 100, middle_center, 0.25
+	+wait 0.05
+	+txtofs p2, 0, 100, middle_center, 0.25
+	+wait 0.05
+	+txtofs p3, 0, 100, middle_center, 0.25
+	+wait 0.05
+	+txtofs p4, 0, 100, middle_center, 0.25
+	+wait 0.05
+	+txtofs p5, 0, 100, middle_center, 0.25
+	+wait 0.05
+	+txtofs p6, 0, 100, middle_center, 0.25
+	+wait 0.05
+	+txtofs p7, 0, 100, middle_center, 0.25
+	+wait 0.20
+
+	+txtset wyte, "$c=red;ぜんぶ$!c;Wyte$c=red;で！", middle_center, 0, 0, center, 1, 18, white
+	
+	+nod
+
+	+txtclr p1, p2, p3, p4, p5, p6, p7, wyte
++return
+
+#howto
+	+txtset howtouse, "どうやって使うの？", middle_center, 0, 0, "center", 1, 24, white
+	+nod
+	+txtclr howtouse
+
+	+txtset unity, "Unityで使える！", middle_center, 0, 0, center, 1, 18, #ff7f7f
+	+nod
+	+txtofs unity, 0, 32, center, 0.3
+	+wait 0.3
+	+txtset mobile, "Windows / Mac / Linux\nAndroid / iOS", middle_center, 0, -32, center, 1, 16, white
+	+txtmod unity, "クロスプラットフォーム！"
+	+nod
+	
+	+txtclr unity, mobile
++return
+
+#play
+	+txtset p, "実演", middle_center, 0, 0, center, 1, 39, white
+	+nod
+	+txtmod p, "実演", center, 0, 39, white
+	+wait 0.02
+	+txtmod p, "実演", center, 1, 39, white
+	+wait 0.02
+	+txtmod p, "実演", center, 0, 39, white
+	+wait 0.02
+	+txtmod p, "実演", center, 1, 39, white
+	+wait 0.02
+	+txtmod p, "実演", center, 0, 39, white
+	+wait 0.02
+	+txtmod p, "実演", center, 1, 39, white
+	+wait 0.02
+	+txtmod p, "実演", center, 0, 39, white
+	+wait 0.02
+	+txtmod p, "実演", center, 1, 39, white
+	+wait 0.02
+	+nod
+
+	+txtofs p, 0, -4
+	+txtofs p, 0, 0, middle_center, 0.2
+	+txtmod p, "実演", center, 0, 39, white
+	+wait 0.2
+	+txtofs p, 0, 4
+	+txtofs p, 0, 0, middle_center, 0.1
+	+wait 0.1
+	+txtofs p, 0, 24
+	+txtofs p, 0, 0, middle_center, 0.08
+	+txtmod p, "実演", center, 1, 39, white
+	+wait 0.08
+	+txtofs p, 0, -52
+	+txtofs p, 0, 0, middle_center, 0.04
+	+wait 0.04
+	+txtofs p, 0, 8
+	+txtofs p, 0, 0, middle_center, 0.04
+	+txtmod p, "実演", center, 0, 39, white
+	+wait 0.04
+	+txtofs p, 0, 32
+	+txtofs p, 0, 0, middle_center, 0.04
+	+txtmod p, "実演", center, 1, 39, white
+	+wait 0.04
+	+txtofs p, 0, -2
+	+txtofs p, 0, 0, middle_center, 0.04
+	+wait 0.04
+	+txtofs p, 0, -44
+	+txtofs p, 0, 0, middle_center, 0.04
+	+wait 0.04
+	+txtofs p, 0, -4
+	+txtofs p, 0, 0, middle_center, 0.04
+	+txtmod p, "実演", center, 0, 39, white
+	+wait 0.04
+	+txtofs p, 0, 8
+	+txtofs p, 0, 0, middle_center, 0.08
+	+wait 0.08
+	+txtofs p, 0, 14
+	+txtofs p, 0, 0, middle_center, 0.02
+	+txtmod p, "実演", center, 1, 39, white
+	+wait 0.02
+	+txtofs p, 0, -60
+	+txtofs p, 0, 0, middle_center, 0.1
+	+wait 0.01
+	+txtofs p, 0, 53
+	+txtofs p, 0, 0, middle_center, 0.09
+	+wait 0.09
+	+txtofs p, 0, -81
+	+txtofs p, 0, 0, middle_center, 0.08
+	+txtmod p, "実演", center, 0, 39, white
+	+wait 0.08
+	+txtofs p, 0, -2
+	+txtofs p, 0, 0, middle_center, 0.1
+	+wait 0.1
+	+txtofs p, 0, 44
+	+txtofs p, 0, 0, middle_center, 0.2
+	+wait 0.1
+	+txtmod p, "(ずっと)実演(してました)", center, 0, 18, white
+	+nod
+	+txtclr p
++return
+
+#load
+	+freeze on
+	+gui on
+	+fade out, 0
+	+move demo
+	+pshow -160, -16
+	+wait 0.5
+	+bgmplay "hometown"
+	+freeze off
+	+fadeasync in, 0.3
+	+sflag on, slide.finished
++end
+
+#epilogue
+	+gui off
+	+txtset text, "最後に", middle_center, 0, 0, center, 1, 22, yellow
+	+nod
+	+txtset text, "ゲームが出ます$sz=11;$c=#990;(多分)", middle_center, 0, 0, center, 1, 22, yellow
+	+nod
+	+txtmod text, "GitHub", center, 1, 22, white
+	+txtofs text, 0, 8
+	+txtset link, "goo.gl/Z2s2ma", middle_center, 0, -24, center, 1, 18, #00aced
+	+nod
+	+txtclr link, text
+	+txtset bye, "Thanks for listening!", middle_center, 0, 8, center, 0, 22, magenta
+	+txtset wyte, "Project $c=white;Wyte", middle_center, 0, -24, center, 0, 11, yellow
++end

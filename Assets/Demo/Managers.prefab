@@ -426,7 +426,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 128
+  orthographic size: 90
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -632,8 +632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Maps:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 114964277694001046, guid: 68660f1c1210b4d609fa6b332df84594, type: 2}
 --- !u!114 &114255745403849868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -827,6 +826,8 @@ MonoBehaviour:
     Value: {fileID: 11400000, guid: 4090e6288101f403e9634f064720798b, type: 2}
   - Key: slide.x
     Value: {fileID: 11400000, guid: 43d746f5bb1b547df91aa3bed2566a20, type: 2}
+  - Key: entity.door
+    Value: {fileID: 11400000, guid: c13cb4de37be541149ed0ce9cdc8d424, type: 2}
 --- !u!114 &114977966309422568
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,0 +1,33 @@
+// Wyte Engine Slide for #shupaconf3
+// (C)2018 Xeltica - Project Wyte All rights reserved.
+
+#pc
+	+pfreeze on
+	:"パソコンには　メールが　きているようだ。"
+	:"$spd=0;わかりました。すぐに　そちらに　むかいます。"
+	key+onsflag #pc_skip
+	:"......よくみると　カギが　おいてある。"
+	:"カギを　てにいれた。"
+	+sflag on, key
+	#pc_skip
+	+pfreeze off
++end
+
+#door
+	key+onsflag #unlock
+	+pfreeze on
+	:"ドアには　カギがかかっている。"
+	+pfreeze off
++end
+
+#unlock
+	+pfreeze on
+	+spclr door
+	:"カギを　あけた。"
+	+bgmstopasync 0.5
+	+fade out, 0.5
+	+phide
+	+move
+	+pfreeze off
+	+goto #epilogue
++end

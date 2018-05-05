@@ -734,7 +734,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &1114773626
 RectTransform:
@@ -822,31 +822,6 @@ Prefab:
       propertyPath: host
       value: 
       objectReference: {fileID: 1114773626}
-    - target: {fileID: 20578907749853858, guid: 552322c8bd187452cbcffac2f03cb98c,
-        type: 2}
-      propertyPath: orthographic size
-      value: 128
-      objectReference: {fileID: 0}
-    - target: {fileID: 20578907749853858, guid: 552322c8bd187452cbcffac2f03cb98c,
-        type: 2}
-      propertyPath: m_BackGroundColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 20578907749853858, guid: 552322c8bd187452cbcffac2f03cb98c,
-        type: 2}
-      propertyPath: m_BackGroundColor.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 20578907749853858, guid: 552322c8bd187452cbcffac2f03cb98c,
-        type: 2}
-      propertyPath: m_BackGroundColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 20578907749853858, guid: 552322c8bd187452cbcffac2f03cb98c,
-        type: 2}
-      propertyPath: m_BackGroundColor.g
-      value: 0.03676468
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 552322c8bd187452cbcffac2f03cb98c, type: 2}
   m_IsPrefabParent: 0
