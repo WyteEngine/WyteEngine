@@ -88,6 +88,7 @@ public class NpcBehaviour : LivableEntity, IEventable {
 		CheckCollision();
 	}
 
+
 	protected virtual void CheckCollision()
 	{
 		var intersects = IsCollidedWithPlayer();
@@ -139,6 +140,14 @@ public class NpcBehaviour : LivableEntity, IEventable {
 			}
 		}
 		yield return new WaitWhile(() => Novel.Runtime.IsRunning);
+	}
+
+	public override void ChangeSprite(string id)
+	{
+		base.ChangeSprite(id);
+		walkAnimId = string.IsNullOrEmpty(walkAnimId) ? id : walkAnimId;
+		jumpAnimId = string.IsNullOrEmpty(jumpAnimId) ? id : jumpAnimId;
+		stayAnimId = string.IsNullOrEmpty(stayAnimId) ? id : stayAnimId;
 	}
 
 	bool EventKeyPushed => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Screen, true) : Input.GetKeyDown(KeyBind.Up);

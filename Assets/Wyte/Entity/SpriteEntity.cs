@@ -62,7 +62,7 @@ public class SpriteEntity : Entity
 		IsAnimating = false;
 	}
 
-	public void ChangeSprite(string id)
+	public virtual void ChangeSprite(string id)
 	{
 		if (Animation == AnimMan[id] && IsAnimating)
 			return;
