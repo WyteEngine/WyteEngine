@@ -99,8 +99,10 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			.Register("spwalk", Npc.SpWalk)
 			// Set a entity event
 			.Register("speve", Npc.SpEvent)
+
 			// Wait any input from a player
 			.Register("nod", (t, a) => MessageContoller.Nod())
+
 			// Create a managed text object
 			.Register("txtset", TextMan.TxtSet)
 			// Change a specified object's position
@@ -108,7 +110,11 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			// Change string, color xor alignment of a specified object.
 			.Register("txtmod", TextMan.TxtMod)
 			// Delete a text object
-			.Register("txtclr", TextMan.TxtClr);
+			.Register("txtclr", TextMan.TxtClr)
+			
+			.Register("tileset", Tile.Place)
+			.Register("tiledel", Tile.Delete)
+			.Register("ontile", Tile.OnTile);
 		#endregion
 
 	}

@@ -32,6 +32,7 @@ public abstract class BaseBehaviour : MonoBehaviour
 	protected AnimationManager AnimMan => AnimationManager.Instance;
 	protected ItemManager ItemMan => ItemManager.Instance;
 	protected TextManager TextMan => TextManager.Instance;
+	protected TileAPI Tile => TileAPI.Instance;
 
 	/// <summary>
 	/// タッチパネルをサポートしているかどうか。
