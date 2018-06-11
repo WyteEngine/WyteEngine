@@ -25,7 +25,13 @@ public abstract class LivableEntity : SpriteEntity
 	protected Rigidbody2D rigid;
 
 	[SerializeField]
-	protected LayerMask groundLayer = LayerMask.GetMask("Ground");
+	protected LayerMask groundLayer;
+
+	public LayerMask GroundLayer
+	{
+		get { return groundLayer; }
+		set { groundLayer = value; }
+	}
 
 	protected float charaScale = 1.0f;
 	protected float charaHead = 1.0f;
