@@ -48,6 +48,7 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 	public NpcBehaviour SpSet(string tag)
 	{
 		var sprite = new GameObject(string.IsNullOrWhiteSpace(tag) ? "New Sprite" : tag, typeof(NpcBehaviour)).GetComponent<NpcBehaviour>();
+		sprite.IsManagedNpc = true;
 		sprite.Tag = tag;
 		sprite.gameObject.layer = LayerMask.NameToLayer("NPC");
 		managedEntity.Add(sprite);

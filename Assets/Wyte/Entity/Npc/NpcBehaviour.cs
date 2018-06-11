@@ -52,6 +52,8 @@ public class NpcBehaviour : LivableEntity, IEventable {
 		set { gravityScaleMultiplier = value; Velocity = new Vector2(Velocity.x, 0); }
 	}
 
+	public bool IsManagedNpc { get; set; }
+
 	public override string WalkAnimationId => walkAnimId;
 	public override string StayAnimationId => stayAnimId;
 	public override string JumpAnimationId => jumpAnimId;
@@ -145,9 +147,11 @@ public class NpcBehaviour : LivableEntity, IEventable {
 	public override void ChangeSprite(string id)
 	{
 		base.ChangeSprite(id);
-		walkAnimId = string.IsNullOrEmpty(walkAnimId) ? id : walkAnimId;
-		jumpAnimId = string.IsNullOrEmpty(jumpAnimId) ? id : jumpAnimId;
-		stayAnimId = string.IsNullOrEmpty(stayAnimId) ? id : stayAnimId;
+
+		if (IsManagedNpc)
+		{
+			walkAnimId = stayAnimId = jumpAnimId = id;
+		}
 	}
 
 	bool EventKeyPushed => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Screen, true) : Input.GetKeyDown(KeyBind.Up);
