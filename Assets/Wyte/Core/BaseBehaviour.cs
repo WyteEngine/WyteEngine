@@ -42,9 +42,9 @@ public abstract class BaseBehaviour : MonoBehaviour
 	/// 条件式が通らない場合エラーを返します．
 	/// </summary>
 	/// <param name="expr"></param>
-	protected void NArgsAssert(bool expr)
+	protected void NArgsAssert(bool expr, int? line = null)
 	{
 		if (!expr)
-			throw new NRuntimeException("引数が一致しません．");
+			throw new NRuntimeException((line != null ? line + "番目の" : "") + "引数が一致しません．");
 	}
 }
