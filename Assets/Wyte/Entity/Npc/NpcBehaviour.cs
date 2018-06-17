@@ -63,68 +63,27 @@ public class NpcBehaviour : LivableEntity, IEventable {
 
 	public override float GravityScale => charaGravityScale * gravityScaleMultiplier;
 
-	protected BoxCollider2D playerCollider;
-
-	protected AIBaseBehaviour[] OwnAIs;
-
-	/// <summary>
-	/// 前フレームでのプレイヤー衝突判定．
-	/// </summary>
-	protected bool prevIntersects;
 
 	protected override void Start()
 	{
 		base.Start();
-		OwnAIs = GetComponents<AIBaseBehaviour>();
 	}
 
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
-		
-		foreach (var ai in OwnAIs)
-		{
-			ai.OnUpdate?.Run(this);
-		}
-
-		CheckCollision();
 	}
 
 
-	protected virtual void CheckCollision()
+	protected override void CheckCollision(bool intersects)
 	{
-		var intersects = IsCollidedWithPlayer();
+		base.CheckCollision(intersects);
 
 		if (intersects)
 		{
 			if (!string.IsNullOrWhiteSpace(label) && (EventKeyPushed && eventWhen == EventCondition.Talked) || !prevIntersects && eventWhen == EventCondition.Touched)
 				Novel.Run(label);
 		}
-		prevIntersects = intersects;
-		
-		if (intersects)
-		{
-			foreach (var ai in OwnAIs)
-			{
-				ai.OnCollidedWithPlayer?.Run(this);
-			}
-		}
-	}
-
-	protected virtual bool IsCollidedWithPlayer()
-	{
-		if (playerCollider == null)
-			playerCollider = Wyte.CurrentPlayer?.GetComponent<BoxCollider2D>();
-		// プレイヤーが存在しなければ常にfalse
-		if (playerCollider == null)
-			return false;
-
-		// 動けないのに死んだら理不尽だ
-		if (!Wyte.CanMove)
-			return false;
-		
-		return collider2D.bounds.Intersects(playerCollider.bounds);
-		
 	}
 
 	protected override IEnumerator OnDeath(Object killer)

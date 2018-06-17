@@ -62,6 +62,8 @@ public abstract class Entity : BaseBehaviour
 	
 	private float godTime;
 
+	protected AIBaseBehaviour[] OwnAIs;
+
 	/// <summary>
 	/// 残り無敵時間を取得または設定します．0のときは無敵ではありません．
 	/// </summary>
@@ -77,6 +79,7 @@ public abstract class Entity : BaseBehaviour
 	protected virtual void Start()
 	{
 		Health = MaxHealth;
+		OwnAIs = GetComponents<AIBaseBehaviour>();
 		if (Health == 0)
 			Kill(null);
 		switch (Visiblity)
@@ -105,6 +108,12 @@ public abstract class Entity : BaseBehaviour
 		// 生きていればアップデート
 		if (!Dying)
 			OnUpdate();
+
+		foreach (var ai in OwnAIs)
+		{
+			ai.OnUpdate?.Run(this);
+		}
+
 		// 死んでいれば供養
 		if (Dead)
 			Destroy(this.gameObject);

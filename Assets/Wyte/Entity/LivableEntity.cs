@@ -45,7 +45,14 @@ public abstract class LivableEntity : SpriteEntity
 	protected bool prevIsGrounded, prevIsCeiling;
 	
 	protected new BoxCollider2D collider2D;
-	
+	protected BoxCollider2D playerCollider;
+
+
+	/// <summary>
+	/// 前フレームでのプレイヤー衝突判定．
+	/// </summary>
+	protected bool prevIntersects;
+
 	protected override void Start()
 	{
 		base.Start();
@@ -77,6 +84,8 @@ public abstract class LivableEntity : SpriteEntity
 
 		prevIsCeiling = IsCeiling();
 		prevIsGrounded = IsGrounded();
+
+		CheckCollision(IsCollidedWithPlayer());
 	}
 
 	protected override void OnFixedUpdate()
@@ -170,6 +179,35 @@ public abstract class LivableEntity : SpriteEntity
 	{
 		bool hit = Physics2D.Linecast(CeilingA, CeilingB, groundLayer);
 		return hit;
+	}
+
+	protected virtual bool IsCollidedWithPlayer()
+	{
+		if (playerCollider == null)
+			playerCollider = Wyte.CurrentPlayer?.GetComponent<BoxCollider2D>();
+		// プレイヤーが存在しなければ常にfalse
+		if (playerCollider == null)
+			return false;
+
+		// 動けないのに死んだら理不尽だ
+		if (!Wyte.CanMove)
+			return false;
+
+		return collider2D.bounds.Intersects(playerCollider.bounds);
+
+	}
+
+	protected virtual void CheckCollision(bool intersects)
+	{
+		if (intersects)
+		{
+			foreach (var ai in OwnAIs)
+			{
+				ai.OnCollidedWithPlayer?.Run(this);
+			}
+		}
+
+		prevIntersects = intersects;
 	}
 
 	Vector3 FloorA => transform.position + new Vector3(-(charaWidth / 2), charaFoot);
