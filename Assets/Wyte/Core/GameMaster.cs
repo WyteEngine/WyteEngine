@@ -85,6 +85,11 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		set
 		{
 			canMove = value;
+			if (!value && CurrentPlayer != null)
+			{
+				// プレイヤーを止める
+				CurrentPlayer.Velocity = new Vector2(0, CurrentPlayer.Velocity.y);
+			}
 		}
 	}
 	#region Novel API
