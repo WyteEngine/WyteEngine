@@ -106,14 +106,18 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 				throw new NRuntimeException("座標が不正です。");
 		}
 		playerTemp = Instantiate(playerPrefab, new Vector3(x, y), Quaternion.Euler(0, 0, 0)) as GameObject;
+		PlayerShown?.Invoke(playerTemp.GetComponent<PlayerController>(), playerTemp.transform.position);
 	}
 
 	public IEnumerator PlayerHide(string t, string[] a)
 	{
-		if (playerTemp != null)
-			Destroy(playerTemp);
+		if (playerTemp == null)
+			yield break;
+		
+		var vec = playerTemp.transform.position;
+		Destroy(playerTemp);
+		PlayerHidden?.Invoke(playerTemp.transform.position);
 		playerTemp = null;
-		yield break;
 	}
 
 	public IEnumerator Freeze(string t, params string[] a)
@@ -300,6 +304,10 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	public event PlayerDeathEventHandler PlayerDead;
 	public event PlayerDeathEventHandler PlayerDying;
 
+	public delegate void PlayerShownEventHandler(PlayerController player, Vector3 pos);
+	public delegate void PlayerHiddenEventHandler(Vector3 pos);
+	public event PlayerShownEventHandler PlayerShown;
+	public event PlayerHiddenEventHandler PlayerHidden;
 
 	public delegate void SaveEventHandler(GameMaster wyte);
 	public event SaveEventHandler GameSave;
