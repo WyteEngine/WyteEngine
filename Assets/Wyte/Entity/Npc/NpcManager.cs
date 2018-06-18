@@ -4,50 +4,54 @@ using System.Collections;
 using Novel.Exceptions;
 using static NovelHelper;
 using System.Linq;
-using System;
-using UnityEngine.Experimental.UIElements;
 
 public class NpcManager : SingletonBaseBehaviour<NpcManager>
 {
 	/// <summary>
 	/// マップからのエンティティ．
 	/// </summary>
-	List<NpcBehaviour> mappedEntity;
+	List<LivableEntity> mappedEntity;
 
 	/// <summary>
 	/// マネージャーが管理しているエンティティ．
 	/// </summary>
-	List<NpcBehaviour> managedEntity;
+	List<LivableEntity> managedEntity;
 
 	protected override void Awake()
 	{
 		base.Awake();
 
-		mappedEntity = new List<NpcBehaviour>();
-		managedEntity = new List<NpcBehaviour>();
+		mappedEntity = new List<LivableEntity>();
+		managedEntity = new List<LivableEntity>();
 
 		Map.MapChanged += (map) =>
 		{
 			// マップエンティティのリセット
 			mappedEntity.Clear();
-			mappedEntity.AddRange(FindObjectsOfType<NpcBehaviour>());
+			mappedEntity.AddRange(FindObjectsOfType<LivableEntity>());
 			// 管理エンティティのリセット
 			managedEntity.ForEach(o => Destroy(o.gameObject));
 			managedEntity.Clear();
 		};
+
 	}
 
 	void Start()
 	{
 		// デーモン
 		StartCoroutine(CollectGarbages());
+		Wyte.PlayerShown += (player, pos) =>
+		{
+			managedEntity.Add(player);
+		};
 	}
 
-	public NpcBehaviour this[string tag] => managedEntity?.FirstOrDefault(a => a.Tag == tag) ?? mappedEntity.FirstOrDefault(a => a.Tag == tag) ?? null;
+	public LivableEntity this[string tag] => managedEntity?.FirstOrDefault(a => a.Tag == tag) ?? mappedEntity.FirstOrDefault(a => a.Tag == tag) ?? null;
 
-	public NpcBehaviour SpSet(string tag)
+	public LivableEntity SpSet(string tag)
 	{
 		var sprite = new GameObject(string.IsNullOrWhiteSpace(tag) ? "New Sprite" : tag, typeof(NpcBehaviour)).GetComponent<NpcBehaviour>();
+		sprite.GroundLayer = 1 << LayerMask.NameToLayer("Ground");
 		sprite.IsManagedNpc = true;
 		sprite.Tag = tag;
 		sprite.gameObject.layer = LayerMask.NameToLayer("NPC");
@@ -55,36 +59,36 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		return sprite;
 	}
 
-	public NpcBehaviour SpSet(string tag, string animId) => SpChr(SpSet(tag), animId);
-	public NpcBehaviour SpSet(string tag, string animId, Vector2 pos) => SpOfs(SpSet(tag, animId), pos);
+	public LivableEntity SpSet(string tag, string animId) => SpChr(SpSet(tag), animId);
+	public LivableEntity SpSet(string tag, string animId, Vector2 pos) => SpOfs(SpSet(tag, animId), pos);
 
-	public NpcBehaviour SpChr(NpcBehaviour sprite, string animId)
+	public LivableEntity SpChr(LivableEntity sprite, string animId)
 	{
 		sprite.ChangeSprite(animId);
 		return sprite;
 	}
 
-	public NpcBehaviour SpChr(string tag, string animId)
+	public LivableEntity SpChr(string tag, string animId)
 	{
 		if (this[tag] == null)
 			throw new NRuntimeException($"NPC tag:{tag} は存在しません．");
 		return SpChr(this[tag], animId);
 	}
 
-	public NpcBehaviour SpOfs(NpcBehaviour sprite, Vector2 pos)
+	public LivableEntity SpOfs(LivableEntity sprite, Vector2 pos)
 	{
 		sprite.transform.position = pos;
 		return sprite;
 	}
 
-	public NpcBehaviour SpOfs(string tag, Vector2 pos)
+	public LivableEntity SpOfs(string tag, Vector2 pos)
 	{
 		if (this[tag] == null)
 			throw new NRuntimeException($"NPC tag:{tag} は存在しません．");
 		return SpOfs(this[tag], pos);
 	}
 
-	public void SpClr(NpcBehaviour npc)
+	public void SpClr(LivableEntity npc)
 	{
 		Destroy(npc.gameObject);
 	}
@@ -106,7 +110,9 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 	{
 		if (this[tag] == null)
 			throw new NRuntimeException($"NPC tag:{tag} は存在しません．");
-		return SpEvent(this[tag], eventId);
+		if (!(this[tag] is NpcBehaviour))
+			throw new NRuntimeException($"tag:{tag} はNPC Entityではありません．");
+		return SpEvent(this[tag] as NpcBehaviour, eventId);
 	}
 
 	#region Novel API
@@ -134,7 +140,7 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 	public IEnumerator SpSetF(string _, string[] args)
 	{
 		yield return SpSet(_, args);
-		this[args[0]].GravityScaleMultiplier = 0;
+		(this[args[0]] as NpcBehaviour).GravityScaleMultiplier = 0;
 	}
 
 
@@ -258,14 +264,14 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 		while (this != null)
 		{
 			// new List しないと削除時に面倒な例外が出る
-			foreach (var e in new List<NpcBehaviour>(mappedEntity))
+			foreach (var e in new List<LivableEntity>(mappedEntity))
 			{
 				if (e == null && mappedEntity.Contains(e))
 					mappedEntity.Remove(e);
 			}
 
 			// new List ｓ(ry
-			foreach (var e in new List<NpcBehaviour>(managedEntity))
+			foreach (var e in new List<LivableEntity>(managedEntity))
 			{
 				if (e == null && managedEntity.Contains(e))
 					managedEntity.Remove(e);
