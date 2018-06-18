@@ -77,13 +77,13 @@ public class NpcBehaviour : LivableEntity, IEventable {
 
 	protected override void CheckCollision(bool intersects)
 	{
-		base.CheckCollision(intersects);
-
 		if (intersects)
 		{
 			if (!string.IsNullOrWhiteSpace(label) && (EventKeyPushed && eventWhen == EventCondition.Talked) || !prevIntersects && eventWhen == EventCondition.Touched)
 				Novel.Run(label);
 		}
+
+		base.CheckCollision(intersects);
 	}
 
 	protected override IEnumerator OnDeath(Object killer)
