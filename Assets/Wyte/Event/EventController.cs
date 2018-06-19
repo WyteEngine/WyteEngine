@@ -114,6 +114,8 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			
 			.Register("tileset", Tile.Place)
 			.Register("tiledel", Tile.Delete)
+			.Register("tilesetrect", Tile.PlaceRect)
+			.Register("tiledelrect", Tile.DeleteRect)
 			.Register("ontile", Tile.OnTile);
 		#endregion
 

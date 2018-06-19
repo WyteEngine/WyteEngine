@@ -98,7 +98,7 @@ public class TileAPI : SingletonBaseBehaviour<TileAPI>
 		}
 	}
 
-	// +place <id>, <x>, <y>
+	// +tileset <id>, <x>, <y>
 	public IEnumerator Place(string _, params string[] args)
 	{
 		NArgsAssert(args.Length >= 3);
@@ -112,13 +112,76 @@ public class TileAPI : SingletonBaseBehaviour<TileAPI>
 		yield break;
 	}
 
-	// +delete <x>, <y>
+	// +tiledel <x>, <y>
 	internal IEnumerator Delete(string _, params string[] args)
 	{
 		int x, y;
 		NArgsAssert(int.TryParse(args[0], out x), 0);
 		NArgsAssert(int.TryParse(args[1], out y), 1);
 		Delete(new Vector2(x, y));
+
+		yield break;
+	}
+
+	// +tilesetrect <id>, <x1>, <y1>, <x2>, <y2>
+	public IEnumerator PlaceRect(string _, params string[] args)
+	{
+		NArgsAssert(args.Length >= 3);
+
+		string id = args[0];
+		int x1, y1, x2, y2;
+		NArgsAssert(int.TryParse(args[1], out x1), 1);
+		NArgsAssert(int.TryParse(args[2], out y1), 2);
+		NArgsAssert(int.TryParse(args[3], out x2), 3);
+		NArgsAssert(int.TryParse(args[4], out y2), 4);
+
+		if (y2 < y1)
+		{
+			var t = y2;
+			y2 = y1;
+			y1 = t;
+		}
+
+		if (x2 < x1)
+		{
+			var t = x2;
+			x2 = x1;
+			x1 = t;
+		}
+
+		for (int y = y1; y <= y2; y++)
+			for (int x = x1; x <= x2; x++)
+				Place(id, new Vector2(x, y));
+		
+		yield break;
+	}
+
+	// +tiledelrect <x1>, <y1>, <x2>, <y2>
+	internal IEnumerator DeleteRect(string _, params string[] args)
+	{
+		int x1, y1, x2, y2;
+		NArgsAssert(int.TryParse(args[0], out x1), 0);
+		NArgsAssert(int.TryParse(args[1], out y1), 1);
+		NArgsAssert(int.TryParse(args[0], out x2), 2);
+		NArgsAssert(int.TryParse(args[1], out y2), 3);
+
+		if (y2 < y1)
+		{
+			var t = y2;
+			y2 = y1;
+			y1 = t;
+		}
+
+		if (x2 < x1)
+		{
+			var t = x2;
+			x2 = x1;
+			x1 = t;
+		}
+
+		for (int y = y1; y <= y2; y++)
+			for (int x = x1; x <= x2; x++)
+				Delete(new Vector2(x, y));
 
 		yield break;
 	}
