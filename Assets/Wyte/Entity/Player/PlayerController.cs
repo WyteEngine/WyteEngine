@@ -75,9 +75,6 @@ public class PlayerController : LivableEntity
 
 	protected override void OnFixedUpdate()
 	{
-		// しないと CanMove でないときにｽｨｰってなる
-		Velocity = new Vector2(0, Velocity.y);
-
 		// 移動可能時に処理を行う
 		if (Wyte.CanMove)
 			InputKey();

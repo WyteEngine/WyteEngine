@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// NPC なオブジェクトにアタッチします。
 /// </summary>
-public class NpcBehaviour : LivableEntity, IEventable {
+public class NpcBehaviour : LivableEntity, IEventable
+{
 
 	[Header("Event")]
 	[SerializeField]
@@ -52,6 +53,8 @@ public class NpcBehaviour : LivableEntity, IEventable {
 		set { gravityScaleMultiplier = value; Velocity = new Vector2(Velocity.x, 0); }
 	}
 
+	public bool IsManagedNpc { get; set; }
+
 	public override string WalkAnimationId => walkAnimId;
 	public override string StayAnimationId => stayAnimId;
 	public override string JumpAnimationId => jumpAnimId;
@@ -61,67 +64,27 @@ public class NpcBehaviour : LivableEntity, IEventable {
 
 	public override float GravityScale => charaGravityScale * gravityScaleMultiplier;
 
-	protected BoxCollider2D playerCollider;
-
-	protected AIBaseBehaviour[] OwnAIs;
-
-	/// <summary>
-	/// 前フレームでのプレイヤー衝突判定．
-	/// </summary>
-	protected bool prevIntersects;
 
 	protected override void Start()
 	{
 		base.Start();
-		OwnAIs = GetComponents<AIBaseBehaviour>();
 	}
 
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
-		
-		foreach (var ai in OwnAIs)
-		{
-			ai.OnUpdate?.Run(this);
-		}
-
-		CheckCollision();
 	}
 
-	protected virtual void CheckCollision()
-	{
-		var intersects = IsCollidedWithPlayer();
 
+	protected override void CheckCollision(bool intersects)
+	{
 		if (intersects)
 		{
 			if (!string.IsNullOrWhiteSpace(label) && (EventKeyPushed && eventWhen == EventCondition.Talked) || !prevIntersects && eventWhen == EventCondition.Touched)
 				Novel.Run(label);
 		}
-		prevIntersects = intersects;
-		
-		if (intersects)
-		{
-			foreach (var ai in OwnAIs)
-			{
-				ai.OnCollidedWithPlayer?.Run(this);
-			}
-		}
-	}
 
-	protected virtual bool IsCollidedWithPlayer()
-	{
-		if (playerCollider == null)
-			playerCollider = Wyte.CurrentPlayer?.GetComponent<BoxCollider2D>();
-		// プレイヤーが存在しなければ常にfalse
-		if (playerCollider == null)
-			return false;
-
-		// 動けないのに死んだら理不尽だ
-		if (!Wyte.CanMove)
-			return false;
-		
-		return collider2D.bounds.Intersects(playerCollider.bounds);
-		
+		base.CheckCollision(intersects);
 	}
 
 	protected override IEnumerator OnDeath(Object killer)
@@ -139,6 +102,16 @@ public class NpcBehaviour : LivableEntity, IEventable {
 			}
 		}
 		yield return new WaitWhile(() => Novel.Runtime.IsRunning);
+	}
+
+	public override void ChangeSprite(string id)
+	{
+		base.ChangeSprite(id);
+
+		if (IsManagedNpc)
+		{
+			walkAnimId = stayAnimId = jumpAnimId = id;
+		}
 	}
 
 	bool EventKeyPushed => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Screen, true) : Input.GetKeyDown(KeyBind.Up);
