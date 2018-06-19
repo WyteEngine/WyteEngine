@@ -75,7 +75,7 @@ public abstract class LivableEntity : SpriteEntity
 			charaWidth2 = sp.bounds.size.x * 1.2f;
 			charaHead = (sp.bounds.size.y / 2) * 1.2857143f;
 			charaFoot = (sp.bounds.size.y / 2) * -1.25f;
-			collider2D.size = sp.bounds.size;
+			collider2D.size = sp.bounds.size * 0.9f;
 		}
 
 		// 落下死
