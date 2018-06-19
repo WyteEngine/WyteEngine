@@ -145,7 +145,7 @@ public class PlayerController : LivableEntity
 		ChangeSprite("entity.player.drown");
 		var targetY = transform.position.y + 300;
 		
-		UpdateUI();		
+		UpdateUI();
 
 		for (int y = (int)transform.position.y; y < targetY; y += 4)
 		{
