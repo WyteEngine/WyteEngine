@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// NPC なオブジェクトにアタッチします。
 /// </summary>
-public class NpcBehaviour : LivableEntity, IEventable {
+public class NpcBehaviour : LivableEntity, IEventable
+{
 
 	[Header("Event")]
 	[SerializeField]
