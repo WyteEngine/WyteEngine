@@ -18,16 +18,18 @@ public class TileAPI : SingletonBaseBehaviour<TileAPI>
 	[SerializeField]
 	private TileKeyValuePair[] tiles;
 
-	Tilemap tilemap;
+	Tilemap[] tilemaps;
+
+	Tilemap Tilemap => tilemaps != null && tilemaps.Length > 0 ? tilemaps[0] : null;
 
 	/// <summary>
 	/// Update is called every frame, if the MonoBehaviour is enabled.
 	/// </summary>
 	void Update()
 	{
-		if (tilemap == null)
+		if (Tilemap == null)
 		{
-			tilemap = FindObjectOfType<Tilemap>();
+			tilemaps = FindObjectsOfType<Tilemap>();
 		}
 	}
 
@@ -43,20 +45,23 @@ public class TileAPI : SingletonBaseBehaviour<TileAPI>
 
 	public void Place(TileBase tile, Vector2 pos)
 	{
-		if (tilemap == null)
+		if (Tilemap == null)
 			return;
 
-		tilemap.SetTile(Vector3Int.FloorToInt(pos), tile);
+		Tilemap.SetTile(Vector3Int.FloorToInt(pos), tile);
 	}
 
 	public void Delete(Vector2 pos)
 	{
-		Place(default(TileBase), pos);
+		foreach (var t in tilemaps)
+		{
+			t.SetTile(Vector3Int.FloorToInt(pos), null);
+		}
 	}
 
 	public bool Exists(string id, Vector2 pos)
 	{
-		if (tilemap == null)
+		if (Tilemap == null)
 			return false;
 
 		return Get(pos) == GetRegisteredTile(id);
@@ -64,10 +69,10 @@ public class TileAPI : SingletonBaseBehaviour<TileAPI>
 
 	public TileBase Get(Vector2 pos)
 	{
-		if (tilemap == null)
+		if (Tilemap == null)
 			return null;
 
-		return tilemap.GetTile(Vector3Int.FloorToInt(pos));
+		return Tilemap.GetTile(Vector3Int.FloorToInt(pos));
 	}
 
 	//+ontile <id>, <x>, <y>, <goto/gosub>, <#yes>, [#no]
@@ -162,8 +167,8 @@ public class TileAPI : SingletonBaseBehaviour<TileAPI>
 		int x1, y1, x2, y2;
 		NArgsAssert(int.TryParse(args[0], out x1), 0);
 		NArgsAssert(int.TryParse(args[1], out y1), 1);
-		NArgsAssert(int.TryParse(args[0], out x2), 2);
-		NArgsAssert(int.TryParse(args[1], out y2), 3);
+		NArgsAssert(int.TryParse(args[2], out x2), 2);
+		NArgsAssert(int.TryParse(args[3], out y2), 3);
 
 		if (y2 < y1)
 		{
