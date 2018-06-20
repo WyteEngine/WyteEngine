@@ -71,6 +71,14 @@ public class GameMaster : SingletonBaseBehaviour<GameMaster>
 		set { guiEnabled = value; }
 	}
 
+	[RuntimeInitializeOnLoadMethod]
+	static void OnLoad()
+	{
+#if UNITY_STANDALONE
+		Screen.SetResolution(640, 360, false, 60);
+#endif
+	}
+
 	/// <summary>
 	/// プレイヤーが移動可能かどうか。
 	/// </summary>
