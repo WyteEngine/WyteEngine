@@ -106,7 +106,7 @@ public abstract class LivableEntity : SpriteEntity
 			Velocity -= new Vector2(0, GravityScale * Time.fixedDeltaTime);
 		}
 		// todo あとでもっとマシに
-		rigid.velocity = Velocity;
+		rigid.velocity = Camera.IsVisible(transform.position) ? Velocity : Vector2.zero;
 	}
 
 	private void OnDrawGizmos()
