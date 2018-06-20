@@ -101,6 +101,14 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 		yield break;
 	}
 
+	public bool IsVisible(Vector3 vec)
+	{
+		var min = camMin - (camMax - camMin) / 2;
+		var max = camMax + (camMax - camMin) / 2;
+		return min.x < vec.x && vec.x < max.x && min.y < vec.y && vec.y < max.y;
+	}
+
+
 	public IEnumerator SwitchToFreeCamera(string _, string[] args)
 	{
 		if (args.Length < 2)
