@@ -30,7 +30,11 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 			mappedEntity.Clear();
 			mappedEntity.AddRange(FindObjectsOfType<LivableEntity>());
 			// 管理エンティティのリセット
-			managedEntity.ForEach(o => Destroy(o.gameObject));
+			managedEntity.ForEach(o =>
+			{
+				if (o != null)
+					Destroy(o.gameObject);
+			});
 			managedEntity.Clear();
 		};
 
