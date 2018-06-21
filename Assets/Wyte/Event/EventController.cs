@@ -116,7 +116,9 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			.Register("tiledel", Tile.Delete)
 			.Register("tilesetrect", Tile.PlaceRect)
 			.Register("tiledelrect", Tile.DeleteRect)
-			.Register("ontile", Tile.OnTile);
+			.Register("ontile", Tile.OnTile)
+
+			.Register("onplatform", OnPlatform);
 		#endregion
 
 	}
@@ -132,6 +134,83 @@ public class EventController : SingletonBaseBehaviour<EventController>
 			Debug.Log("<color=yellow>スクリプトを再読込しました．</color>", this);
 		}
 	}
+
+
+	bool PlatformIsMatch(string platformId)
+	{
+		foreach (var s in platformId.ToLower().Split(','))
+		{
+			switch (Application.platform)
+			{
+				case RuntimePlatform.WindowsEditor:
+				case RuntimePlatform.WindowsPlayer:
+					if (s == "windows" || s == "pc")
+						return true;
+					break;
+				case RuntimePlatform.OSXEditor:
+				case RuntimePlatform.OSXPlayer:
+					if (s == "mac" || s == "pc")
+						return true;
+					break;
+				case RuntimePlatform.LinuxEditor:
+				case RuntimePlatform.LinuxPlayer:
+					if (s == "linux" || s == "pc")
+						return true;
+					break;
+				case RuntimePlatform.Android:
+					if (s == "android" || s == "mobile")
+						return true;
+					break;
+				case RuntimePlatform.IPhonePlayer:
+					if (s == "ios" || s == "mobile")
+						return true;
+					break;
+				case RuntimePlatform.WebGLPlayer:
+					if (s == "web")
+						return true;
+					break;
+				case RuntimePlatform.WSAPlayerARM:
+				case RuntimePlatform.WSAPlayerX86:
+				case RuntimePlatform.WSAPlayerX64:
+					if (s == "uwp" || s == "mobile")
+						return true;
+					break;
+			}
+		}
+		return false;
+	}
+
+	IEnumerator OnPlatform(string _, params string[] args)
+	{
+		NArgsAssert(args.Length % 3 == 0);
+		string platform, gotogosub, label;
+		platform = gotogosub = label = "";
+		foreach (var a in args.Select((x, n) => new { x, n }))
+		{
+			switch (a.n % 3)
+			{
+				case 0:
+					platform = a.x;
+					break;
+				case 1:
+					NArgsAssert(a.x == "goto" || a.x == "gosub", a.n);
+					gotogosub = a.x;
+					break;
+				case 2:
+					label = a.x;
+					if (PlatformIsMatch(platform))
+						if (gotogosub == "goto")
+							yield return Novel.Runtime.Goto(null, label);
+						else
+							yield return Novel.Runtime.Gosub(null, label);
+					
+					// 念の為
+					platform = gotogosub = label = "";
+					break;
+			}
+		}
+	}
+
 
 }
 
