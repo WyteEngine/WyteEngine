@@ -142,7 +142,7 @@ public abstract class LivableEntity : SpriteEntity
 		if (IsJumping && hold)
 			Velocity -= new Vector2(0, GravityScale * 0.05f);
 
-		if (IsCeiling())
+		if (IsCeiling() && Velocity.y > 0)
 			Velocity = new Vector2(Velocity.x, charaCeilingBouness);
 	}
 
