@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 /// <summary>
 /// アニメーション可能なスプライトを持つEntityです．
 /// </summary>
@@ -91,14 +92,12 @@ public class SpriteEntity : Entity
 
 		if (AnimationMultiplier == 0f)
 		{
-			Debug.LogWarning("Value 0 was set to Animation Multiplier. It will cause division by zero. The setting will be replaced to 1 by system.");
+			Debug.LogWarning("Animation Multiplier setting is now 0. It will be a cause of division by zero. Therefore, the system replaced it to 1.");
 			AnimationMultiplier = 1;
 		}
 
-		if (GodTime > 0)
-		{
-			GodTime * 1000 % 100;
-		}
+		// 無敵のときにチカチカする
+		spriteRenderer.enabled = GodTime > 0 ? (GodTime * 1000 % 250 < 125) : true;
 
 		if (Animation != null && IsAnimating)
 		{
