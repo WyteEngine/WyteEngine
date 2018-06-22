@@ -165,6 +165,8 @@ public abstract class Entity : BaseBehaviour
 			// 殺人容疑
 			Kill(interacter);
 		}
+		else
+			OnDamaged(interacter);
 	}
 
 	public void Heal(UObject interacter, int point)
@@ -172,6 +174,7 @@ public abstract class Entity : BaseBehaviour
 		Health += point;
 		if (Health > MaxHealth)
 			Health = MaxHealth;
+		OnHealed(interacter);
 	}
 
 	public void Kill(UObject killer)
