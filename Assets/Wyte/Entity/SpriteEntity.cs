@@ -94,6 +94,12 @@ public class SpriteEntity : Entity
 			Debug.LogWarning("Value 0 was set to Animation Multiplier. It will cause division by zero. The setting will be replaced to 1 by system.");
 			AnimationMultiplier = 1;
 		}
+
+		if (GodTime > 0)
+		{
+			GodTime * 1000 % 100;
+		}
+
 		if (Animation != null && IsAnimating)
 		{
 			spriteRenderer.sprite = CurrentAnim.Sprite;
