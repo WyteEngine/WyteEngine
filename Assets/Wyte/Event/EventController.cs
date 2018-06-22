@@ -378,8 +378,12 @@ public class UnityNRuntime
 				// 実行
 				yield return command;
 			}
+
 			ProgramCounter++;
+				
 		}
+		GameMaster.Instance.CanMove = true;
+		GameMaster.Instance.IsNotFreezed = true;
 		IsRunning = false;
 	}
 
