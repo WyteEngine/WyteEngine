@@ -135,6 +135,8 @@ public class PlayerController : LivableEntity
 
 	protected override IEnumerator OnDamaged(Object interacter)
 	{
+		// 効果音を再生
+		Sfx.Play("entity.player.damage");
 		return base.OnDamaged(interacter);
 	}
 
