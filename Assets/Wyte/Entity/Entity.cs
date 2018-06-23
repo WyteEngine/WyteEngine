@@ -179,6 +179,7 @@ public abstract class Entity : BaseBehaviour
 
 	public void Kill(UObject killer)
 	{
+		Health = 0;
 		StartCoroutine(Death(killer));
 	}
 
