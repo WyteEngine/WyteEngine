@@ -69,7 +69,7 @@ public class PlayerController : LivableEntity
 	{
 
 		d.AppendLine($"pp{(int)transform.position.x},{(int)transform.position.y}")
-		 .AppendLine($"pv{(int)rigid.velocity.x},{(int)rigid.velocity.y} ")
+		 .AppendLine($"pv{(int)Velocity.x},{(int)Velocity.y} ")
 		 .AppendLine($"p{(Dying ? "DEAD" : "ALIVE")} ");
 	}
 
@@ -140,11 +140,15 @@ public class PlayerController : LivableEntity
 
 	protected override IEnumerator OnDeath(Object killer)
 	{
+		yield return base.OnDeath(killer);
 		StartCoroutine(Bgm.Stop(0.5f));
 		Sfx.Play(DeathSfxId);
 		ChangeSprite("entity.player.drown");
 		var targetY = transform.position.y + 300;
-		
+
+
+		charaGravityScale = 0;
+
 		UpdateUI();
 
 		for (int y = (int)transform.position.y; y < targetY; y += 4)
@@ -154,7 +158,7 @@ public class PlayerController : LivableEntity
 			
 			yield return null;
 		}
-		yield return new WaitForSeconds(3);
+		yield return new WaitForSeconds(2.5f);
 		Wyte.Initalize();
 	}
 }

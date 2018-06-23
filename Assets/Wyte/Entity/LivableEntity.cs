@@ -88,14 +88,15 @@ public abstract class LivableEntity : SpriteEntity
 		CheckCollision(IsCollidedWithPlayer());
 	}
 
+	protected override IEnumerator OnDeath(Object killer)
+	{
+		rigid.velocity = Velocity = Vector2.zero;
+		return base.OnDeath(killer);
+	}
+
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
-		
-		if (Dying)
-		{
-			Velocity.Set(0, 0);
-		}
 		
 		if (Velocity.y < 0 && IsGrounded())
 		{
