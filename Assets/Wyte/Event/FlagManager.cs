@@ -81,7 +81,7 @@ public class FlagManager : SingletonBaseBehaviour<FlagManager>
 
 	}
 
-	public IEnumerator Flag(string _, string[] args)
+	public new IEnumerator Flag(string _, string[] args)
 	{
 		FlagImpl(flags, args);
 		yield break;

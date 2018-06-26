@@ -229,7 +229,7 @@ public class NpcManager : SingletonBaseBehaviour<NpcManager>
 			spTag = args[0];
 			args = args.Skip(1).ToArray();
 		}
-		var npc = this[tag];
+		var npc = this[spTag];
 		if (npc == null)
 			throw new NRuntimeException($"NPC tag:{tag} は存在しません．");			
 
