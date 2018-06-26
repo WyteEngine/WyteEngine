@@ -97,7 +97,6 @@ public class SpriteEntity : Entity
 		}
 
 		// 無敵のときにチカチカする
-		spriteRenderer.enabled = GodTime > 0 ? (GodTime * 1000 % 250 < 125) : true;
 		spriteRenderer.enabled = GodTime <= 0 || (GodTime * 1000 % 250 < 125);
 
 		if (Animation != null && IsAnimating)
