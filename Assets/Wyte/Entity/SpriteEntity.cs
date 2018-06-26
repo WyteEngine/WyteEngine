@@ -112,15 +112,15 @@ public class SpriteEntity : Entity
 				if (animPtr >= Animation.Count)
 				{
 					if (Animation.UseLoop)
-				{
-					animPtr = 0;
-					loopTimes++;
-						if (Animation.LoopTimes != 0 && Animation.LoopTimes < loopTimes)
 					{
-						StopAnim();
-						loopTimes = 0;
+						animPtr = 0;
+						loopTimes++;
+						if (Animation.LoopTimes != 0 && Animation.LoopTimes < loopTimes)
+						{
+							StopAnim();
+							loopTimes = 0;
+						}
 					}
-				}
 					else
 					{
 						animPtr--;
