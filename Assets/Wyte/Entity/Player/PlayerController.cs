@@ -32,20 +32,22 @@ public class PlayerController : LivableEntity
 	public override string JumpSfxId => "entity.player.jump";
 	public override string DeathSfxId => "entity.player.death";
 
-	private int maxHealth;
+	public override int MaxHealth => Wyte.Player.MaxLife;
 
-	public override int MaxHealth => maxHealth;
+	private int prevHealth, prevWytePlayerHealth;
+
 
 	/// <summary>
 	/// 開始処理
 	/// </summary>
 	protected override void Start()
 	{
-		maxHealth = Wyte.Player.MaxLife;
 		hpGauge = GameObject.FindGameObjectWithTag("HpGauge").GetComponent<Gauge>();
 		hpNumeric = GameObject.FindGameObjectWithTag("HpNumeric").GetComponent<Text>();
 		base.Start();
 		Debugger.DebugRendering += Debugger_DebugRendering;
+		prevWytePlayerHealth = Wyte.Player.Life;
+		prevHealth = Health;
 	}
 
 	protected void UpdateUI()
@@ -80,6 +82,15 @@ public class PlayerController : LivableEntity
 			InputKey();
 		
 		UpdateUI();
+
+		if (prevHealth != Health)
+			Wyte.Player.Life = Health;
+
+		if (prevWytePlayerHealth != Wyte.Player.Life)
+			Health = Wyte.Player.Life;
+
+		prevHealth = Health;
+		prevWytePlayerHealth = Wyte.Player.Life;
 		base.OnFixedUpdate();
 	}
 
