@@ -44,6 +44,16 @@ public static class MathHelper
 	public static Vector3 EaseOut(float time, Vector3 start, Vector3 end) => new Vector3(EaseOut(time, start.x, end.x), EaseOut(time, start.y, end.y), EaseOut(time, start.z, end.z));
 
 	/// <summary>
+	/// 加速移動を計算します。
+	/// </summary>
+	/// <returns>The out.</returns>
+	/// <param name="time">Time.</param>
+	/// <param name="start">Start.</param>
+	/// <param name="end">End.</param>
+	public static Vector3 EaseIn(float time, Vector3 start, Vector3 end) => new Vector3(EaseIn(time, start.x, end.x), EaseIn(time, start.y, end.y), EaseIn(time, start.z, end.z));
+
+
+	/// <summary>
 	/// 角度を弧度に変換します。
 	/// </summary>
 	/// <returns>The radian.</returns>
