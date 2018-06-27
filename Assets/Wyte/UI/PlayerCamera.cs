@@ -23,6 +23,8 @@ public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 
 	private Vector3 camMin, camMax;
 
+	public Rect CameraRects => new Rect((camMin + camMax) / 2, camMax - camMin);
+
 	void Start()
 	{
 		Wyte.GameReset += (wyte) =>
