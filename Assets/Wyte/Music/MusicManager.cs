@@ -42,7 +42,15 @@ public class MusicManager : SingletonBaseBehaviour<MusicManager>
 		Debugger.DebugRendering += (d) => d.Append($"bgm:{songName ?? "none"} ");
 	}
 
-	public MusicData Get(string id) => Songs.FirstOrDefault(m => m.Id == id);
+	public MusicData Get(string id)
+	{
+		var data = Songs.FirstOrDefault(m => m.Id == id);
+		if (data.Clip == null)
+		{
+			Debug.LogWarning($"Music ID {id} doesn't exist.");
+		}
+		return data;
+	}
 
 	public void Play(string id)
 	{

@@ -33,6 +33,11 @@ public class SfxManager : SingletonBaseBehaviour<SfxManager>
 	public void Play(string id)
 	{
 		var targetEffects = Effects.FirstOrDefault(e => e.Id == id);
+		if (targetEffects.Clip == null)
+		{
+			Debug.LogWarning($"SFX ID {id} doesn't exist.");
+			return;
+		}
 		source.PlayOneShot(targetEffects.Clip);
 	}
 

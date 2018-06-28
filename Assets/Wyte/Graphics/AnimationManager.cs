@@ -16,6 +16,15 @@ public class AnimationManager : SingletonBaseBehaviour<AnimationManager>
 
 	public AnimationKeyValuePair[] Animation => animations;
 
-	public WyteAnimation this[string key] => animations?.FirstOrDefault(a => a.Key == key)?.Value;
+	public WyteAnimation this[string key]
+	{
+		get
+		{
+			var an = animations?.FirstOrDefault(a => a.Key == key)?.Value;
+			if (an == null)
+				Debug.LogWarning($"Animation ID {key} doesn't exist.");
+			return an;
+		}
+	}
 
 }
