@@ -9,11 +9,11 @@ namespace WyteEngine.Map
 {
 	public class MapManager : SingletonBaseBehaviour<MapManager>
 	{
-		public MapProperty[] Maps;
+		public MapPropertyBase[] Maps;
 
 		private GameObject currentMapObject;
 
-		public MapProperty CurrentMap { get; private set; }
+		public MapPropertyBase CurrentMap { get; private set; }
 		public Rect CurrentMapSize { get; private set; }
 
 		private void Start()
@@ -45,25 +45,10 @@ namespace WyteEngine.Map
 
 			currentMapObject = Instantiate(map.gameObject) as GameObject;
 			CurrentMap = map;
-			var tmaps = map.gameObject.GetComponentsInChildren<Tilemap>();
-			var cs = map.gameObject.GetComponent<Grid>().cellSize;
-			var rect = Rect.zero;
-			foreach (var tmap in tmaps)
-			{
-				tmap.CompressBounds();
-				var b = tmap.cellBounds;
-				float x = cs.x, y = cs.y;
-				var r = Rect.MinMaxRect(b.xMin * x, b.yMin * y, b.xMax * x, b.yMax * y);
-
-				// 取得したものが大きければその分広げる
-				rect.xMin = r.xMin < rect.xMin ? r.xMin : rect.xMin;
-				rect.yMin = r.yMin < rect.yMin ? r.yMin : rect.yMin;
-				rect.xMax = rect.xMax < r.xMax ? r.xMax : rect.xMax;
-				rect.yMax = rect.yMax < r.yMax ? r.yMax : rect.yMax;
-			}
+			CurrentMap.Initialize(this);
 
 
-			CurrentMapSize = rect;
+			CurrentMapSize = CurrentMap.Size;
 
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().backgroundColor = map.BackColor;
 			MapChanged?.Invoke(map);
