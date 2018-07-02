@@ -5,19 +5,6 @@ using UnityEngine;
 using WyteEngine.Event;
 namespace WyteEngine.Sfx
 {
-
-	[System.Serializable]
-	public struct SfxData
-	{
-		[SerializeField]
-		private string id;
-		[SerializeField]
-		private AudioClip clip;
-
-		public string Id => id;
-		public AudioClip Clip => clip;
-	}
-
 	[RequireComponent(typeof(AudioSource))]
 	public class SfxManager : SingletonBaseBehaviour<SfxManager>
 	{
@@ -59,5 +46,17 @@ namespace WyteEngine.Sfx
 			Play(NovelHelper.CombineAll(args));
 			yield break;
 		}
+	}
+
+	[System.Serializable]
+	public struct SfxData
+	{
+		[SerializeField]
+		private string id;
+		[SerializeField]
+		private AudioClip clip;
+
+		public string Id => id;
+		public AudioClip Clip => clip;
 	}
 }

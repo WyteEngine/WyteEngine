@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using Novel.Exceptions;
-using static WyteEngine.Event.NovelHelper;
 using System.Linq;
+using WyteEngine.Event;
 
 namespace WyteEngine.Entities
 {
@@ -135,8 +135,8 @@ namespace WyteEngine.Entities
 				if (args.Length > 4)
 					throw new NRuntimeException("引数が多すぎます．");
 
-				pos.x = TryParse(args[2]);
-				pos.y = TryParse(args[3]);
+				pos.x = NovelHelper.TryParse(args[2]);
+				pos.y = NovelHelper.TryParse(args[3]);
 			}
 			SpSet(spTag, id, pos);
 			yield break;
@@ -166,8 +166,8 @@ namespace WyteEngine.Entities
 				args = args.Skip(1).ToArray();
 			}
 			NArgsAssert(args.Length == 2);
-			var x = TryParse(args[0]);
-			var y = TryParse(args[1]);
+			var x = NovelHelper.TryParse(args[0]);
+			var y = NovelHelper.TryParse(args[1]);
 			SpOfs(spTag, new Vector2(x, y));
 			yield break;
 		}
@@ -237,8 +237,8 @@ namespace WyteEngine.Entities
 
 			NArgsAssert(args.Length == 2);
 
-			distance = TryParse(args[0]);
-			time = TryParse(args[1]);
+			distance = NovelHelper.TryParse(args[0]);
+			time = NovelHelper.TryParse(args[1]);
 			// 速さ = 距離 / 時間
 			var speed = distance / time;
 			if (float.IsNaN(speed) || float.IsInfinity(speed))

@@ -6,7 +6,7 @@ using Novel.Models;
 using Novel.Parsing;
 using System;
 using Novel.Exceptions;
-using static WyteEngine.Event.NovelHelper;
+using WyteEngine.Event;
 using WyteEngine.UI;
 
 namespace WyteEngine.Event
@@ -331,7 +331,7 @@ namespace WyteEngine.Event
 		{
 			ProgramCounter = 0;
 			NullCheck(code);
-			label = GetLabelString(label);
+			label = NovelHelper.GetLabelString(label);
 			if (!string.IsNullOrWhiteSpace(label))
 				if (code.Labels.ContainsKey(label))
 					ProgramCounter = code.Labels[label];
@@ -395,7 +395,7 @@ namespace WyteEngine.Event
 		int GetLine(string label)
 		{
 			// Nullチェックと整形
-			label = GetLabelString(label);
+			label = NovelHelper.GetLabelString(label);
 
 			if (!code.Labels.ContainsKey(label))
 				throw new NRuntimeException($"ラベル \"{label}\"が存在しません．");
@@ -411,7 +411,7 @@ namespace WyteEngine.Event
 		{
 			if (args.Length == 0)
 				throw new NRuntimeException("移動先のラベルが指定されていません．");
-			var label = GetLine(CombineAll(args));
+			var label = GetLine(NovelHelper.CombineAll(args));
 			// 移動する
 			Goto(label);
 			yield break;
@@ -443,7 +443,7 @@ namespace WyteEngine.Event
 		public IEnumerator Wait(string spriteTags, string[] args)
 		{
 			float i;
-			if (!float.TryParse(CombineAll(args), out i))
+			if (!float.TryParse(NovelHelper.CombineAll(args), out i))
 				throw new NRuntimeException("不正な数値です．");
 			yield return new WaitForSeconds(i);
 		}

@@ -3,25 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Novel.Exceptions;
-using static WyteEngine.Event.NovelHelper;
+using WyteEngine.Event;
 namespace WyteEngine.Music
 {
-
-	[System.Serializable]
-	public struct MusicData
-	{
-		[SerializeField]
-		private string id;
-		[SerializeField]
-		private AudioClip clip;
-		[SerializeField]
-		private bool loop;
-
-		public string Id => id;
-		public AudioClip Clip => clip;
-		public bool Loop => loop;
-	}
-
 	[RequireComponent(typeof(AudioSource))]
 	public class MusicManager : SingletonBaseBehaviour<MusicManager>
 	{
@@ -91,13 +75,13 @@ namespace WyteEngine.Music
 
 		public IEnumerator Play(string t, string[] a)
 		{
-			Play(CombineAll(a));
+			Play(NovelHelper.CombineAll(a));
 			yield break;
 		}
 
 		public IEnumerator Change(string t, string[] a)
 		{
-			Change(CombineAll(a));
+			Change(NovelHelper.CombineAll(a));
 			yield break;
 		}
 
@@ -109,7 +93,7 @@ namespace WyteEngine.Music
 			}
 			else
 			{
-				float i = TryParse(CombineAll(a));
+				float i = NovelHelper.TryParse(NovelHelper.CombineAll(a));
 				yield return Stop(i);
 			}
 		}
@@ -143,5 +127,20 @@ namespace WyteEngine.Music
 			Stop();
 			source.volume = 1;
 		}
+	}
+
+	[System.Serializable]
+	public struct MusicData
+	{
+		[SerializeField]
+		private string id;
+		[SerializeField]
+		private AudioClip clip;
+		[SerializeField]
+		private bool loop;
+
+		public string Id => id;
+		public AudioClip Clip => clip;
+		public bool Loop => loop;
 	}
 }
