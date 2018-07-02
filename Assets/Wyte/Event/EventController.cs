@@ -6,485 +6,489 @@ using Novel.Models;
 using Novel.Parsing;
 using System;
 using Novel.Exceptions;
-using static NovelHelper;
+using static WyteEngine.Event.NovelHelper;
+using WyteEngine.UI;
 
-/// <summary>
-/// Novel スクリプトを用いてゲームを制御します。
-/// </summary>
-public class EventController : SingletonBaseBehaviour<EventController>
+namespace WyteEngine.Event
 {
-	UnityNRuntime runtime;
-	public UnityNRuntime Runtime => runtime;
-
-	IEnumerable<TextAsset> Load() => Resources.LoadAll("Event", typeof(TextAsset)).Cast<TextAsset>();
-
-	// Use this for initialization
-	void Start()
+	/// <summary>
+	/// Novel スクリプトを用いてゲームを制御します。
+	/// </summary>
+	public class EventController : SingletonBaseBehaviour<EventController>
 	{
-		// ランタイムの用意
-		runtime = new UnityNRuntime(Load(), MessageContoller.Instance.Say);
+		UnityNRuntime runtime;
+		public UnityNRuntime Runtime => runtime;
 
-		#region WyteEngine Novel API の登録
-		// hack マネージャーの読み込みがまともになり次第ちゃんとする
-		runtime
-			// Fade
-			.Register("fade", FadeController.Instance.Fade)
-			// Fade Asynchronously
-			.Register("fadeasync", FadeController.Instance.FadeAsync)
+		IEnumerable<TextAsset> Load() => Resources.LoadAll("Event", typeof(TextAsset)).Cast<TextAsset>();
 
-			// Play BGM
-			.Register("bgmplay", Bgm.Play)
-			// Change BGM with keeping its time sample
-			.Register("bgmchange", Bgm.Change)
-			// Stop BGM
-			.Register("bgmstop", Bgm.Stop)
-			// Stop BGM Asynchronously
-			.Register("bgmstopasync", Bgm.StopAsync)
+		// Use this for initialization
+		void Start()
+		{
+			// ランタイムの用意
+			runtime = new UnityNRuntime(Load(), MessageContoller.Instance.Say);
 
-			// Sound FX 
-			.Register("sfx", Sfx.Play)
-			// Alias
-			.Register("se", Sfx.Play)
+			#region WyteEngine Novel API の登録
+			// hack マネージャーの読み込みがまともになり次第ちゃんとする
+			runtime
+				// Fade
+				.Register("fade", FadeController.Instance.Fade)
+				// Fade Asynchronously
+				.Register("fadeasync", FadeController.Instance.FadeAsync)
 
-			// Map Moving
-			.Register("move", Map.Move)
+				// Play BGM
+				.Register("bgmplay", Bgm.Play)
+				// Change BGM with keeping its time sample
+				.Register("bgmchange", Bgm.Change)
+				// Stop BGM
+				.Register("bgmstop", Bgm.Stop)
+				// Stop BGM Asynchronously
+				.Register("bgmstopasync", Bgm.StopAsync)
 
-			// Show Player
-			.Register("pshow", Wyte.PlayerShow)
-			// Hide Player
-			.Register("phide", Wyte.PlayerHide)
+				// Sound FX 
+				.Register("sfx", Sfx.Play)
+				// Alias
+				.Register("se", Sfx.Play)
 
-			// Edit Flag
-			.Register("flag", Flag.Flag)
-			// Event by Flag
-			.Register("onflag", Flag.OnFlag)
+				// Map Moving
+				.Register("move", Map.Move)
 
-			// Edit Skip Flag
-			.Register("sflag", Flag.SkipFlag)
-			// Event by Skip Flag
-			.Register("onsflag", Flag.OnSkipFlag)
+				// Show Player
+				.Register("pshow", Wyte.PlayerShow)
+				// Hide Player
+				.Register("phide", Wyte.PlayerHide)
 
-			// Edit Area Flag
-			.Register("aflag", Flag.AreaFlag)
-			// Event by Area Flag
-			.Register("onaflag", Flag.OnAreaFlag)
+				// Edit Flag
+				.Register("flag", Flag.Flag)
+				// Event by Flag
+				.Register("onflag", Flag.OnFlag)
 
-			// Say message
-			.Register("say", MessageContoller.Instance.Say)
+				// Edit Skip Flag
+				.Register("sflag", Flag.SkipFlag)
+				// Event by Skip Flag
+				.Register("onsflag", Flag.OnSkipFlag)
 
-			// Set GUI　visiblity
-			.Register("gui", Wyte.Gui)
+				// Edit Area Flag
+				.Register("aflag", Flag.AreaFlag)
+				// Event by Area Flag
+				.Register("onaflag", Flag.OnAreaFlag)
 
-			// Freeze All
-			.Register("freeze", Wyte.Freeze)
-			// Freeze the Player
-			.Register("pfreeze", Wyte.PlayerFreeze)
+				// Say message
+				.Register("say", MessageContoller.Instance.Say)
 
-			// Switch to the PlayerCamera
-			.Register("playercamera", Camera.SwitchToPlayerCamera)
-			// Switch to the FreeCamera
-			.Register("freecamera", Camera.SwitchToFreeCamera)
+				// Set GUI　visiblity
+				.Register("gui", Wyte.Gui)
 
-			// Set a NPC
-			.Register("spset", Npc.SpSet)
-			// Set a non-gravity object (simple sprite)
-			.Register("spsetf", Npc.SpSetF)
-			// Move the NPC to specified location
-			.Register("spofs", Npc.SpOfs)
-			// Change the Wyte Animation of the NPC
-			.Register("spchr", Npc.SpChr)
-			// Remove the NPC
-			.Register("spclr", Npc.SpClr)
-			// Let the NPC walk
-			.Register("spwalk", Npc.SpWalk)
-			// Set a entity event
-			.Register("speve", Npc.SpEvent)
+				// Freeze All
+				.Register("freeze", Wyte.Freeze)
+				// Freeze the Player
+				.Register("pfreeze", Wyte.PlayerFreeze)
 
-			// Wait any input from a player
-			.Register("nod", (t, a) => MessageContoller.Nod())
+				// Switch to the PlayerCamera
+				.Register("playercamera", Camera.SwitchToPlayerCamera)
+				// Switch to the FreeCamera
+				.Register("freecamera", Camera.SwitchToFreeCamera)
 
-			// Create a managed text object
-			.Register("txtset", TextMan.TxtSet)
-			// Change a specified object's position
-			.Register("txtofs", TextMan.TxtOfs)
-			// Change string, color xor alignment of a specified object.
-			.Register("txtmod", TextMan.TxtMod)
-			// Delete a text object
-			.Register("txtclr", TextMan.TxtClr)
-			
-			.Register("tileset", Tile.Place)
-			.Register("tiledel", Tile.Delete)
-			.Register("tilesetrect", Tile.PlaceRect)
-			.Register("tiledelrect", Tile.DeleteRect)
-			.Register("ontile", Tile.OnTile)
+				// Set a NPC
+				.Register("spset", Npc.SpSet)
+				// Set a non-gravity object (simple sprite)
+				.Register("spsetf", Npc.SpSetF)
+				// Move the NPC to specified location
+				.Register("spofs", Npc.SpOfs)
+				// Change the Wyte Animation of the NPC
+				.Register("spchr", Npc.SpChr)
+				// Remove the NPC
+				.Register("spclr", Npc.SpClr)
+				// Let the NPC walk
+				.Register("spwalk", Npc.SpWalk)
+				// Set a entity event
+				.Register("speve", Npc.SpEvent)
 
-			.Register("onplatform", OnPlatform);
+				// Wait any input from a player
+				.Register("nod", (t, a) => MessageContoller.Nod())
+
+				// Create a managed text object
+				.Register("txtset", TextMan.TxtSet)
+				// Change a specified object's position
+				.Register("txtofs", TextMan.TxtOfs)
+				// Change string, color xor alignment of a specified object.
+				.Register("txtmod", TextMan.TxtMod)
+				// Delete a text object
+				.Register("txtclr", TextMan.TxtClr)
+
+				.Register("tileset", Tile.Place)
+				.Register("tiledel", Tile.Delete)
+				.Register("tilesetrect", Tile.PlaceRect)
+				.Register("tiledelrect", Tile.DeleteRect)
+				.Register("ontile", Tile.OnTile)
+
+				.Register("onplatform", OnPlatform);
+			#endregion
+
+		}
+
+		public void Run(string label) => StartCoroutine(runtime.Call(label));
+		// Update is called once per frame
+		void Update()
+		{
+			// スクリプトリロード
+			if (Wyte.IsDebugMode && Input.GetKeyDown(KeyCode.F2))
+			{
+				runtime.Reload(Load());
+				Debug.Log("<color=yellow>スクリプトを再読込しました．</color>", this);
+			}
+		}
+
+
+		bool PlatformIsMatch(string platformId)
+		{
+			foreach (var s in platformId.ToLower().Split(','))
+			{
+				switch (Application.platform)
+				{
+					case RuntimePlatform.WindowsEditor:
+					case RuntimePlatform.WindowsPlayer:
+						if (s == "windows" || s == "pc")
+							return true;
+						break;
+					case RuntimePlatform.OSXEditor:
+					case RuntimePlatform.OSXPlayer:
+						if (s == "mac" || s == "pc")
+							return true;
+						break;
+					case RuntimePlatform.LinuxEditor:
+					case RuntimePlatform.LinuxPlayer:
+						if (s == "linux" || s == "pc")
+							return true;
+						break;
+					case RuntimePlatform.Android:
+						if (s == "android" || s == "mobile")
+							return true;
+						break;
+					case RuntimePlatform.IPhonePlayer:
+						if (s == "ios" || s == "mobile")
+							return true;
+						break;
+					case RuntimePlatform.WebGLPlayer:
+						if (s == "web")
+							return true;
+						break;
+					case RuntimePlatform.WSAPlayerARM:
+					case RuntimePlatform.WSAPlayerX86:
+					case RuntimePlatform.WSAPlayerX64:
+						if (s == "uwp" || s == "mobile")
+							return true;
+						break;
+				}
+			}
+			return false;
+		}
+
+		IEnumerator OnPlatform(string _, params string[] args)
+		{
+			NArgsAssert(args.Length % 3 == 0);
+			string platform, gotogosub, label;
+			platform = gotogosub = label = "";
+			foreach (var a in args.Select((x, n) => new { x, n }))
+			{
+				switch (a.n % 3)
+				{
+					case 0:
+						platform = a.x;
+						break;
+					case 1:
+						NArgsAssert(a.x == "goto" || a.x == "gosub", a.n);
+						gotogosub = a.x;
+						break;
+					case 2:
+						label = a.x;
+						if (PlatformIsMatch(platform))
+							if (gotogosub == "goto")
+								yield return Novel.Runtime.Goto(null, label);
+							else
+								yield return Novel.Runtime.Gosub(null, label);
+
+						// 念の為
+						platform = gotogosub = label = "";
+						break;
+				}
+			}
+		}
+
+
+	}
+
+	public delegate IEnumerator UnityNCommand(string spriteTags, params string[] args);
+
+	/// <summary>
+	/// Unity のコルーチンとして動作する Novel ランタイム．
+	/// </summary>
+	public class UnityNRuntime
+	{
+		/// <summary>
+		/// 実行可能な Novel コード．
+		/// </summary>
+		INCode code;
+
+		/// <summary>
+		/// Novel コマンドのテーブル．
+		/// </summary>
+		Dictionary<string, UnityNCommand> commands;
+
+		/// <summary>
+		/// 現在実行されている Novel プログラムのアドレス．
+		/// </summary>
+		public int ProgramCounter { get; private set; }
+
+		/// <summary>
+		/// サブルーチン実行用のスタック
+		/// </summary>
+		private Stack<int> goSubStack;
+
+
+		/// <summary>
+		/// 実行中であるかどうか．
+		/// </summary>
+		/// <value><c>tsrue</c> if is running; otherwise, <c>false</c>.</value>
+		public bool IsRunning { get; private set; }
+
+		/// <summary>
+		/// エラー出力用 Novel コマンド。
+		/// </summary>
+		UnityNCommand outErr;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:UnityNRuntime"/> class.
+		/// </summary>
+		/// <param name="assets">スクリプト アセット。</param>
+		/// <param name="errorCommand">エラー時の出力に使用するNovel コマンド。</param>
+		public UnityNRuntime(IEnumerable<TextAsset> assets, UnityNCommand errorCommand)
+		{
+			commands = new Dictionary<string, UnityNCommand>();
+			// combined text asset
+			Reload(assets);
+			outErr = errorCommand;
+			goSubStack = new Stack<int>();
+
+			#region 組み込みコマンド登録
+			commands["goto"] = Goto;
+			commands["debug"] = Debug;
+			commands["wait"] = Wait;
+			commands["end"] = End;
+			commands["gosub"] = Gosub;
+			commands["return"] = Return;
+			#endregion
+		}
+
+		public void Reload(IEnumerable<TextAsset> assets)
+		{
+			// combined text asset
+			var text = string.Join("\n", assets.Select(a => a.text));
+			code = NParser.Parse(text);
+		}
+
+
+		/// <summary>
+		/// Null チェックを行います
+		/// 
+		/// </summary>
+		/// <param name="target">Target.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		void NullCheck<T>(T target) where T : class
+		{
+			if (target == null) throw new ArgumentNullException();
+		}
+
+		/// <summary>
+		/// Novel コマンドの登録を行います．
+		/// </summary>
+		/// <returns>このインスタンスをそのまま返します．これによってメソッドチェーンが可能です．</returns>
+		/// <param name="name">Name.</param>
+		/// <param name="command">Command.</param>
+		public UnityNRuntime Register(string name, UnityNCommand command)
+		{
+			// 申し訳ないが重複はNG.
+			if (commands.ContainsKey(name))
+				throw new ArgumentException($"The command name {name} is duplicated.");
+			#region NullCheck
+			NullCheck(name);
+			NullCheck(command);
+			// 通る場合，それは通常ならありえない挙動．クラスのバグか，リフレクション等の不正アクセス，またはランタイムのバグ．
+			if (commands == null)
+				throw new InvalidOperationException("bug: Command Dictionary is null");
+			#endregion
+
+			commands.Add(name, command);
+
+			return this;
+		}
+
+		/// <summary>
+		/// 指定されたラベルから，コード実行を行います．ラベルが空であったり，存在しない場合冒頭から実行します．
+		/// </summary>
+		/// <returns>コルーチンを返却します．MonoBehaviourで実行するようにしてください．</returns>
+		/// <param name="label">Label.</param>
+		public IEnumerator Call(string label = default(string))
+		{
+			ProgramCounter = 0;
+			NullCheck(code);
+			label = GetLabelString(label);
+			if (!string.IsNullOrWhiteSpace(label))
+				if (code.Labels.ContainsKey(label))
+					ProgramCounter = code.Labels[label];
+			IsRunning = true;
+			return StartEngine();
+		}
+
+		/// <summary>
+		/// ランタイムのコルーチンです．
+		/// </summary>
+		/// <returns>The engine.</returns>
+		IEnumerator StartEngine()
+		{
+			while (true)
+			{
+				// コードの終端に到達したら終了．
+				if (ProgramCounter > code.Statements.Length - 1)
+					break;
+				// stop
+				if (!IsRunning)
+					break;
+				// ステートメントを取得
+				var statement = code.Statements[ProgramCounter];
+				if (!commands.ContainsKey(statement.CommandName))
+				{
+					UnityEngine.Debug.LogWarning($"Command Not Found `{statement.CommandName}`");
+				}
+				else
+				{
+					IEnumerator command = null;
+					// 試行
+					try
+					{
+						command = commands[statement.CommandName.ToLower()](statement.SpriteTag, statement.Arguments);
+					}
+					// スクリプトに起因するエラー。
+					catch (NRuntimeException ex)
+					{
+						command = outErr?.Invoke("エラー:" + ex.Message);
+					}
+					// バグなどによる予期せぬエラー。
+					catch (Exception ex)
+					{
+						command = outErr?.Invoke("予期せぬエラー:" + ex.Message);
+					}
+
+					// 実行
+					yield return command;
+				}
+
+				ProgramCounter++;
+
+			}
+			GameMaster.Instance.CanMove = true;
+			GameMaster.Instance.IsNotFreezed = true;
+			IsRunning = false;
+		}
+
+		#region 組み込みコマンド用ヘルパーメソッド
+
+		int GetLine(string label)
+		{
+			// Nullチェックと整形
+			label = GetLabelString(label);
+
+			if (!code.Labels.ContainsKey(label))
+				throw new NRuntimeException($"ラベル \"{label}\"が存在しません．");
+			return code.Labels[label];
+		}
+
+		#endregion
+
+		public void Goto(int ptr) => ProgramCounter = ptr - 1;
+
+		#region 組み込みコマンド実装
+		public IEnumerator Goto(string t, params string[] args)
+		{
+			if (args.Length == 0)
+				throw new NRuntimeException("移動先のラベルが指定されていません．");
+			var label = GetLine(CombineAll(args));
+			// 移動する
+			Goto(label);
+			yield break;
+		}
+
+		public IEnumerator Gosub(string _, params string[] args)
+		{
+			if (goSubStack.Count > 20)
+				throw new NRuntimeException("スタックオーバーフローです．");
+			goSubStack.Push(ProgramCounter + 1);
+			return Goto(_, args);
+		}
+
+		public IEnumerator Return(string _, params string[] args)
+		{
+			if (goSubStack.Count < 1)
+				throw new NRuntimeException("サブルーチンにいません．");
+			Goto(goSubStack.Pop());
+			yield break;
+		}
+
+		public IEnumerator Debug(string t, params string[] args)
+		{
+			UnityEngine.Debug.Log($"{t}+Debug {string.Join(", ", args)}");
+			yield break;
+		}
+
+
+		public IEnumerator Wait(string spriteTags, string[] args)
+		{
+			float i;
+			if (!float.TryParse(CombineAll(args), out i))
+				throw new NRuntimeException("不正な数値です．");
+			yield return new WaitForSeconds(i);
+		}
+
+		public IEnumerator End(string tag, string[] args)
+		{
+			IsRunning = false;
+			yield break;
+		}
 		#endregion
 
 	}
 
-	public void Run(string label) => StartCoroutine(runtime.Call(label));
-	// Update is called once per frame
-	void Update()
+	public static class NovelHelper
 	{
-		// スクリプトリロード
-		if (Wyte.IsDebugMode && Input.GetKeyDown(KeyCode.F2))
+		public static float TryParse(string numeric)
 		{
-			runtime.Reload(Load());
-			Debug.Log("<color=yellow>スクリプトを再読込しました．</color>", this);
+			float ret;
+			if (!float.TryParse(numeric, out ret))
+				throw new NRuntimeException("型が一致しません．");
+			return ret;
 		}
-	}
 
+		/// <summary>
+		/// 問答無用で文字列配列をそのまま連結します．引数の区切りがいらない場合に便利です．
+		/// </summary>
+		/// <returns>連結された文字列．</returns>
+		/// <param name="strings">連結してほしい文字列を含む配列．</param>
+		public static string CombineAll(string[] strings) => string.Join("", strings);
 
-	bool PlatformIsMatch(string platformId)
-	{
-		foreach (var s in platformId.ToLower().Split(','))
+		/// <summary>
+		/// ラベル文字列を整形します．
+		/// </summary>
+		/// <returns>The label string.</returns>
+		/// <param name="label">Label.</param>
+		public static string GetLabelString(string label)
 		{
-			switch (Application.platform)
-			{
-				case RuntimePlatform.WindowsEditor:
-				case RuntimePlatform.WindowsPlayer:
-					if (s == "windows" || s == "pc")
-						return true;
-					break;
-				case RuntimePlatform.OSXEditor:
-				case RuntimePlatform.OSXPlayer:
-					if (s == "mac" || s == "pc")
-						return true;
-					break;
-				case RuntimePlatform.LinuxEditor:
-				case RuntimePlatform.LinuxPlayer:
-					if (s == "linux" || s == "pc")
-						return true;
-					break;
-				case RuntimePlatform.Android:
-					if (s == "android" || s == "mobile")
-						return true;
-					break;
-				case RuntimePlatform.IPhonePlayer:
-					if (s == "ios" || s == "mobile")
-						return true;
-					break;
-				case RuntimePlatform.WebGLPlayer:
-					if (s == "web")
-						return true;
-					break;
-				case RuntimePlatform.WSAPlayerARM:
-				case RuntimePlatform.WSAPlayerX86:
-				case RuntimePlatform.WSAPlayerX64:
-					if (s == "uwp" || s == "mobile")
-						return true;
-					break;
-			}
+			// null or empty チェック
+			if (string.IsNullOrEmpty(label))
+				throw new ArgumentNullException(nameof(label));
+
+			// 仕様上，#をつけてもつけなくてもよい
+			if (label[0] == '#')
+				label = label.Remove(0, 1);
+			return label;
 		}
-		return false;
-	}
-
-	IEnumerator OnPlatform(string _, params string[] args)
-	{
-		NArgsAssert(args.Length % 3 == 0);
-		string platform, gotogosub, label;
-		platform = gotogosub = label = "";
-		foreach (var a in args.Select((x, n) => new { x, n }))
-		{
-			switch (a.n % 3)
-			{
-				case 0:
-					platform = a.x;
-					break;
-				case 1:
-					NArgsAssert(a.x == "goto" || a.x == "gosub", a.n);
-					gotogosub = a.x;
-					break;
-				case 2:
-					label = a.x;
-					if (PlatformIsMatch(platform))
-						if (gotogosub == "goto")
-							yield return Novel.Runtime.Goto(null, label);
-						else
-							yield return Novel.Runtime.Gosub(null, label);
-					
-					// 念の為
-					platform = gotogosub = label = "";
-					break;
-			}
-		}
-	}
-
-
-}
-
-public delegate IEnumerator UnityNCommand(string spriteTags, params string[] args);
-
-/// <summary>
-/// Unity のコルーチンとして動作する Novel ランタイム．
-/// </summary>
-public class UnityNRuntime
-{
-	/// <summary>
-	/// 実行可能な Novel コード．
-	/// </summary>
-	INCode code;
-
-	/// <summary>
-	/// Novel コマンドのテーブル．
-	/// </summary>
-	Dictionary<string, UnityNCommand> commands;
-
-	/// <summary>
-	/// 現在実行されている Novel プログラムのアドレス．
-	/// </summary>
-	public int ProgramCounter { get; private set; }
-
-	/// <summary>
-	/// サブルーチン実行用のスタック
-	/// </summary>
-	private Stack<int> goSubStack;
-
-
-	/// <summary>
-	/// 実行中であるかどうか．
-	/// </summary>
-	/// <value><c>tsrue</c> if is running; otherwise, <c>false</c>.</value>
-	public bool IsRunning { get; private set; }
-
-	/// <summary>
-	/// エラー出力用 Novel コマンド。
-	/// </summary>
-	UnityNCommand outErr;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="T:UnityNRuntime"/> class.
-	/// </summary>
-	/// <param name="assets">スクリプト アセット。</param>
-	/// <param name="errorCommand">エラー時の出力に使用するNovel コマンド。</param>
-	public UnityNRuntime(IEnumerable<TextAsset> assets, UnityNCommand errorCommand)
-	{
-		commands = new Dictionary<string, UnityNCommand>();
-		// combined text asset
-		Reload(assets);
-		outErr = errorCommand;
-		goSubStack = new Stack<int>();
-
-		#region 組み込みコマンド登録
-		commands["goto"] = Goto;
-		commands["debug"] = Debug;
-		commands["wait"] = Wait;
-		commands["end"] = End;
-		commands["gosub"] = Gosub;
-		commands["return"] = Return;
-		#endregion
-	}
-
-	public void Reload(IEnumerable<TextAsset> assets)
-	{
-		// combined text asset
-		var text = string.Join("\n", assets.Select(a => a.text));
-		code = NParser.Parse(text);
-	}
-
-
-	/// <summary>
-	/// Null チェックを行います
-	/// 
-	/// </summary>
-	/// <param name="target">Target.</param>
-	/// <typeparam name="T">The 1st type parameter.</typeparam>
-	void NullCheck<T>(T target) where T : class
-	{
-		if (target == null) throw new ArgumentNullException();
-	}
-
-	/// <summary>
-	/// Novel コマンドの登録を行います．
-	/// </summary>
-	/// <returns>このインスタンスをそのまま返します．これによってメソッドチェーンが可能です．</returns>
-	/// <param name="name">Name.</param>
-	/// <param name="command">Command.</param>
-	public UnityNRuntime Register(string name, UnityNCommand command)
-	{
-		// 申し訳ないが重複はNG.
-		if (commands.ContainsKey(name))
-			throw new ArgumentException($"The command name {name} is duplicated.");
-		#region NullCheck
-		NullCheck(name);
-		NullCheck(command);
-		// 通る場合，それは通常ならありえない挙動．クラスのバグか，リフレクション等の不正アクセス，またはランタイムのバグ．
-		if (commands == null)
-			throw new InvalidOperationException("bug: Command Dictionary is null");
-		#endregion
-
-		commands.Add(name, command);
-
-		return this;
-	}
-
-	/// <summary>
-	/// 指定されたラベルから，コード実行を行います．ラベルが空であったり，存在しない場合冒頭から実行します．
-	/// </summary>
-	/// <returns>コルーチンを返却します．MonoBehaviourで実行するようにしてください．</returns>
-	/// <param name="label">Label.</param>
-	public IEnumerator Call(string label = default(string))
-	{
-		ProgramCounter = 0;
-		NullCheck(code);
-		label = GetLabelString(label);
-		if (!string.IsNullOrWhiteSpace(label))
-			if (code.Labels.ContainsKey(label))
-				ProgramCounter = code.Labels[label];
-		IsRunning = true;
-		return StartEngine();
-	}
-
-	/// <summary>
-	/// ランタイムのコルーチンです．
-	/// </summary>
-	/// <returns>The engine.</returns>
-	IEnumerator StartEngine()
-	{
-		while (true)
-		{
-			// コードの終端に到達したら終了．
-			if (ProgramCounter > code.Statements.Length - 1)
-				break;
-			// stop
-			if (!IsRunning)
-				break;
-			// ステートメントを取得
-			var statement = code.Statements[ProgramCounter];
-			if (!commands.ContainsKey(statement.CommandName))
-			{
-				UnityEngine.Debug.LogWarning($"Command Not Found `{statement.CommandName}`");
-			}
-			else
-			{
-				IEnumerator command = null;
-				// 試行
-				try
-				{
-					command = commands[statement.CommandName.ToLower()](statement.SpriteTag, statement.Arguments);
-				}
-				// スクリプトに起因するエラー。
-				catch (NRuntimeException ex)
-				{
-					command = outErr?.Invoke("エラー:" + ex.Message);
-				}
-				// バグなどによる予期せぬエラー。
-				catch (Exception ex)
-				{
-					command = outErr?.Invoke("予期せぬエラー:" + ex.Message);
-				}
-
-				// 実行
-				yield return command;
-			}
-
-			ProgramCounter++;
-				
-		}
-		GameMaster.Instance.CanMove = true;
-		GameMaster.Instance.IsNotFreezed = true;
-		IsRunning = false;
-	}
-
-	#region 組み込みコマンド用ヘルパーメソッド
-
-	int GetLine(string label)
-	{
-		// Nullチェックと整形
-		label = GetLabelString(label);
-
-		if (!code.Labels.ContainsKey(label))
-			throw new NRuntimeException($"ラベル \"{label}\"が存在しません．");
-		return code.Labels[label];
-	}
-
-	#endregion
-
-	public void Goto(int ptr) => ProgramCounter = ptr - 1;
-
-	#region 組み込みコマンド実装
-	public IEnumerator Goto(string t, params string[] args)
-	{
-		if (args.Length == 0)
-			throw new NRuntimeException("移動先のラベルが指定されていません．");
-		var label = GetLine(CombineAll(args));
-		// 移動する
-		Goto(label);
-		yield break;
-	}
-
-	public IEnumerator Gosub(string _, params string[] args)
-	{
-		if (goSubStack.Count > 20)
-			throw new NRuntimeException("スタックオーバーフローです．");
-		goSubStack.Push(ProgramCounter + 1);
-		return Goto(_, args);
-	}
-
-	public IEnumerator Return(string _, params string[] args)
-	{
-		if (goSubStack.Count < 1)
-			throw new NRuntimeException("サブルーチンにいません．");
-		Goto(goSubStack.Pop());
-		yield break;
-	}
-
-	public IEnumerator Debug(string t, params string[] args)
-	{
-		UnityEngine.Debug.Log($"{t}+Debug {string.Join(", ", args)}");
-		yield break;
-	}
-
-
-	public IEnumerator Wait(string spriteTags, string[] args)
-	{
-		float i;
-		if (!float.TryParse(CombineAll(args), out i))
-			throw new NRuntimeException("不正な数値です．");
-		yield return new WaitForSeconds(i);
-	}
-
-	public IEnumerator End(string tag, string[] args)
-	{
-		IsRunning = false;
-		yield break;
-	}
-	#endregion
-
-}
-
-public static class NovelHelper
-{
-	public static float TryParse(string numeric)
-	{
-		float ret;
-		if (!float.TryParse(numeric, out ret))
-			throw new NRuntimeException("型が一致しません．");
-		return ret;
-	}
-
-	/// <summary>
-	/// 問答無用で文字列配列をそのまま連結します．引数の区切りがいらない場合に便利です．
-	/// </summary>
-	/// <returns>連結された文字列．</returns>
-	/// <param name="strings">連結してほしい文字列を含む配列．</param>
-	public static string CombineAll(string[] strings) => string.Join("", strings);
-
-	/// <summary>
-	/// ラベル文字列を整形します．
-	/// </summary>
-	/// <returns>The label string.</returns>
-	/// <param name="label">Label.</param>
-	public static string GetLabelString(string label)
-	{
-		// null or empty チェック
-		if (string.IsNullOrEmpty(label))
-			throw new ArgumentNullException(nameof(label));
-
-		// 仕様上，#をつけてもつけなくてもよい
-		if (label[0] == '#')
-			label = label.Remove(0, 1);
-		return label;
 	}
 }

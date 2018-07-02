@@ -1,11 +1,14 @@
-public class IfNode : AINodeBase
+namespace WyteEngine.Entities.AI
 {
-	private readonly Condition condition;
-	public IfNode(Condition c)
+	public class IfNode : AINodeBase
 	{
-		condition = c;
+		private readonly Condition condition;
+		public IfNode(Condition c)
+		{
+			condition = c;
+		}
+		public override bool Run(Entity context) => condition(context);
 	}
-	public override bool Run(Entity context) => condition(context);
-}
 
-public delegate bool Condition(Entity context);
+	public delegate bool Condition(Entity context);
+}

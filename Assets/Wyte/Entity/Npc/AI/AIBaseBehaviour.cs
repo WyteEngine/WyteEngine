@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public abstract class AIBaseBehaviour : BaseBehaviour
+namespace WyteEngine.Entities.AI
 {
-	public AINodeBase OnUpdate { get; protected set; }
-	
-	public AINodeBase OnCollidedWithPlayer { get; protected set; }
-
-	protected virtual void Awake()
+	public abstract class AIBaseBehaviour : BaseBehaviour
 	{
-		OnInitialize();
-	}
+		public AINodeBase OnUpdate { get; protected set; }
 
-	protected virtual void OnInitialize() { }
+		public AINodeBase OnCollidedWithPlayer { get; protected set; }
+
+		protected virtual void Awake()
+		{
+			OnInitialize();
+		}
+
+		protected virtual void OnInitialize() { }
+	}
 }

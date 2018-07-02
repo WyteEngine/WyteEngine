@@ -1,18 +1,21 @@
 using UnityEngine;
 using System.Collections;
-
-public class PCGameViewBehaviour : SingletonBaseBehaviour<PCGameViewBehaviour>
+namespace WyteEngine.UI
 {
-	// Use this for initialization
-	void Start()
-	{
-		if (IsSmartDevice)
-			gameObject.SetActive(false);
-	}
 
-	// Update is called once per frame
-	void Update()
+	public class PCGameViewBehaviour : SingletonBaseBehaviour<PCGameViewBehaviour>
 	{
-			
+		// Use this for initialization
+		void Start()
+		{
+			if (IsSmartDevice)
+				gameObject.SetActive(false);
+		}
+
+		// Update is called once per frame
+		void Update()
+		{
+
+		}
 	}
 }

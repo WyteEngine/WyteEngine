@@ -1,23 +1,26 @@
-public class SelectorNode : AINodeBase
+namespace WyteEngine.Entities.AI
 {
-	private readonly AINodeBase[] nodes;
-
-	public override bool Run(Entity context)
+	public class SelectorNode : AINodeBase
 	{
-		var flag = false;
-		foreach (var node in nodes)
+		private readonly AINodeBase[] nodes;
+
+		public override bool Run(Entity context)
 		{
-			if (node.Run(context))
+			var flag = false;
+			foreach (var node in nodes)
 			{
-				flag = true;
-				break;
+				if (node.Run(context))
+				{
+					flag = true;
+					break;
+				}
 			}
+			return flag;
 		}
-		return flag;
-	}
 
-	public SelectorNode(params AINodeBase[] nodeToSelect)
-	{
-		nodes = nodeToSelect;
+		public SelectorNode(params AINodeBase[] nodeToSelect)
+		{
+			nodes = nodeToSelect;
+		}
 	}
 }

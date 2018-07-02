@@ -1,5 +1,9 @@
-public abstract class AINodeBase
+
+namespace WyteEngine.Entities.AI
 {
-	protected Entity context;
-	public abstract bool Run(Entity context);
+	public abstract class AINodeBase
+	{
+		protected Entity context;
+		public abstract bool Run(Entity context);
+	}
 }

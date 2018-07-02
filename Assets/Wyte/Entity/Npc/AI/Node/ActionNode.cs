@@ -1,17 +1,20 @@
 using System;
 
-public class ActionNode : AINodeBase
+namespace WyteEngine.Entities.AI
 {
-	private readonly Action<Entity> action;
-
-	public ActionNode(Action<Entity> act)
+	public class ActionNode : AINodeBase
 	{
-		action = act;
-	}
+		private readonly Action<Entity> action;
 
-	public override bool Run(Entity context)
-	{
-		action(context);
-		return true;
+		public ActionNode(Action<Entity> act)
+		{
+			action = act;
+		}
+
+		public override bool Run(Entity context)
+		{
+			action(context);
+			return true;
+		}
 	}
 }

@@ -1,17 +1,21 @@
 ﻿using System.Collections;
+using WyteEngine.UI;
 
-public class ItemEventArgs : System.EventArgs
+namespace WyteEngine.Item
 {
-	public IEnumerator Say(string text) => MessageContoller.Instance.Say(null, text);
-
-	public string UserName { get; }
-	public string ItemName { get; }
-	public bool Canceled { get; set; }
-
-	public ItemEventArgs(string user, string item, bool canceled = false)
+	public class ItemEventArgs : System.EventArgs
 	{
-		UserName = user;
-		ItemName = item;
-		Canceled = canceled;
+		public IEnumerator Say(string text) => MessageContoller.Instance.Say(null, text);
+
+		public string UserName { get; }
+		public string ItemName { get; }
+		public bool Canceled { get; set; }
+
+		public ItemEventArgs(string user, string item, bool canceled = false)
+		{
+			UserName = user;
+			ItemName = item;
+			Canceled = canceled;
+		}
 	}
 }

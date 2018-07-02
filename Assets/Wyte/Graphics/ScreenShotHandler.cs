@@ -3,34 +3,37 @@ using System.Collections;
 using System.IO;
 using System;
 
-public class ScreenShotHandler : SingletonBaseBehaviour<ScreenShotHandler>
+namespace WyteEngine.Graphics
 {
-	private static readonly string dest = "Screenshots";
-
-	void Update()
+	public class ScreenShotHandler : SingletonBaseBehaviour<ScreenShotHandler>
 	{
-		if (Input.GetKeyDown(KeyCode.F2))
+		private static readonly string dest = "Screenshots";
+
+		void Update()
 		{
-			var file = DateTime.Now.ToString("yyMMdd-hhmmss") + ".png";
-			if (IsSmartDevice)
-				ScreenCapture.CaptureScreenshot(file);
-			else
+			if (Input.GetKeyDown(KeyCode.F2))
 			{
-				StartCoroutine(TakeShot(file));
+				var file = DateTime.Now.ToString("yyMMdd-hhmmss") + ".png";
+				if (IsSmartDevice)
+					ScreenCapture.CaptureScreenshot(file);
+				else
+				{
+					StartCoroutine(TakeShot(file));
+				}
 			}
 		}
-	}
 
-	private IEnumerator TakeShot(string file)
-	{
-		yield return new WaitForEndOfFrame();
+		private IEnumerator TakeShot(string file)
+		{
+			yield return new WaitForEndOfFrame();
 
-		var path = Path.Combine(Environment.CurrentDirectory, dest);
-		if (!Directory.Exists(path))
-			Directory.CreateDirectory(path);
-		path = Path.Combine(path, file);
-		var tex = ScreenCapture.CaptureScreenshotAsTexture();
-		File.WriteAllBytes(path, tex.EncodeToPNG());
-		Destroy(tex);
+			var path = Path.Combine(Environment.CurrentDirectory, dest);
+			if (!Directory.Exists(path))
+				Directory.CreateDirectory(path);
+			path = Path.Combine(path, file);
+			var tex = ScreenCapture.CaptureScreenshotAsTexture();
+			File.WriteAllBytes(path, tex.EncodeToPNG());
+			Destroy(tex);
+		}
 	}
 }
