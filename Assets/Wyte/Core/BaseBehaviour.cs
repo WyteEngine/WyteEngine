@@ -46,6 +46,7 @@ namespace WyteEngine
 		protected ItemManager ItemMan => ItemManager.Instance;
 		protected TextManager TextMan => TextManager.Instance;
 		protected TileAPI Tile => TileAPI.Instance;
+		protected BossGaugeBinder BossGauge => BossGaugeBinder.Instance;
 
 		/// <summary>
 		/// タッチパネルをサポートしているかどうか。

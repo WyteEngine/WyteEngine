@@ -121,7 +121,14 @@ namespace WyteEngine.Event
 				.Register("tiledelrect", Tile.DeleteRect)
 				.Register("ontile", Tile.OnTile)
 
-				.Register("onplatform", OnPlatform);
+				.Register("onplatform", OnPlatform)
+
+				.Register("bossbarshow", BossGauge.Show)
+				.Register("bossbarhide", BossGauge.Hide)
+				.Register("bossbarsetvalue", BossGauge.SetValue)
+				.Register("bossbarsetmaxvalue", BossGauge.SetMaxValue)
+				.Register("bossbarbind", BossGauge.Bind)
+				.Register("bossbarunbind", BossGauge.UnBind);
 			#endregion
 
 		}
