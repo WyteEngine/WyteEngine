@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using WyteEngine.Entities;
-using WyteEngine.Event;
 
 namespace WyteEngine.UI
 {
@@ -102,7 +101,7 @@ namespace WyteEngine.UI
 		{
 			if (Gauge == null)
 			{
-				Debug.LogError("Bind a gauge");
+				Debug.LogError("Attach a gauge prefab to a BossGaugeBinder.");
 				enabled = false;
 			}
 			if (bindedEntity != null)
