@@ -28,15 +28,15 @@ namespace WyteEngine.Entities
 
 			Map.MapChanged += (map) =>
 			{
-			// マップエンティティのリセット
-			mappedEntity.Clear();
+				// マップエンティティのリセット
+				mappedEntity.Clear();
 				mappedEntity.AddRange(FindObjectsOfType<LivableEntity>());
-			// 管理エンティティのリセット
-			managedEntity.ForEach(o =>
-				{
-					if (o != null)
-						Destroy(o.gameObject);
-				});
+				// 管理エンティティのリセット
+				managedEntity.ForEach(o =>
+					{
+						if (o != null)
+							Destroy(o.gameObject);
+					});
 				managedEntity.Clear();
 			};
 
@@ -52,7 +52,18 @@ namespace WyteEngine.Entities
 			};
 		}
 
-		public LivableEntity this[string tag] => managedEntity?.FirstOrDefault(a => a.Tag == tag) ?? mappedEntity.FirstOrDefault(a => a.Tag == tag) ?? null;
+		public LivableEntity this[string tag]
+		{
+			get
+			{
+				var m = managedEntity?.FirstOrDefault(a => a.Tag == tag) ?? mappedEntity.FirstOrDefault(a => a.Tag == tag);
+				if (m == null)
+				{
+					Debug.LogWarning($"NPC ID {tag} は見つかりませんでした．");
+				}
+				return m;
+			}
+		}
 
 		public LivableEntity SpSet(string tag)
 		{
