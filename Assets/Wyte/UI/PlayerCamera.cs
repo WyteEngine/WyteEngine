@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Novel.Exceptions;
 using System;
-using static WyteEngine.Event.NovelHelper;
+using WyteEngine.Event;
 using WyteEngine.Entities;
 
 namespace WyteEngine.UI
@@ -74,7 +74,6 @@ namespace WyteEngine.UI
 					newPosition = FreePosition;
 					break;
 			}
-
 			camMin = theCamera.ViewportToWorldPoint(Vector3.zero);
 			camMax = theCamera.ViewportToWorldPoint(Vector3.one);
 			var camSize = camMax - camMin;
@@ -119,8 +118,8 @@ namespace WyteEngine.UI
 		{
 			if (args.Length < 2)
 				throw new NRuntimeException("引数が足りません．");
-			var x = TryParse(args[0]);
-			var y = TryParse(args[1]);
+			var x = NovelHelper.TryParse(args[0]);
+			var y = NovelHelper.TryParse(args[1]);
 			SwitchToFreeCamera(x, y);
 			yield break;
 		}
