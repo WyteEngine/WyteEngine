@@ -67,7 +67,7 @@ namespace WyteEngine.Map
 			yield break;
 		}
 
-		public delegate void MapChangedEventHandler(MapProperty map);
+		public delegate void MapChangedEventHandler(MapPropertyBase map);
 		public event MapChangedEventHandler MapChanged;
 	}
 }
