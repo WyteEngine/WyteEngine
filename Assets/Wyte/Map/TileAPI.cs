@@ -24,11 +24,22 @@ namespace WyteEngine.Map
 
 		Tilemap Tilemap => tilemaps != null && tilemaps.Length > 0 ? tilemaps[0] : null;
 
+		private void Start()
+		{
+			Novel.Runtime
+				 .Register("tileset", Place)
+				 .Register("tiledel", Delete)
+				 .Register("tilesetrect", PlaceRect)
+				 .Register("tiledelrect", DeleteRect)
+				 .Register("ontile", OnTile);
+		}
+
 		/// <summary>
 		/// Update is called every frame, if the MonoBehaviour is enabled.
 		/// </summary>
-		void Update()
+		protected override void Update()
 		{
+			base.Update();
 			if (Tilemap == null)
 			{
 				tilemaps = FindObjectsOfType<Tilemap>();

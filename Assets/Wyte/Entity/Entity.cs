@@ -107,8 +107,9 @@ namespace WyteEngine.Entities
 			}
 		}
 
-		protected void Update()
+		protected override void Update()
 		{
+			base.Update();
 			// 生きていればアップデート
 			if (!Dying)
 				OnUpdate();

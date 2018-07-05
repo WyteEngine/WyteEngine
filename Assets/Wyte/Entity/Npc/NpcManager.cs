@@ -50,6 +50,15 @@ namespace WyteEngine.Entities
 			{
 				managedEntity.Add(player);
 			};
+
+			Novel.Runtime
+				 .Register("spset", SpSet)
+				 .Register("spsetf", SpSetF)
+				 .Register("spofs", SpOfs)
+				 .Register("spchr", SpChr)
+				 .Register("spclr", SpClr)
+				 .Register("spwalk", SpWalk)
+				 .Register("speve", SpEvent);
 		}
 
 		public LivableEntity this[string tag]

@@ -5,6 +5,7 @@ using Novel.Exceptions;
 using System.Linq;
 using FlagMap = WyteEngine.Event.FlagDictionary;
 using WyteEngine.Helper;
+using System;
 
 namespace WyteEngine.Event
 {
@@ -45,11 +46,22 @@ namespace WyteEngine.Event
 			// さようなら．
 			areaFlags.Clear();
 			};
-
 		}
 
-		void Update()
+		private void Start()
 		{
+			Novel.Runtime
+ 				 .Register("flag", Flag)
+ 				 .Register("onflag", OnFlag)
+				 .Register("sflag", SkipFlag)
+				 .Register("onsflag", OnSkipFlag)
+				 .Register("aflag", AreaFlag)
+				 .Register("onaflag", OnAreaFlag);
+		}
+
+		protected override void Update()
+		{
+			base.Update();
 			if (Wyte.IsDebugMode && Input.GetKeyDown(KeyCode.F4))
 			{
 				Flags.Clear();

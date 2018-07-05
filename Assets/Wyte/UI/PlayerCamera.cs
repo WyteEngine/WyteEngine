@@ -47,6 +47,10 @@ namespace WyteEngine.UI
 			{
 				d.Append($"cam{camMin},{camMax} ");
 			};
+
+			Novel.Runtime
+				 .Register("playercamera", SwitchToPlayerCamera)
+				 .Register("freecamera", SwitchToFreeCamera);
 		}
 
 		void LateUpdate()

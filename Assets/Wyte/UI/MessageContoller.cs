@@ -46,14 +46,22 @@ namespace WyteEngine.UI
 			buffer = "";
 		}
 
+		private void Start()
+		{
+			Novel.Runtime
+				 .Register("say", Say)
+				 .Register("nod", (t, a) => Nod());
+		}
+
 		public static bool IsTouched => EnvironmentFlag.IsSmartDevice
 						? (Input.touchCount > 0)
 						: (Input.GetKey(KeyBinding.Instance.Binding.Jump));
 
 		GameObject CurrentPad => IsSmartDevice ? UISmartDevice : UIPersonalComputer;
 
-		private void Update()
+		protected override void Update()
 		{
+			base.Update();
 			if (Wyte.IsDebugMode)
 			{
 				// デバッグテキスト

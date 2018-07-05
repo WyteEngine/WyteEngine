@@ -27,11 +27,6 @@ namespace WyteEngine
 			CheckInstance();
 		}
 
-		protected void Start()
-		{
-
-		}
-
 		/// <summary>
 		/// Start the specified coroutine.
 		/// </summary>

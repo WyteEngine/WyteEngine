@@ -95,10 +95,19 @@ namespace WyteEngine.UI
 		private void Start()
 		{
 			Hide();
+
+			Novel.Runtime
+				 .Register("bossbarshow", Show)
+				 .Register("bossbarhide", Hide)
+				 .Register("bossbarsetvalue", SetValue)
+				 .Register("bossbarsetmaxvalue", SetMaxValue)
+				 .Register("bossbarbind", Bind)
+				 .Register("bossbarunbind", UnBind);
 		}
 
-		private void Update()
+		protected override void Update()
 		{
+			base.Update();
 			if (Gauge == null)
 			{
 				Debug.LogError("Attach a gauge prefab to a BossGaugeBinder.");

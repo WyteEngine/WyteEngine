@@ -21,122 +21,31 @@ namespace WyteEngine.Event
 
 		IEnumerable<TextAsset> Load() => Resources.LoadAll("Event", typeof(TextAsset)).Cast<TextAsset>();
 
+		protected override void Awake()
+		{
+			base.Awake();
+
+			// ランタイムの用意
+			runtime = new UnityNRuntime(Load(), MessageContoller.Instance.Say);
+		}
+
 		// Use this for initialization
 		void Start()
 		{
-			// ランタイムの用意
-			runtime = new UnityNRuntime(Load(), MessageContoller.Instance.Say);
-
 			#region WyteEngine Novel API の登録
 			// hack マネージャーの読み込みがまともになり次第ちゃんとする
-			runtime
-				// Fade
-				.Register("fade", FadeController.Instance.Fade)
-				// Fade Asynchronously
-				.Register("fadeasync", FadeController.Instance.FadeAsync)
 
-				// Play BGM
-				.Register("bgmplay", Bgm.Play)
-				// Change BGM with keeping its time sample
-				.Register("bgmchange", Bgm.Change)
-				// Stop BGM
-				.Register("bgmstop", Bgm.Stop)
-				// Stop BGM Asynchronously
-				.Register("bgmstopasync", Bgm.StopAsync)
+			Runtime.Register("onplatform", OnPlatform);
 
-				// Sound FX 
-				.Register("sfx", Sfx.Play)
-				// Alias
-				.Register("se", Sfx.Play)
-
-				// Map Moving
-				.Register("move", Map.Move)
-
-				// Show Player
-				.Register("pshow", Wyte.PlayerShow)
-				// Hide Player
-				.Register("phide", Wyte.PlayerHide)
-
-				// Edit Flag
-				.Register("flag", Flag.Flag)
-				// Event by Flag
-				.Register("onflag", Flag.OnFlag)
-
-				// Edit Skip Flag
-				.Register("sflag", Flag.SkipFlag)
-				// Event by Skip Flag
-				.Register("onsflag", Flag.OnSkipFlag)
-
-				// Edit Area Flag
-				.Register("aflag", Flag.AreaFlag)
-				// Event by Area Flag
-				.Register("onaflag", Flag.OnAreaFlag)
-
-				// Say message
-				.Register("say", MessageContoller.Instance.Say)
-
-				// Set GUI　visiblity
-				.Register("gui", Wyte.Gui)
-
-				// Freeze All
-				.Register("freeze", Wyte.Freeze)
-				// Freeze the Player
-				.Register("pfreeze", Wyte.PlayerFreeze)
-
-				// Switch to the PlayerCamera
-				.Register("playercamera", Camera.SwitchToPlayerCamera)
-				// Switch to the FreeCamera
-				.Register("freecamera", Camera.SwitchToFreeCamera)
-
-				// Set a NPC
-				.Register("spset", Npc.SpSet)
-				// Set a non-gravity object (simple sprite)
-				.Register("spsetf", Npc.SpSetF)
-				// Move the NPC to specified location
-				.Register("spofs", Npc.SpOfs)
-				// Change the Wyte Animation of the NPC
-				.Register("spchr", Npc.SpChr)
-				// Remove the NPC
-				.Register("spclr", Npc.SpClr)
-				// Let the NPC walk
-				.Register("spwalk", Npc.SpWalk)
-				// Set a entity event
-				.Register("speve", Npc.SpEvent)
-
-				// Wait any input from a player
-				.Register("nod", (t, a) => MessageContoller.Nod())
-
-				// Create a managed text object
-				.Register("txtset", TextMan.TxtSet)
-				// Change a specified object's position
-				.Register("txtofs", TextMan.TxtOfs)
-				// Change string, color xor alignment of a specified object.
-				.Register("txtmod", TextMan.TxtMod)
-				// Delete a text object
-				.Register("txtclr", TextMan.TxtClr)
-
-				.Register("tileset", Tile.Place)
-				.Register("tiledel", Tile.Delete)
-				.Register("tilesetrect", Tile.PlaceRect)
-				.Register("tiledelrect", Tile.DeleteRect)
-				.Register("ontile", Tile.OnTile)
-
-				.Register("onplatform", OnPlatform)
-
-				.Register("bossbarshow", BossGauge.Show)
-				.Register("bossbarhide", BossGauge.Hide)
-				.Register("bossbarsetvalue", BossGauge.SetValue)
-				.Register("bossbarsetmaxvalue", BossGauge.SetMaxValue)
-				.Register("bossbarbind", BossGauge.Bind)
-				.Register("bossbarunbind", BossGauge.UnBind);
 			#endregion
 
 		}
 
 		public void Run(string label) => StartCoroutine(runtime.Call(label));
 		// Update is called once per frame
-		void Update()
+		protected override void Update()
 		{
+			base.Update();
 			// スクリプトリロード
 			if (Wyte.IsDebugMode && Input.GetKeyDown(KeyCode.F2))
 			{

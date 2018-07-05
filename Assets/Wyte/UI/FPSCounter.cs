@@ -36,8 +36,9 @@ namespace WyteEngine.UI
 		}
 
 		// Update is called once per frame
-		void Update()
+		protected override void Update()
 		{
+			base.Update();
 			if (Input.GetKeyDown(KeyCode.F3))
 			{
 				isDebugMode = !isDebugMode;

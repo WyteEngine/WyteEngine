@@ -53,6 +53,8 @@ namespace WyteEngine
 		/// </summary>
 		protected bool IsSmartDevice => EnvironmentFlag.IsSmartDevice;
 
+		public bool IsPostInitialized { get; set; }
+
 		/// <summary>
 		/// 条件式が通らない場合エラーを返します．
 		/// </summary>
@@ -62,6 +64,16 @@ namespace WyteEngine
 			if (!expr)
 				throw new NRuntimeException((line != null ? line + "番目の" : "") + "引数が一致しません．");
 		}
-	}
 
+		protected virtual void Update()
+		{
+			if (!IsPostInitialized)
+			{
+				PostStart();
+				IsPostInitialized = true;
+			}
+		}
+
+		protected virtual void PostStart() { }
+	}
 }

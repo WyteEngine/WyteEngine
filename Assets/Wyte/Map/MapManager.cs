@@ -23,6 +23,9 @@ namespace WyteEngine.Map
 				Unload();
 			};
 			Debugger.DebugRendering += (d) => d.Append($"map:{CurrentMap?.name ?? "NULL"} msz{CurrentMapSize.min},{CurrentMapSize.max} ");
+
+			Novel.Runtime
+				 .Register("move", Map.Move);
 		}
 
 		public void Move(string name)

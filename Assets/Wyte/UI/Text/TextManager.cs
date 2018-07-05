@@ -17,6 +17,15 @@ namespace WyteEngine.UI.TextFormatting
 		[SerializeField]
 		Font[] fonts;
 
+		private void Start()
+		{
+			Novel.Runtime
+				 .Register("txtset", TxtSet)
+				 .Register("txtofs", TxtOfs)
+				 .Register("txtmod", TxtMod)
+				 .Register("txtclr", TxtClr);
+		}
+
 		/// <summary>
 		/// ホストが存在しなければ例外をスローします．
 		/// </summary>

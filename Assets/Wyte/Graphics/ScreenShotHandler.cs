@@ -9,8 +9,9 @@ namespace WyteEngine.Graphics
 	{
 		private static readonly string dest = "Screenshots";
 
-		void Update()
+		protected override void Update()
 		{
+			base.Update();
 			if (Input.GetKeyDown(KeyCode.F2))
 			{
 				var file = DateTime.Now.ToString("yyMMdd-hhmmss") + ".png";

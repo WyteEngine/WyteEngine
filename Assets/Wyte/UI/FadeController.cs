@@ -21,6 +21,10 @@ namespace WyteEngine.UI
 			{
 				FadeOutAsync(0);
 			};
+
+			Novel.Runtime
+				 .Register("fade", Fade)
+				 .Register("fadeasync", FadeAsync);
 		}
 
 		new readonly Color light = new Color(0, 0, 0, 0);
@@ -76,7 +80,6 @@ namespace WyteEngine.UI
 					break;
 			}
 		}
-
 
 		public IEnumerator FadeAsync(string t, string[] a)
 		{

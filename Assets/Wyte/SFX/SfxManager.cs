@@ -20,6 +20,13 @@ namespace WyteEngine.Sfx
 			source = GetComponent<AudioSource>();
 		}
 
+		private void Start()
+		{
+			Novel.Runtime
+				 .Register("sfx", Play)
+				 .Register("se", Play);
+		}
+
 		public void Play(string id)
 		{
 			var targetEffects = Effects.FirstOrDefault(e => e.Id == id);

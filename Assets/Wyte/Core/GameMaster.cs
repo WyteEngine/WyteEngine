@@ -206,21 +206,28 @@ namespace WyteEngine
 			CanMove = true;
 			// hack 後々ちゃんと書き直す
 			Player = new PlayerData("ホワイト", 4);
-		}
 
-		bool booted;
+			Novel.Runtime
+				 .Register("pshow", PlayerShow)
+				 .Register("phide", PlayerHide)
+				 .Register("gui", Gui)
+				 .Register("freeze", Freeze)
+				 .Register("pfreeze", PlayerFreeze);
+		}
 
 		int ftsDebugCount;
 
-		void Update()
+		protected override void PostStart()
 		{
-			// Novel Bootstrap
-			if (!booted)
-			{
-				StartCoroutine(Boot());
-			}
+			StartCoroutine(Boot());
+		}
 
-			if (IsDebugMode && UnityEngine.Input.GetKeyDown(KeyCode.F5))
+		protected override void Update()
+		{
+			base.Update();
+			// Novel Bootstrap
+
+			if (IsDebugMode && Input.GetKeyDown(KeyCode.F5))
 			{
 				switch (ftsDebugCount)
 				{
@@ -286,8 +293,6 @@ namespace WyteEngine
 
 		IEnumerator Boot()
 		{
-			booted = true;
-
 			if (!IsDebugMode && requestDebugMode && (Application.isEditor || Debug.isDebugBuild))
 			{
 				IsDebugMode = true;
@@ -312,7 +317,7 @@ namespace WyteEngine
 				Destroy(playerTemp);
 			IsNotFreezed = CanMove = true;
 			GameReset?.Invoke(this);
-			booted = false;
+			IsPostInitialized = false;
 		}
 
 		public delegate void PlayerDeathEventHandler(UObject player, UObject enemy, WyteEventArgs e);

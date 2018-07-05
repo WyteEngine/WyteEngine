@@ -53,8 +53,9 @@ namespace WyteEngine.UI
 		}
 
 		// Update is called once per frame
-		void Update()
+		protected override void Update()
 		{
+			base.Update();
 			ButtonAnimation(left, GamePadButtons.Left);
 			ButtonAnimation(right, GamePadButtons.Right);
 			ButtonAnimation(action, GamePadButtons.Action);

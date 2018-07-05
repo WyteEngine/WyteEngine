@@ -26,6 +26,12 @@ namespace WyteEngine.Music
 		void Start()
 		{
 			Debugger.DebugRendering += (d) => d.Append($"bgm:{songName ?? "none"} ");
+
+			Novel.Runtime
+				 .Register("bgmplay", Play)
+				 .Register("bgmchange", Change)
+				 .Register("bgmstop", Stop)
+				 .Register("bgmstopasync", StopAsync);
 		}
 
 		public MusicData Get(string id)
