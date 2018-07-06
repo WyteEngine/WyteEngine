@@ -26,16 +26,16 @@ namespace WyteEngine.Graphics
 			var heightCoeff = Screen.height / displayArea.y;
 			// displayArea の幅と高さのどちらに合わせるかを決める.
 			var coefficient = 1;
-			if (widthCoeff < heightCoeff)
-			{
-				// 幅に合わせる場合.
+			//if (widthCoeff < heightCoeff)
+			//{
+			//	// 幅に合わせる場合.
 				coefficient = widthCoeff;
-			}
-			else
-			{
-				// 高さに合わせる場合.
-				coefficient = heightCoeff;
-			}
+			//}
+			//else
+			//{
+			//	// 高さに合わせる場合.
+			//	coefficient = heightCoeff;
+			//}
 
 			// Orthographic なカメラの Size を、ドット絵が綺麗に表示されるように調整する.
 			var s = Screen.height / (referencePixelsPerUnit * coefficient * 2);   // orthographicSizeは高さの半分なので2で割る.
