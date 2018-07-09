@@ -56,7 +56,8 @@ namespace WyteEngine.Event
 				 .Register("sflag", SkipFlag)
 				 .Register("onsflag", OnSkipFlag)
 				 .Register("aflag", AreaFlag)
-				 .Register("onaflag", OnAreaFlag);
+				 .Register("onaflag", OnAreaFlag)
+				 .Register("clearallflag", ClearAllFlag);
 		}
 
 		protected override void Update()
@@ -129,6 +130,16 @@ namespace WyteEngine.Event
 		{
 			yield return OnFlagImpl(areaFlags, name, labels);
 		}
+
+
+		public IEnumerator ClearAllFlag(string name, string[] args)
+		{
+			Flags.Clear();
+			SkipFlags.Clear();
+			AreaFlags.Clear();
+			yield break;
+		}
+
 	}
 
 	public sealed class FlagDictionary : IDictionary<string, bool>
