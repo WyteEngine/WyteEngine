@@ -31,7 +31,8 @@ namespace WyteEngine.Music
 				 .Register("bgmplay", Play)
 				 .Register("bgmchange", Change)
 				 .Register("bgmstop", Stop)
-				 .Register("bgmstopasync", StopAsync);
+			     .Register("bgmstopasync", StopAsync)
+				 .Register("bgmwait", Wait);
 		}
 
 		public MusicData Get(string id)
@@ -54,6 +55,7 @@ namespace WyteEngine.Music
 			source.volume = 1;
 			source.Play();
 			songName = id;
+			waitCache = 0;
 		}
 
 		public void Play(int id)
@@ -104,10 +106,53 @@ namespace WyteEngine.Music
 			}
 		}
 
+
 		public IEnumerator StopAsync(string t, string[] a)
 		{
 			StartCoroutine(Stop(t, a));
 			yield break;
+		}
+
+		private float waitCache;
+
+		private float waitQueue;
+
+		public IEnumerator Wait(string t, string[] a)
+		{
+			// 0.5 0.5
+			// 0 0.1
+			// 0.5 0.4
+			// 0 0.6
+			// 0.5 -0.1 skip
+			// 0 0.2
+			// 0.5 0.2
+			float i;
+			if (!float.TryParse(NovelHelper.CombineAll(a), out i))
+				throw new NRuntimeException("不正な数値です．");
+			if (!source.isPlaying)
+				yield return Novel.Runtime.Wait(t, a);
+			else
+			{
+				if (waitCache != 0)
+				{
+					var wt = i - (source.time - waitCache) - waitQueue;
+					waitQueue = 0;
+					if (wt < 0)
+					{
+						waitQueue = wt;
+						yield return null;
+					}
+					else
+					{
+						yield return new WaitForSeconds(wt);
+					}
+				}
+				else
+				{
+					yield return Novel.Runtime.Wait(t, a);
+				}
+				waitCache = source.time;
+			}
 		}
 
 		public void Stop()
