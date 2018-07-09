@@ -128,6 +128,7 @@ namespace WyteEngine.Entities
 						else
 						{
 							animPtr--;
+							StopAnim();
 						}
 					}
 				}
