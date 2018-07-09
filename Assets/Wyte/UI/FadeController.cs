@@ -68,7 +68,7 @@ namespace WyteEngine.UI
 						throw new NRuntimeException("モードがおかしいです。");
 				}
 				nowTime += Time.deltaTime;
-				yield return null;
+				yield return new WaitForEndOfFrame();
 			}
 			switch (mode.ToLower())
 			{

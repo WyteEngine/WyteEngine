@@ -135,7 +135,7 @@ namespace WyteEngine.UI
 			while (!(!prevTouch && IsTouched))
 			{
 				prevTouch = IsTouched;
-				yield return null;
+				yield return new WaitForEndOfFrame();
 			}
 		}
 	}

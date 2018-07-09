@@ -128,7 +128,7 @@ namespace WyteEngine.Music
 				t += Time.deltaTime;
 				// (time - t) / time = 1 - (t / time)
 				source.volume = 1 - (t / time);
-				yield return null;
+				yield return new WaitForEndOfFrame();
 			}
 			Stop();
 			source.volume = 1;

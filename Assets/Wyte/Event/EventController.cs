@@ -277,25 +277,34 @@ namespace WyteEngine.Event
 				}
 				else
 				{
-					IEnumerator command = null;
-					// 試行
-					try
-					{
-						command = commands[statement.CommandName.ToLower()](statement.SpriteTag, statement.Arguments);
-					}
-					// スクリプトに起因するエラー。
-					catch (NRuntimeException ex)
-					{
-						command = outErr?.Invoke("エラー:" + ex.Message);
-					}
-					// バグなどによる予期せぬエラー。
-					catch (Exception ex)
-					{
-						command = outErr?.Invoke("予期せぬエラー:" + ex.Message);
-					}
+					IEnumerator command = commands[statement.CommandName.ToLower()](statement.SpriteTag, statement.Arguments);
 
-					// 実行
-					yield return command;
+					bool flag = true;;
+					while (true)
+					{
+						try
+						{
+							if (!(flag = command.MoveNext()))
+								break;
+						}
+						catch (NRuntimeException ex)
+						{
+							// 意図的なエラー．
+							UnityEngine.Debug.LogError($"Error in novel script(line.{ProgramCounter})\n{ex.Message}");
+							continue;
+						}
+						catch (Exception ex)
+						{
+							// なんかのバグ．
+							UnityEngine.Debug.LogError($"Unhandled Exception in novel script(line.{ProgramCounter}) due to a bug.\n{ex.Message}\n{ex.StackTrace}");
+							continue;
+						}
+						//UnityEngine.Debug.Log(ProgramCounter + " - " + command.Current);
+						if (command.Current != null)
+						{
+							yield return command.Current;
+						}
+					}
 				}
 
 				ProgramCounter++;
