@@ -10,7 +10,6 @@ namespace WyteEngine.Entities
 	[RequireComponent(typeof(SpriteRenderer))]
 	public class SpriteEntity : Entity
 	{
-		[SerializeField]
 		private new WyteAnimation animation;
 		public WyteAnimation Animation
 		{
