@@ -9,6 +9,7 @@ using WyteEngine.Entities;
 using WyteEngine.UI.TextFormatting;
 using WyteEngine.UI;
 using WyteEngine.Event;
+using WyteEngine.I18n;
 
 namespace WyteEngine
 {
@@ -196,7 +197,7 @@ namespace WyteEngine
 			QualitySettings.vSyncCount = 1;
 #else
 		// Fix to 60fps
-		Application.targetFrameRate = 60;
+			Application.targetFrameRate = 60;
 #endif
 		}
 
@@ -297,7 +298,7 @@ namespace WyteEngine
 			{
 				IsDebugMode = true;
 				yield return Freeze(null, "on");
-				yield return MessageContoller.Instance?.Say(null, "デバッグモードを　起動します。\n注意! これは　開発者向けの　機能です。");
+				yield return MessageContoller.Instance?.Say(null, (LocalizableString)"system.warning.debug");
 				yield return Freeze(null, "off");
 			}
 

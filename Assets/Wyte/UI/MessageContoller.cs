@@ -86,7 +86,7 @@ namespace WyteEngine.UI
 
 		public IEnumerator Say(string sprite, params string[] args)
 		{
-			var messageSource = NovelHelper.CombineAll(args);
+			var messageSource = I18n[NovelHelper.CombineAll(args)];
 			// 話者がいる場合は表示
 			// hack 今後もっとUIをよくする
 			buffer = string.IsNullOrEmpty(sprite) ? "" : sprite + " : ";

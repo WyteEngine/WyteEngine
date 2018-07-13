@@ -10,6 +10,7 @@ using WyteEngine.Graphics;
 using WyteEngine.Item;
 using WyteEngine.Entities;
 using WyteEngine.UI.TextFormatting;
+using WyteEngine.I18n;
 
 namespace WyteEngine
 {
@@ -47,6 +48,7 @@ namespace WyteEngine
 		protected TextManager TextMan => TextManager.Instance;
 		protected TileAPI Tile => TileAPI.Instance;
 		protected BossGaugeBinder BossGauge => BossGaugeBinder.Instance;
+		protected I18nProvider I18n => I18nProvider.Instance;
 
 		/// <summary>
 		/// タッチパネルをサポートしているかどうか。

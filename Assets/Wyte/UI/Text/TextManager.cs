@@ -80,7 +80,7 @@ namespace WyteEngine.UI.TextFormatting
 
 			var obj = map[id].Text;
 
-			obj.text = TextComponent.Parse(text);
+			obj.text = TextComponent.Parse(I18n[text]);
 
 			obj.alignment = textAlignment.HasValue ? textAlignment.Value : obj.alignment;
 			obj.color = color.HasValue ? color.Value : obj.color;
