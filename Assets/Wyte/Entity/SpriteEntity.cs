@@ -17,6 +17,8 @@ namespace WyteEngine.Entities
 			set { animation = value; }
 		}
 
+		public int AnimationIndex => animPtr;
+
 		/// <summary>
 		/// アニメーションしているかどうかを取得します．
 		/// </summary>
@@ -70,12 +72,14 @@ namespace WyteEngine.Entities
 		{
 			if (Animation == AnimMan[id] && IsAnimating)
 				return;
+			var prevAnim = Animation;
 			Animation = AnimMan[id];
 			if (Animation != null)
 				spriteRenderer.sprite = Animation[0].Sprite;
 			animPtr = 0;
 			loopTimes = 0;
-			StartAnim();
+			if (prevAnim != Animation)
+				StartAnim();
 		}
 
 		protected virtual void Awake()

@@ -63,6 +63,7 @@ namespace WyteEngine.Entities
 			collider2D = GetComponent<BoxCollider2D>();
 			rigid.freezeRotation = true;
 			rigid.gravityScale = 0;
+			StartAnim();
 		}
 
 		protected override void OnUpdate()
