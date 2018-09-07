@@ -87,7 +87,7 @@ namespace WyteEngine.UI
 		public IEnumerator Say(string sprite, params string[] args)
 		{
 			var messageSource = I18n[NovelHelper.CombineAll(args)];
-			var voice = "entity.npc.saying";
+			var voice = "system.saying";
 			// 話者がいる場合は表示
 			// hack 今後もっとUIをよくする
 			buffer = string.IsNullOrEmpty(sprite) ? "" : sprite + " : ";
