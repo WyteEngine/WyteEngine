@@ -92,15 +92,15 @@ namespace WyteEngine.Entities
 					// Nothing to do.
 					break;
 				case EntityVisiblity.InVisible:
-					Destroy(this);
+					Destroy(gameObject);
 					break;
 				case EntityVisiblity.VisibleWhenOn:
 					if (!Flag.Flags[FlagId])
-						Destroy(this);
+						Destroy(gameObject);
 					break;
 				case EntityVisiblity.VisibleWhenOff:
 					if (Flag.Flags[FlagId])
-						Destroy(this);
+						Destroy(gameObject);
 					break;
 				default:
 					throw new InvalidOperationException("予期しない EntityVisiblity．");
