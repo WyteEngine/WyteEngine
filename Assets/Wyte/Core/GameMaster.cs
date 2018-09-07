@@ -62,7 +62,7 @@ namespace WyteEngine
 
 		private bool canMove;
 
-		public string DebugModeHelp => "F1高速字送り{0} F2スクリプトリロード F3情報 F4フラグリセット F5 FTSデバッグ";
+		public string DebugModeHelp => I18n["system.debug.help"];
 
 		[SerializeField]
 		[Tooltip("Unity EditorまたはDevelopment Build時にデバッグプレイをおこなうかどうか．")]
@@ -286,7 +286,7 @@ namespace WyteEngine
 			{
 				escaping = true;
 				yield return Freeze(null, "on");
-				yield return MessageContoller.Instance.Say(null, "初期化します。");
+				yield return MessageContoller.Instance.Say(null, I18n["system.initialize"]);
 			}
 
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -297,12 +297,12 @@ namespace WyteEngine
 			if (!IsDebugMode && requestDebugMode && (Application.isEditor || Debug.isDebugBuild))
 			{
 				IsDebugMode = true;
-				yield return Freeze(null, "on");
-				yield return MessageContoller.Instance?.Say(null, (LocalizableString)"system.warning.debug");
-				yield return Freeze(null, "off");
+				//yield return Freeze(null, "on");
+				//yield return MessageContoller.Instance?.Say(null, I18n["system.warning.debug"]);
+				//yield return Freeze(null, "off");
 			}
 
-			StartCoroutine(Gui(null, GuiEnabled ? "on" : "off"));
+			yield return Gui(null, GuiEnabled ? "on" : "off");
 
 			Novel.Run(BootstrapLabel);
 		}
@@ -310,7 +310,7 @@ namespace WyteEngine
 
 
 		//todo 必要ならescapeもキーバインドつける
-		bool Escape => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Escape, true) : UnityEngine.Input.GetKeyDown(KeyCode.Escape);
+		bool Escape => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Escape, true) : Input.GetKeyDown(KeyCode.Escape);
 
 		public void Initalize()
 		{

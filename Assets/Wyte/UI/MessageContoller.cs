@@ -65,7 +65,7 @@ namespace WyteEngine.UI
 			if (Wyte.IsDebugMode)
 			{
 				// デバッグテキスト
-				UIPersonalComputer.GetComponentInChildren<Text>().text = string.Format(Wyte.DebugModeHelp, quickEnabled ? "○" : "×");
+				UIPersonalComputer.GetComponentInChildren<Text>().text = string.Format(Wyte.DebugModeHelp, quickEnabled ? I18n["system.debug.true"] : I18n["system.debug.false"]);
 				if (Input.GetKeyDown(KeyCode.F1))
 				{
 					quickEnabled = !quickEnabled;
@@ -99,7 +99,7 @@ namespace WyteEngine.UI
 			}
 			catch (FormatException ex)
 			{
-				mes = new TextComponent(@"$c=red;書式エラー: " + TextUtility.ToSafeString(ex.Message)).Elements;
+				mes = new TextComponent(string.Format(I18n["fts.error"], TextUtility.ToSafeString(ex.Message))).Elements;
 			}
 			foreach (var c in mes)
 			{
