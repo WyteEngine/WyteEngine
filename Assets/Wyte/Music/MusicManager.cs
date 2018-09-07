@@ -113,45 +113,53 @@ namespace WyteEngine.Music
 			yield break;
 		}
 
-		private float waitCache;
+		private double waitCache;
 
-		private float waitQueue;
+		private double waitQueue;
 
 		public IEnumerator Wait(string t, string[] a)
 		{
-			// 0.5 0.5
-			// 0 0.1
-			// 0.5 0.4
-			// 0 0.6
-			// 0.5 -0.1 skip
-			// 0 0.2
-			// 0.5 0.2
+			// wait		0.5
+			// process	0.2
+			// wait		0.3
+			// process	0.7
+			// wait		-0.2	skip
+			// process	
 			float i;
 			if (!float.TryParse(NovelHelper.CombineAll(a), out i))
 				throw new NRuntimeException("不正な数値です．");
 			if (!source.isPlaying)
+			{
 				yield return Novel.Runtime.Wait(t, a);
+				waitCache = 0;
+			}
 			else
 			{
 				if (waitCache != 0)
 				{
-					var wt = i - (source.time - waitCache) - waitQueue;
+					var wt = i - (source.time - waitCache) + waitQueue;
+					var time = source.time;
+					Debug.Log($"wt:{wt}\nwaitCache:{waitCache}\nsource.time:{source.time}\nwaitQueue:{waitQueue}");
 					waitQueue = 0;
 					if (wt < 0)
 					{
 						waitQueue = wt;
-						yield return null;
+						waitCache = source.time;
 					}
 					else
 					{
-						yield return new WaitForSeconds(wt);
+						var prevTime = source.time;
+						yield return new WaitForSeconds((float)wt);
+						waitCache = prevTime + wt;
 					}
 				}
 				else
 				{
+					Debug.Log("waitCache == 0");
+					var prevTime = source.time;
 					yield return Novel.Runtime.Wait(t, a);
+					waitCache = prevTime + i;
 				}
-				waitCache = source.time;
 			}
 		}
 
