@@ -11,40 +11,27 @@ namespace WyteEngine.Event
 {
 	public class FlagManager : SingletonBaseBehaviour<FlagManager>
 	{
-		/// <summary>
-		/// セーブされるフラグ．
-		/// </summary>
-		FlagMap flags;
-		/// <summary>
-		/// セーブされず，ゲームを終了すると消去されるフラグ．
-		/// </summary>
-		FlagMap skipFlags;
-		/// <summary>
-		/// マップ切り替え時に消去されるスキップフラグ．
-		/// </summary>
-		FlagMap areaFlags;
-
-		public FlagMap Flags => flags;
-		public FlagMap SkipFlags => skipFlags;
-		public FlagMap AreaFlags => areaFlags;
+		public FlagMap Flags { get; private set; }
+		public FlagMap SkipFlags { get; private set; }
+		public FlagMap AreaFlags { get; private set; }
 
 		protected override void Awake()
 		{
 			base.Awake();
-			flags = SaveDataHelper.Load<FlagMap>("flag.json") ?? new FlagMap();
-			skipFlags = new FlagMap();
-			areaFlags = new FlagMap();
+			Flags = SaveDataHelper.Load<FlagMap>("flag.json") ?? new FlagMap();
+			SkipFlags = new FlagMap();
+			AreaFlags = new FlagMap();
 
 			Wyte.GameSave += (wyte) =>
 			{
-				SaveDataHelper.Save("flag.json", flags);
+				SaveDataHelper.Save("flag.json", Flags);
 			// スキップフラグはセーブされない．
 			};
 
 			Map.MapChanged += (wyte) =>
 			{
 				// さようなら．
-				areaFlags.Clear();
+				AreaFlags.Clear();
 			};
 		}
 
@@ -84,7 +71,7 @@ namespace WyteEngine.Event
 			if (labels.Length < 1)
 				return null;
 			var useGosub = false;
-			if (labels.Length >= 3)
+			if (labels.Length >= 3 || labels[0].ToLower() == "goto" || labels[0].ToLower() == "gosub")
 			{
 				useGosub = labels[0].ToLower() == "gosub";
 				labels = labels.Skip(1).ToArray();
@@ -99,36 +86,36 @@ namespace WyteEngine.Event
 
 		public new IEnumerator Flag(string _, string[] args)
 		{
-			FlagImpl(flags, args);
+			FlagImpl(Flags, args);
 			yield break;
 		}
 
 		public IEnumerator OnFlag(string name, string[] labels)
 		{
-			yield return OnFlagImpl(flags, name, labels);
+			yield return OnFlagImpl(Flags, name, labels);
 		}
 
 
 		public IEnumerator SkipFlag(string _, string[] args)
 		{
-			FlagImpl(skipFlags, args);
+			FlagImpl(SkipFlags, args);
 			yield break;
 		}
 
 		public IEnumerator OnSkipFlag(string name, string[] labels)
 		{
-			yield return OnFlagImpl(skipFlags, name, labels);
+			yield return OnFlagImpl(SkipFlags, name, labels);
 		}
 
 		public IEnumerator AreaFlag(string _, string[] args)
 		{
-			FlagImpl(areaFlags, args);
+			FlagImpl(AreaFlags, args);
 			yield break;
 		}
 
 		public IEnumerator OnAreaFlag(string name, string[] labels)
 		{
-			yield return OnFlagImpl(areaFlags, name, labels);
+			yield return OnFlagImpl(AreaFlags, name, labels);
 		}
 
 
