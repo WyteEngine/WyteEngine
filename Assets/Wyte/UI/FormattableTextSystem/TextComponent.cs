@@ -114,30 +114,45 @@ namespace WyteEngine.UI.TextFormatting
 			switch (name.ToLower())
 			{
 				case "b":
+				case "bold":
 					elem.Bold = true;
 					break;
 				case "i":
+				case "italic":
 					elem.Italic = true;
 					break;
 				case "c":
+				case "col":
+				case "color":
 					elem.Color = args;
 					break;
+				case "v":
+				case "voice":
+					elem.Voice = args;
+					break;
 				case "!b":
+				case "!bold":
 					elem.Bold = false;
 					break;
 				case "!i":
+				case "!italic":
 					elem.Italic = false;
 					break;
 				case "!c":
+				case "!col":
+				case "!color":
 					elem.Color = null;
 					break;
 				case "!sz":
+				case "!size":
 					elem.Size = 0;
 					break;
 				case "!spd":
+				case "!speed":
 					elem.Speed = 1;
 					break;
 				case "sz":
+				case "size":
 					int size;
 					if (!int.TryParse(args.Trim(), out size))
 						throw new FormatException("サイズには整数値のみ指定できます");
@@ -145,6 +160,7 @@ namespace WyteEngine.UI.TextFormatting
 					elem.Size = size;
 					break;
 				case "r":
+				case "rest":
 					elem.Bold = false;
 					elem.Italic = false;
 					elem.Color = null;
@@ -152,8 +168,10 @@ namespace WyteEngine.UI.TextFormatting
 					elem.Speed = 1;
 					elem.WaitTime = 0;
 					elem.Size = 0;
+					elem.Voice = null;
 					break;
 				case "w":
+				case "wait":
 					float wait;
 					if (!float.TryParse(args.Trim(), out wait))
 						throw new FormatException("待機時間には実数値のみ指定できます");
@@ -164,6 +182,7 @@ namespace WyteEngine.UI.TextFormatting
 					elem.Nod = true;
 					break;
 				case "spd":
+				case "speed":
 					float spd;
 					if (!float.TryParse(args.Trim(), out spd))
 						throw new FormatException("文字送り速度には実数値のみ指定できます");
@@ -171,6 +190,7 @@ namespace WyteEngine.UI.TextFormatting
 					elem.Speed = spd;
 					break;
 				case "var":
+				case "variable":
 					foreach (var c in GetVariable(args))
 					{
 						elem.Text = c.ToString();
