@@ -299,7 +299,6 @@ namespace WyteEngine.Event
 							UnityEngine.Debug.LogError($"Unhandled Exception in novel script(line.{ProgramCounter}) due to a bug.\n{ex.Message}\n{ex.StackTrace}");
 							continue;
 						}
-						//UnityEngine.Debug.Log(ProgramCounter + " - " + command.Current);
 						if (command.Current != null)
 						{
 							yield return command.Current;

@@ -39,12 +39,12 @@ namespace WyteEngine.Event
 			{
 				SaveDataHelper.Save("flag.json", flags);
 			// スキップフラグはセーブされない．
-		};
+			};
 
 			Map.MapChanged += (wyte) =>
 			{
-			// さようなら．
-			areaFlags.Clear();
+				// さようなら．
+				areaFlags.Clear();
 			};
 		}
 
