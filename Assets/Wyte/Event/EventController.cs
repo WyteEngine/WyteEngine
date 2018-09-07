@@ -261,6 +261,9 @@ namespace WyteEngine.Event
 		/// <returns>The engine.</returns>
 		IEnumerator StartEngine()
 		{
+			GameMaster.Instance.CanMove = false;
+			GameMaster.Instance.IsNotFreezed = false;
+
 			while (true)
 			{
 				// コードの終端に到達したら終了．
