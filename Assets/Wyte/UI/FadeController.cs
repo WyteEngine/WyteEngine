@@ -13,7 +13,7 @@ namespace WyteEngine.UI
 	{
 		Image image;
 
-		FadeState state;	
+		FadeState state = FadeState.Out;	
 
 		private void Start()
 		{
