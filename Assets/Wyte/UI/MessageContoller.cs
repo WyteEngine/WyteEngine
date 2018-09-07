@@ -87,6 +87,7 @@ namespace WyteEngine.UI
 		public IEnumerator Say(string sprite, params string[] args)
 		{
 			var messageSource = I18n[NovelHelper.CombineAll(args)];
+			var voice = "entity.npc.saying";
 			// 話者がいる場合は表示
 			// hack 今後もっとUIをよくする
 			buffer = string.IsNullOrEmpty(sprite) ? "" : sprite + " : ";
@@ -113,10 +114,15 @@ namespace WyteEngine.UI
 					yield return Nod();
 				}
 
+				if (!string.IsNullOrWhiteSpace(c.Voice))
+				{
+					voice = c.Voice;
+				}
+
 				buffer += c.ToString();
 				if (!quickEnabled && c.Speed != 0)
 				{
-					Sfx.Play("entity.npc.saying");
+					Sfx.Play(voice);
 					// タッチ時は早くする
 					yield return new WaitForSeconds(speed / Mathf.Abs(c.Speed) / (IsTouched ? 2 : 1));
 				}

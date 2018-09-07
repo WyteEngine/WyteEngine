@@ -12,6 +12,7 @@ namespace WyteEngine.UI.TextFormatting
 		public bool Nod { get; set; }
 		public float Speed { get; set; }
 		public string Color { get; set; }
+		public string Voice { get; set; }
 
 		public override string ToString()
 		{
