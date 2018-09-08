@@ -95,6 +95,9 @@ namespace WyteEngine.UI
 			base.Update();
 			quitButton.sprite = prevView?.Count > 0 ? backIcon : quitIcon;
 
+			if (Wyte.Escape)
+				Hide();
+
 			transform.localScale = Vector3.Lerp(transform.localScale, IsVisible ? visibleScale : invisibleScale, 0.8f);
 		}			
 	}

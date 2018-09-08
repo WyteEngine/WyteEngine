@@ -329,7 +329,7 @@ namespace WyteEngine
 
 
 		//todo 必要ならescapeもキーバインドつける
-		bool Escape => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Escape, true) : Input.GetKeyDown(KeyCode.Escape);
+		public bool Escape => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Escape, true) : Input.GetKeyDown(KeyBind.Pause);
 
 		public void Initalize()
 		{
