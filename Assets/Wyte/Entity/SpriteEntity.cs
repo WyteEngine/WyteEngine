@@ -27,7 +27,7 @@ namespace WyteEngine.Entities
 
 		public WyteAnimation.AnimData CurrentAnim => Animation != null && animPtr < Animation.Count ? Animation[animPtr] : null;
 
-		protected SpriteDirection direction;
+		public SpriteDirection Direction { get; set; }
 
 		/// <summary>
 		/// アニメーションの位置．
@@ -95,7 +95,7 @@ namespace WyteEngine.Entities
 
 		protected override void OnUpdate()
 		{
-			transform.localScale = new Vector3(direction == SpriteDirection.Left ? -localScale.x : localScale.x, localScale.y);
+			transform.localScale = new Vector3(Direction == SpriteDirection.Left ? -localScale.x : localScale.x, localScale.y);
 
 			if (AnimationMultiplier == 0f)
 			{

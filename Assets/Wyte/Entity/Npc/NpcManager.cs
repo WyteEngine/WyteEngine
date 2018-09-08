@@ -4,6 +4,8 @@ using System.Collections;
 using Novel.Exceptions;
 using System.Linq;
 using WyteEngine.Event;
+using static WyteEngine.Entities.SpriteEntity;
+using System;
 
 namespace WyteEngine.Entities
 {
@@ -58,7 +60,9 @@ namespace WyteEngine.Entities
 				 .Register("spchr", SpChr)
 				 .Register("spclr", SpClr)
 				 .Register("spwalk", SpWalk)
-				 .Register("speve", SpEvent);
+				 .Register("speve", SpEvent)
+				 .Register("spdir", SpDir)
+				 .Register("spwalkto", SpWalkTo);
 		}
 
 		public LivableEntity this[string tag]
@@ -112,6 +116,19 @@ namespace WyteEngine.Entities
 			if (this[tag] == null)
 				throw new NRuntimeException($"NPC tag:{tag} は存在しません．");
 			return SpOfs(this[tag], pos);
+		}
+
+		public LivableEntity SpDir(string tag, SpriteDirection dir)
+		{
+			if (this[tag] == null)
+				throw new NRuntimeException($"NPC tag:{tag} は存在しません．");
+			return SpDir(this[tag], dir);
+		}
+
+		private LivableEntity SpDir(LivableEntity sprite, SpriteDirection dir)
+		{
+			sprite.Direction = dir;
+			return sprite;
 		}
 
 		public void SpClr(LivableEntity npc)
@@ -234,6 +251,32 @@ namespace WyteEngine.Entities
 			yield break;
 		}
 
+		// <tag>+spchr <animId>
+		// +spchr <tag>, <animId>
+		public IEnumerator SpDir(string tag, string[] args)
+		{
+			string spTag, dir;
+			if (!string.IsNullOrEmpty(tag))
+			{
+				spTag = tag;
+				NArgsAssert(args.Length == 1);
+				dir = args[0];
+			}
+			else
+			{
+				NArgsAssert(args.Length == 2);
+				spTag = args[0];
+				dir = args[1];
+			}
+			dir = dir.ToLower();
+			if (dir != "left" && dir != "right")
+			{
+				throw new NRuntimeException("Direction がおかしいです。");
+			}
+			SpDir(spTag, dir == "left" ? SpriteDirection.Left : SpriteDirection.Right);
+			yield break;
+		}
+
 		// <tag>+spwalk <distance>, <time>
 		// +spwalk <tag>, <distance>, <time>
 		public IEnumerator SpWalk(string tag, string[] args)
@@ -259,6 +302,39 @@ namespace WyteEngine.Entities
 
 			distance = NovelHelper.TryParse(args[0]);
 			time = NovelHelper.TryParse(args[1]);
+			yield return Walk(npc, distance, time);
+		}
+		// <tag>+spwalk <x>, <time>
+		// +spwalk <tag>, <x>, <time>
+		public IEnumerator SpWalkTo(string tag, string[] args)
+		{
+			string spTag;
+			float distance, time, x;
+			NArgsAssert(args.Length >= 2);
+
+			if (!string.IsNullOrEmpty(tag))
+			{
+				spTag = tag;
+			}
+			else
+			{
+				spTag = args[0];
+				args = args.Skip(1).ToArray();
+			}
+			var npc = this[spTag];
+			if (npc == null)
+				throw new NRuntimeException($"NPC tag:{tag} は存在しません．");
+
+			NArgsAssert(args.Length == 2);
+
+			x = NovelHelper.TryParse(args[0]);
+			time = NovelHelper.TryParse(args[1]);
+
+			yield return Walk(npc, x - npc.transform.position.x, time);
+		}
+
+		private IEnumerator Walk(LivableEntity npc, float distance, float time)
+		{
 			// 速さ = 距離 / 時間
 			var speed = distance / time;
 			if (float.IsNaN(speed) || float.IsInfinity(speed))
@@ -266,8 +342,8 @@ namespace WyteEngine.Entities
 			npc.Move(speed);
 			yield return new WaitForSeconds(time);
 			npc.Move(0);
-
 		}
+
 
 		// <tag>+spclr
 		// +spclr <tag>

@@ -138,7 +138,7 @@ namespace WyteEngine.Entities
 		public virtual void Move(float rightSpeed, bool hold = true)
 		{
 			Velocity = new Vector2(rightSpeed, Velocity.y);
-			direction = (int)rightSpeed < 0 ? SpriteDirection.Left : (int)rightSpeed > 0 ? SpriteDirection.Right : direction;
+			Direction = (int)rightSpeed < 0 ? SpriteDirection.Left : (int)rightSpeed > 0 ? SpriteDirection.Right : Direction;
 			// 着地音
 			if ((IsCeiling() && !prevIsCeiling) || (IsGrounded() && !prevIsGrounded))
 				Sfx.Play(LandSfxId);
