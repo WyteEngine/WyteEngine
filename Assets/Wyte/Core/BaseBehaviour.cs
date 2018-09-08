@@ -49,6 +49,7 @@ namespace WyteEngine
 		protected TileAPI Tile => TileAPI.Instance;
 		protected BossGaugeBinder BossGauge => BossGaugeBinder.Instance;
 		protected I18nProvider I18n => I18nProvider.Instance;
+		protected ConfigController Menu => ConfigController.Instance;
 
 		/// <summary>
 		/// タッチパネルをサポートしているかどうか。
