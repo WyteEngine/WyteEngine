@@ -12,29 +12,46 @@ namespace WyteEngine.I18n
 	public class I18nProvider : SingletonBaseBehaviour<I18nProvider>
 	{
 		[SerializeField]
-		private string lang = "en";
+		private string lang = "en-us";
 
 		public string Language
 		{
 			get { return lang; }
-			set { lang = value; }
+			set
+			{
+				var oldLang = lang;
+				lang = value;
+				LanguageChanged?.Invoke(oldLang, lang);
+			}
 		}
 
 		public Dictionary<string, Dictionary<string, string>> Locales { get; private set; }
 
 		public Dictionary<string, string> CurrentLang => Locales.ContainsKey(Language) ? Locales[Language] : null;
 
+		public event LanguageChangedEventHandler LanguageChanged;
+
+		public string[] AvailableLocales { get; private set; }
+
 		protected override void Awake()
 		{
 			base.Awake();
-			var localeAssets = Resources.LoadAll("Language", typeof(TextAsset)).Cast<TextAsset>();
+			AvailableLocales = Resources.Load<TextAsset>("Language/langs").text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+
 			Locales = new Dictionary<string, Dictionary<string, string>>();
-			foreach (var asset in localeAssets)
+			foreach (var locale in AvailableLocales)
 			{
-				Locales[asset.name] = ParseLangFile(asset.text);
-				Debug.Log($"Loaded a {asset.name} locale file.");
+				var asset = Resources.Load<TextAsset>($"Language/{locale}/strings");
+				Locales[locale] = ParseLangFile(asset.text);
+				Debug.Log($"Loaded a {locale} locale file.");
 			}
 		}
+
+		public T GetResource<T>(string path) where T : Object
+		{
+			return Resources.Load<T>($"Language/{Language}/{path}");
+		}
+
 		/// <summary>
 		/// 翻訳された文字列を取得します．
 		/// </summary>
@@ -109,6 +126,8 @@ namespace WyteEngine.I18n
 		/// <returns>改行コードをLine Feedに統一した文字列．</returns>
 		/// <param name="str">変換すべき文字列．</param>
 		static string ToLFString(string str) => str.Replace("\r\n", "\n").Replace('\r', '\n');
+
+		public delegate void LanguageChangedEventHandler(string oldLanguage, string newLanguage);
 	}
 
 }
