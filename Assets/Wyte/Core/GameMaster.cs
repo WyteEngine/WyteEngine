@@ -250,6 +250,11 @@ namespace WyteEngine
 			IsPostInitialized = false;
 		}
 
+		public void Reset()
+		{
+			SceneManager.LoadScene("Main");
+		}
+
 		#region Novel API
 		public IEnumerator PlayerShow(string t, string[] a)
 		{
