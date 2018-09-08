@@ -68,13 +68,13 @@ namespace WyteEngine.Entities
 
 		protected override void OnUpdate()
 		{
-			base.OnUpdate();
 			Animate();
 			if (!Wyte.IsNotFreezed)
 			{
 				rigid.velocity = Vector2.zero;
 				return;
 			}
+			base.OnUpdate();
 			var sp = CurrentAnim?.Sprite;
 			if (sp != null)
 			{
@@ -103,6 +103,11 @@ namespace WyteEngine.Entities
 
 		protected override void OnFixedUpdate()
 		{
+			if (!Wyte.IsNotFreezed)
+			{
+				rigid.velocity = Vector2.zero;
+				return;
+			}
 			base.OnFixedUpdate();
 
 			if (Velocity.y < 0 && IsGrounded())

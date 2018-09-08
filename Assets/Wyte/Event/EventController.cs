@@ -263,7 +263,6 @@ namespace WyteEngine.Event
 		IEnumerator StartEngine()
 		{
 			GameMaster.Instance.CanMove = false;
-			GameMaster.Instance.IsNotFreezed = false;
 
 			while (true)
 			{
@@ -320,7 +319,6 @@ namespace WyteEngine.Event
 
 			}
 			GameMaster.Instance.CanMove = true;
-			GameMaster.Instance.IsNotFreezed = true;
 			IsRunning = false;
 		}
 

@@ -49,8 +49,7 @@ namespace WyteEngine.Entities
 			hpNumeric = GameObject.FindGameObjectWithTag("HpNumeric").GetComponent<Text>();
 			base.Start();
 			Debugger.DebugRendering += Debugger_DebugRendering;
-			prevWytePlayerHealth = Wyte.Player.Life;
-			prevHealth = Health;
+			prevHealth = Health = prevWytePlayerHealth = Wyte.Player.Life;
 		}
 
 		protected void UpdateUI()
@@ -83,6 +82,12 @@ namespace WyteEngine.Entities
 			// 移動可能時に処理を行う
 			if (Wyte.CanMove)
 				InputKey();
+
+			if (!Wyte.IsNotFreezed)
+			{
+				rigid.velocity = Vector2.zero;
+				return;
+			}
 
 			UpdateUI();
 
