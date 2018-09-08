@@ -9,13 +9,7 @@ namespace WyteEngine.Inputing
 
 		public static readonly Keys Default = new Keys("left", "right", "up", "down", "z", "x", "left shift", "escape", "a", "q", "w", false);
 
-		public Keys Binding
-		{
-			get { return _binding; }
-			set { _binding = value; }
-		}
-
-		private Keys _binding;
+		public Keys Binding { get; set; }
 
 		private static readonly string BindingFileName = "keybind.json";
 
@@ -41,17 +35,53 @@ namespace WyteEngine.Inputing
 	[System.Serializable]
 	public struct Keys
 	{
+		/// <summary>
+		/// 左キー。
+		/// </summary>
 		public string Left;
+		/// <summary>
+		/// 右キー。
+		/// </summary>
 		public string Right;
+		/// <summary>
+		/// 上キー。
+		/// </summary>
 		public string Up;
+		/// <summary>
+		/// 下キー。
+		/// </summary>
 		public string Down;
+		/// <summary>
+		/// ジャンプキー。
+		/// </summary>
 		public string Jump;
+		/// <summary>
+		/// アクションキー。
+		/// </summary>
 		public string Action;
+		/// <summary>
+		/// ダッシュキー。
+		/// </summary>
 		public string Dash;
+		/// <summary>
+		/// ポーズキー。
+		/// </summary>
 		public string Pause;
+		/// <summary>
+		/// メニューキー。
+		/// </summary>
 		public string Menu;
+		/// <summary>
+		/// 拡張左キー。
+		/// </summary>
 		public string ExLeft;
+		/// <summary>
+		/// 拡張右キー。
+		/// </summary>
 		public string ExRight;
+		/// <summary>
+		/// タッチを強制するかどうか。
+		/// </summary>
 		public bool ForceTouch;
 
 		/// <summary>
