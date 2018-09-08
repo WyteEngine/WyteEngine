@@ -6,6 +6,7 @@ using System.Text;
 using WyteEngine.Map;
 using WyteEngine.Entities;
 using WyteEngine.Music;
+using UnityEngine;
 
 namespace WyteEngine.UI.TextFormatting
 {
@@ -272,6 +273,39 @@ namespace WyteEngine.UI.TextFormatting
 		enum ParseState
 		{
 			PlainText, Name, Argument
+		}
+	}
+
+	/// <summary>
+	/// <see cref="TextComponent"/> を生成するためのビルダークラスです。
+	/// </summary>
+	public class TextComponentBuilder
+	{
+		private readonly StringBuilder b = new StringBuilder();
+
+		public string CurrentText => b.ToString();
+
+		public static TextComponentBuilder Create() => new TextComponentBuilder();
+
+		public TextComponentBuilder Text(string text) => Append(text);
+		public TextComponentBuilder Bold(bool on = true) => Append(on ? "$b;" : "$!b;");
+		public TextComponentBuilder Italic(bool on = true) => Append(on ? "$i;" : "$!i;");
+		public TextComponentBuilder Color(Color c) => Append($"$c=#{ColorUtility.ToHtmlStringRGBA(c)};");
+		public TextComponentBuilder Color(string c) => Append($"$c={c};");
+		public TextComponentBuilder Size(int size) => Append($"$sz={size};");
+		public TextComponentBuilder Reset() => Append("$r;");
+		public TextComponentBuilder Wait(float time) => Append($"$w={time};");
+		public TextComponentBuilder Nod() => Append("$nod;");
+		public TextComponentBuilder Speed(float time) => Append($"$spd={time};");
+		public TextComponentBuilder Variable(string var) => Append($"$var={var};");
+		public TextComponentBuilder Voice(string v) => Append($"v={v};");
+
+		public TextComponent Finish() => new TextComponent(CurrentText);
+
+		private TextComponentBuilder Append(string text)
+		{
+			b.Append(text);
+			return this;
 		}
 	}
 }

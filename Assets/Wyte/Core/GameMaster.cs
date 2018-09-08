@@ -249,14 +249,29 @@ namespace WyteEngine
 						ftsDebugCount++;
 						break;
 					case 4:
-						Debug.Log(TextComponent.Parse(@"いま諸君は， $b;$var=map_name;$r;にいるはずじゃ． $c=green;$var=bgm_name;$r;が流れていれば間違いないぞ．"));
+						var text = TextComponentBuilder.Create()
+										.Text("これは")
+										.Color(Color.blue)
+										.Bold()
+										.Italic()
+										.Text(nameof(TextComponentBuilder))
+										.Reset()
+										.Text("を使って")
+										.Size(15)
+										.Text("生成しているぞ！")
+										.CurrentText;
+						Debug.Log(text);
 						ftsDebugCount++;
 						break;
 					case 5:
-						Debug.Log(new TextComponent(@"$sz=5;おーい，きこえとるか？ $r;...$sz=20;きこえとったら返事せんかー！！！$r;"));
+						Debug.Log(TextComponent.Parse(@"いま諸君は， $b;$var=map_name;$r;にいるはずじゃ． $c=green;$var=bgm_name;$r;が流れていれば間違いないぞ．"));
 						ftsDebugCount++;
 						break;
 					case 6:
+						Debug.Log(new TextComponent(@"$sz=5;おーい，きこえとるか？ $r;...$sz=20;きこえとったら返事せんかー！！！$r;"));
+						ftsDebugCount++;
+						break;
+					case 7:
 						Debug.Log(new TextComponent(@"ゴホン．これでデバッグは終わりにするぞ．それでは，冒険を楽しみたまえ．"));
 						ftsDebugCount = 0;
 						break;
