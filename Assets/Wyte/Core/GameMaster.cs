@@ -290,22 +290,22 @@ namespace WyteEngine
 			// Initialize
 			if (Escape && !escaping)
 			{
-				StartCoroutine(Init());
+				ConfigController.Instance.Show();
 			}
 		}
 		bool escaping;
 
-		IEnumerator Init()
-		{
-			if (GuiEnabled)
-			{
-				escaping = true;
-				yield return Freeze(null, "on");
-				yield return MessageContoller.Instance.Say(null, I18n["system.initialize"]);
-			}
+		//IEnumerator Init()
+		//{
+		//	if (GuiEnabled)
+		//	{
+		//		escaping = true;
+		//		yield return Freeze(null, "on");
+		//		yield return MessageContoller.Instance.Say(null, I18n["system.initialize"]);
+		//	}
 
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		}
+		//	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		//}
 
 		IEnumerator Boot()
 		{
