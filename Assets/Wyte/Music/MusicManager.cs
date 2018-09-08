@@ -17,6 +17,8 @@ namespace WyteEngine.Music
 
 		public string SongName => songName;
 
+		private float timeCache;
+
 		protected override void Awake()
 		{
 			base.Awake();
@@ -31,8 +33,9 @@ namespace WyteEngine.Music
 				 .Register("bgmplay", Play)
 				 .Register("bgmchange", Change)
 				 .Register("bgmstop", Stop)
-			     .Register("bgmstopasync", StopAsync)
-				 .Register("bgmwait", Wait);
+				 .Register("bgmstopasync", StopAsync)
+				 .Register("bgmwait", Wait)
+				 .Register("bgmreplay", Replay);
 		}
 
 		public MusicData Get(string id)
@@ -66,6 +69,13 @@ namespace WyteEngine.Music
 				return;
 			}
 			Play(Songs[id].Id);
+		}
+
+		public void Replay()
+		{
+			source.volume = 1;
+			source.Play();
+			source.time = timeCache;
 		}
 
 		public void Change(string id)
@@ -163,8 +173,17 @@ namespace WyteEngine.Music
 			}
 		}
 
+		public IEnumerator Replay(string t, string[] a)
+		{
+			Replay();
+			yield break;
+		}
+
+
+
 		public void Stop()
 		{
+			timeCache = source.time;
 			source.Stop();
 			songName = null;
 		}
