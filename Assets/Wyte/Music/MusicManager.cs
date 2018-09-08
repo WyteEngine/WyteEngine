@@ -149,7 +149,7 @@ namespace WyteEngine.Music
 					else
 					{
 						var prevTime = source.time;
-						yield return new WaitForSeconds((float)wt);
+						while (source.time - prevTime < wt) yield return new WaitForEndOfFrame();
 						waitCache = prevTime + wt;
 					}
 				}
@@ -157,7 +157,7 @@ namespace WyteEngine.Music
 				{
 					Debug.Log("waitCache == 0");
 					var prevTime = source.time;
-					yield return Novel.Runtime.Wait(t, a);
+					while (source.time - prevTime < i) yield return new WaitForEndOfFrame();
 					waitCache = prevTime + i;
 				}
 			}
