@@ -7,6 +7,7 @@ using WyteEngine.Map;
 using WyteEngine.Entities;
 using WyteEngine.Music;
 using UnityEngine;
+using WyteEngine.Inputing;
 
 namespace WyteEngine.UI.TextFormatting
 {
@@ -219,6 +220,9 @@ namespace WyteEngine.UI.TextFormatting
 		static string GetVariable(string key)
 		{
 			var p = GameMaster.Instance?.CurrentPlayer != null ? GameMaster.Instance.CurrentPlayer.GetComponent<PlayerController>() : null;
+
+
+			var keys = KeyBinding.Instance.Binding;
 			switch (key)
 			{
 				case "pname":
@@ -251,6 +255,22 @@ namespace WyteEngine.UI.TextFormatting
 					return DateTime.Now.Day.ToString();
 				case "date_wd":
 					return DateTime.Now.ToString("dddd");
+				case "key_left":
+					return keys.Left;
+				case "key_right":
+					return keys.Right;
+				case "key_up":
+					return keys.Up;
+				case "key_down":
+					return keys.Down;
+				case "key_jump":
+					return keys.Jump;
+				case "key_dash":
+					return keys.Dash;
+				case "key_action":
+					return keys.Action;
+				case "key_pause":
+					return keys.Pause;
 				case "now":
 					return DateTime.Now.ToString("yy/MM/dd HH:mm:ss");
 				case "map_id":
