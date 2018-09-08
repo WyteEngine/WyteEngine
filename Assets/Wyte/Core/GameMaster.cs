@@ -294,7 +294,10 @@ namespace WyteEngine
 			// Initialize
 			if (Escape && !escaping)
 			{
-				ConfigController.Instance.Show();
+				if (!ConfigController.instance.IsVisible)
+					ConfigController.Instance.Show();
+				else
+					ConfigController.Instance.Hide();
 			}
 		}
 		bool escaping;
