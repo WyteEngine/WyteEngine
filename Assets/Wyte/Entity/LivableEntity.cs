@@ -70,7 +70,11 @@ namespace WyteEngine.Entities
 		{
 			base.OnUpdate();
 			Animate();
-
+			if (!Wyte.IsNotFreezed)
+			{
+				rigid.velocity = Vector2.zero;
+				return;
+			}
 			var sp = CurrentAnim?.Sprite;
 			if (sp != null)
 			{
