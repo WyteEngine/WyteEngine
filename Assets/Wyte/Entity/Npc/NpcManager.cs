@@ -85,6 +85,7 @@ namespace WyteEngine.Entities
 			sprite.IsManagedNpc = true;
 			sprite.Tag = tag;
 			sprite.gameObject.layer = LayerMask.NameToLayer("NPC");
+			sprite.GetComponent<Collider2D>().isTrigger = true;
 			managedEntity.Add(sprite);
 			return sprite;
 		}
