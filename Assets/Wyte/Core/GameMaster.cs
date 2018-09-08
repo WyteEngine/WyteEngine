@@ -15,56 +15,47 @@ namespace WyteEngine
 {
 	public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	{
-		public readonly string LongVersion = "1.0.0beta2";
-		public readonly string ShortVersion = "100b2";
+		#region ゲームデータ
+		public readonly string LongVersion = "1.0.0beta3";
+		public readonly string ShortVersion = "100b3";
 
 		[SerializeField] string gameVersion;
 		public string GameVersion => gameVersion;
 
-		/// <summary>
-		/// ゲーム起動時に最初に指定するイベントのラベル名．
-		/// </summary>
+		#endregion
+
+		#region インスペクター変数
 		[Tooltip("ゲーム内ではじめに実行するイベントのラベル名．")]
-		[SerializeField]
 		[FormerlySerializedAs("BootstrapLabel")]
-		string bootstrapLabel;
+		[SerializeField]　string bootstrapLabel;
 
-		public string BootstrapLabel => bootstrapLabel;
+		[SerializeField] GameObject playerPrefab;
 
-		/// <summary>
-		/// Gets or sets the name of the player.
-		/// </summary>
-		/// <value>The name of the player.</value>
-		[Obsolete("Use Player.Name Instead.")]
-		public string PlayerName => Player?.Name ?? "Null";
+		[SerializeField] GameObject itemBar;
 
-		/// <summary>
-		/// プレイヤーの情報．
-		/// </summary>
-		/// <value>The player.</value>
-		public PlayerData Player { get; private set; }
+		[SerializeField] GameObject gamePad;
+		#endregion
 
-		[SerializeField]
-		GameObject playerPrefab;
+		GameObject playerTemp;
 
-		[SerializeField]
-		GameObject itemBar;
+		private bool canMove;
+		
+		bool escaping;
 
-		[SerializeField]
-		GameObject gamePad;
+		private IEnumerator FtsDebug { get; set; }
 
 		public PlayerController CurrentPlayer => playerTemp == null ? null : playerTemp.GetComponent<PlayerController>();
 
-		GameObject playerTemp;
+		public string BootstrapLabel => bootstrapLabel;
+
+		public PlayerData Player { get; private set; }
 
 		/// <summary>
 		/// プレイヤー、NPC、すべてが動けない状態かどうか。
 		/// </summary>
-		/// <value><c>フリーズ状態であればtrue</c> そうでなければ<c>false</c>.
-		/// </value>
+		/// <value><c>フリーズ状態であればtrue</c> そうでなければ<c>false</c>.</value>
 		public bool IsNotFreezed { get; set; }
 
-		private bool canMove;
 
 		public string DebugModeHelp => I18n["system.debug.help"];
 
@@ -83,13 +74,6 @@ namespace WyteEngine
 			set { guiEnabled = value; }
 		}
 
-		[RuntimeInitializeOnLoadMethod]
-		static void OnLoad()
-		{
-#if UNITY_STANDALONE
-			Screen.SetResolution(640, 360, false, 60);
-#endif
-		}
 
 		/// <summary>
 		/// プレイヤーが移動可能かどうか。
@@ -112,6 +96,160 @@ namespace WyteEngine
 				}
 			}
 		}
+
+		protected override void Awake()
+		{
+			base.Awake();
+#if UNITY_EDITOR
+			QualitySettings.vSyncCount = 1;
+#else
+		// Fix to 60fps
+			Application.targetFrameRate = 60;
+#endif
+			
+		}
+
+		void Start()
+		{
+			IsNotFreezed = true;
+			CanMove = true;
+			// hack 後々ちゃんと書き直す
+			Player = new PlayerData("ホワイト", 4);
+
+			Novel.Runtime
+				 .Register("pshow", PlayerShow)
+				 .Register("phide", PlayerHide)
+				 .Register("gui", Gui)
+				 .Register("freeze", Freeze)
+				 .Register("pfreeze", PlayerFreeze);
+		}
+
+		protected override void PostStart()
+		{
+			StartCoroutine(Boot());
+		}
+
+		protected override void Update()
+		{
+			base.Update();
+			// FTS デバッグ
+			if (IsDebugMode && Input.GetKeyDown(KeyCode.F5))
+			{
+				if (FtsDebug == null)
+					FtsDebug = DoFtsDebug();
+				// コルーチンを逐次呼ぶ
+				FtsDebug.MoveNext();
+			}
+
+			// Clossplatform UI Visible
+			if (GuiEnabled)
+			{
+				if (CanMove)
+					MessageContoller.Instance.ShowBox();
+				else
+					MessageContoller.Instance.HideBox();
+			}
+
+			// Initialize
+			if (Escape)
+			{
+				if (!ConfigController.instance.IsVisible)
+					ConfigController.Instance.Show();
+				else
+					ConfigController.Instance.Back();
+			}
+		}
+
+		IEnumerator DoFtsDebug()
+		{
+			var count = 0;
+			while (true)
+			{
+				switch (count)
+				{
+					case 0:
+						Debug.Log(TextComponent.Parse(@"ようこそ $c=red;ホワイトスペース$r;へ！"));
+						break;
+					case 1:
+						Debug.Log(TextComponent.Parse(@"君の名前は $b;$var=pname; $r;じゃな？"));
+						break;
+					case 2:
+						Debug.Log(TextComponent.Parse(@"このメッセージは $c=#007fff;$i;TextComponent$r;のデバッグ用じゃ．"));
+						break;
+					case 3:
+						Debug.Log(new TextComponent(@"先程は$c=blue;static$r;メソッド，今このテキストは$c=red;インスタンス$r;で生成しておるぞ．"));
+						break;
+					case 4:
+						var text = TextComponentBuilder.Create()
+										.Text("これは")
+										.Color(Color.blue)
+										.Bold()
+										.Italic()
+										.Text(nameof(TextComponentBuilder))
+										.Reset()
+										.Text("を使って")
+										.Size(15)
+										.Text("生成しているぞ！")
+										.CurrentText;
+						Debug.Log(text);
+						break;
+					case 5:
+						Debug.Log(TextComponent.Parse(@"いま諸君は， $b;$var=map_name;$r;にいるはずじゃ． $c=green;$var=bgm_name;$r;が流れていれば間違いないぞ．"));
+						break;
+					case 6:
+						Debug.Log(new TextComponent(@"$sz=5;おーい，きこえとるか？ $r;...$sz=20;きこえとったら返事せんかー！！！$r;"));
+						break;
+					case 7:
+						Debug.Log(new TextComponent(@"ゴホン．これでデバッグは終わりにするぞ．それでは，冒険を楽しみたまえ．"));
+						break;
+				}
+				count++;
+				if (count > 7)
+					count = 0;
+				yield return null;
+			}
+		}
+
+
+		[RuntimeInitializeOnLoadMethod]
+		static void OnLoad()
+		{
+#if UNITY_STANDALONE
+			Screen.SetResolution(640, 360, false, 60);
+#endif
+		}
+		
+		/// <summary>
+		/// 起動処理を行います。
+		/// </summary>
+		IEnumerator Boot()
+		{
+			// デバッグモードの開始
+			if (!IsDebugMode && requestDebugMode && (Application.isEditor || Debug.isDebugBuild))
+			{
+				IsDebugMode = true;
+			}
+
+			yield return Gui(null, GuiEnabled ? "on" : "off");
+
+			Novel.Run(BootstrapLabel);
+		}
+
+		//todo 必要ならescapeもキーバインドつける
+		public bool Escape => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Escape, true) : Input.GetKeyDown(KeyBind.Pause);
+
+		/// <summary>
+		/// プレイヤーが死んだときに呼ばれます。
+		/// </summary>
+		public void Initalize()
+		{
+			if (playerTemp != null)
+				Destroy(playerTemp);
+			IsNotFreezed = CanMove = true;
+			GameReset?.Invoke(this);
+			IsPostInitialized = false;
+		}
+
 		#region Novel API
 		public IEnumerator PlayerShow(string t, string[] a)
 		{
@@ -193,155 +331,6 @@ namespace WyteEngine
 		}
 
 		#endregion
-
-		protected override void Awake()
-		{
-			base.Awake();
-#if UNITY_EDITOR
-			QualitySettings.vSyncCount = 1;
-#else
-		// Fix to 60fps
-			Application.targetFrameRate = 60;
-#endif
-		}
-
-		void Start()
-		{
-			IsNotFreezed = true;
-			CanMove = true;
-			// hack 後々ちゃんと書き直す
-			Player = new PlayerData("ホワイト", 4);
-
-			Novel.Runtime
-				 .Register("pshow", PlayerShow)
-				 .Register("phide", PlayerHide)
-				 .Register("gui", Gui)
-				 .Register("freeze", Freeze)
-				 .Register("pfreeze", PlayerFreeze);
-		}
-
-		int ftsDebugCount;
-
-		protected override void PostStart()
-		{
-			StartCoroutine(Boot());
-		}
-
-		protected override void Update()
-		{
-			base.Update();
-			// Novel Bootstrap
-
-			if (IsDebugMode && Input.GetKeyDown(KeyCode.F5))
-			{
-				switch (ftsDebugCount)
-				{
-					case 0:
-						Debug.Log(TextComponent.Parse(@"ようこそ $c=red;ホワイトスペース$r;へ！"));
-						ftsDebugCount++;
-						break;
-					case 1:
-						Debug.Log(TextComponent.Parse(@"君の名前は $b;$var=pname; $r;じゃな？"));
-						ftsDebugCount++;
-						break;
-					case 2:
-						Debug.Log(TextComponent.Parse(@"このメッセージは $c=#007fff;$i;TextComponent$r;のデバッグ用じゃ．"));
-						ftsDebugCount++;
-						break;
-					case 3:
-						Debug.Log(new TextComponent(@"先程は$c=blue;static$r;メソッド，今このテキストは$c=red;インスタンス$r;で生成しておるぞ．"));
-						ftsDebugCount++;
-						break;
-					case 4:
-						var text = TextComponentBuilder.Create()
-										.Text("これは")
-										.Color(Color.blue)
-										.Bold()
-										.Italic()
-										.Text(nameof(TextComponentBuilder))
-										.Reset()
-										.Text("を使って")
-										.Size(15)
-										.Text("生成しているぞ！")
-										.CurrentText;
-						Debug.Log(text);
-						ftsDebugCount++;
-						break;
-					case 5:
-						Debug.Log(TextComponent.Parse(@"いま諸君は， $b;$var=map_name;$r;にいるはずじゃ． $c=green;$var=bgm_name;$r;が流れていれば間違いないぞ．"));
-						ftsDebugCount++;
-						break;
-					case 6:
-						Debug.Log(new TextComponent(@"$sz=5;おーい，きこえとるか？ $r;...$sz=20;きこえとったら返事せんかー！！！$r;"));
-						ftsDebugCount++;
-						break;
-					case 7:
-						Debug.Log(new TextComponent(@"ゴホン．これでデバッグは終わりにするぞ．それでは，冒険を楽しみたまえ．"));
-						ftsDebugCount = 0;
-						break;
-				}
-			}
-
-			// Clossplatform UI Visible
-			if (GuiEnabled)
-			{
-				if (CanMove)
-					MessageContoller.Instance.ShowBox();
-				else
-					MessageContoller.Instance.HideBox();
-			}
-
-			// Initialize
-			if (Escape && !escaping)
-			{
-				if (!ConfigController.instance.IsVisible)
-					ConfigController.Instance.Show();
-				else
-					ConfigController.Instance.Hide();
-			}
-		}
-		bool escaping;
-
-		//IEnumerator Init()
-		//{
-		//	if (GuiEnabled)
-		//	{
-		//		escaping = true;
-		//		yield return Freeze(null, "on");
-		//		yield return MessageContoller.Instance.Say(null, I18n["system.initialize"]);
-		//	}
-
-		//	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		//}
-
-		IEnumerator Boot()
-		{
-			if (!IsDebugMode && requestDebugMode && (Application.isEditor || Debug.isDebugBuild))
-			{
-				IsDebugMode = true;
-				//yield return Freeze(null, "on");
-				//yield return MessageContoller.Instance?.Say(null, I18n["system.warning.debug"]);
-				//yield return Freeze(null, "off");
-			}
-
-			yield return Gui(null, GuiEnabled ? "on" : "off");
-
-			Novel.Run(BootstrapLabel);
-		}
-
-
-
-		//todo 必要ならescapeもキーバインドつける
-		public bool Escape => IsSmartDevice ? GamePadBehaviour.Instance.Get(GamePadButtons.Escape, true) : Input.GetKeyDown(KeyBind.Pause);
-
-		public void Initalize()
-		{
-			if (playerTemp != null)
-				Destroy(playerTemp);
-			IsNotFreezed = CanMove = true;
-			GameReset?.Invoke(this);
-			IsPostInitialized = false;
-		}
 
 		public delegate void PlayerDeathEventHandler(UObject player, UObject enemy, WyteEventArgs e);
 		public event PlayerDeathEventHandler PlayerDead;
