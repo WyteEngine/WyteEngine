@@ -8,6 +8,7 @@ using System;
 using Novel.Exceptions;
 using WyteEngine.Event;
 using WyteEngine.UI;
+using WyteEngine.Helper;
 
 namespace WyteEngine.Event
 {
@@ -272,6 +273,10 @@ namespace WyteEngine.Event
 				// stop
 				if (!IsRunning)
 					break;
+
+				// メニューが開いているときは待機する
+				yield return new WaitWhileMenuIsVisible();
+
 				// ステートメントを取得
 				var statement = code.Statements[ProgramCounter];
 				if (!commands.ContainsKey(statement.CommandName))
@@ -285,6 +290,8 @@ namespace WyteEngine.Event
 					bool flag = true;;
 					while (true)
 					{
+						// メニューが開いているときは待機する
+						yield return new WaitWhileMenuIsVisible();
 						try
 						{
 							if (!(flag = command.MoveNext()))
