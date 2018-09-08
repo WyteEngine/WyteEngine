@@ -13,9 +13,13 @@ using WyteEngine.I18n;
 
 namespace WyteEngine
 {
-
 	public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	{
+		public readonly string LongVersion = "1.0.0beta2";
+		public readonly string ShortVersion = "100b2";
+
+		[SerializeField] string gameVersion;
+		public string GameVersion => gameVersion;
 
 		/// <summary>
 		/// ゲーム起動時に最初に指定するイベントのラベル名．
