@@ -274,7 +274,8 @@ namespace WyteEngine.Event
 					break;
 
 				// メニューが開いているときは待機する
-				yield return new WaitWhileMenuIsVisible();
+				if (ConfigController.Instance.IsVisible)
+					yield return new WaitWhileMenuIsVisible();
 
 				// ステートメントを取得
 				var statement = code.Statements[ProgramCounter];
@@ -290,7 +291,8 @@ namespace WyteEngine.Event
 					while (true)
 					{
 						// メニューが開いているときは待機する
-						yield return new WaitWhileMenuIsVisible();
+						if (ConfigController.Instance.IsVisible)
+							yield return new WaitWhileMenuIsVisible();
 						try
 						{
 							if (!(flag = command.MoveNext()))

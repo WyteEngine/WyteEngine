@@ -114,12 +114,20 @@ namespace WyteEngine.Entities
 			{
 				Velocity = new Vector2(Velocity.x, 0);
 			}
-			if (!IsGrounded())
+
+			if (Camera.IsVisible(transform.position))
 			{
-				Velocity -= new Vector2(0, GravityScale * Time.fixedDeltaTime);
+				if (!IsGrounded())
+				{
+					Velocity -= new Vector2(0, GravityScale * Time.fixedDeltaTime);
+				}
+			}
+			else
+			{
+				Velocity = Vector2.zero;
 			}
 			// todo あとでもっとマシに
-			rigid.velocity = Camera.IsVisible(transform.position) ? Velocity : Vector2.zero;
+			rigid.velocity = Velocity;
 		}
 
 		private void OnDrawGizmos()

@@ -16,8 +16,8 @@ namespace WyteEngine
 	public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	{
 		#region ゲームデータ
-		public readonly string LongVersion = "1.0.0beta4";
-		public readonly string ShortVersion = "100b4";
+		public readonly string LongVersion = "1.0.0beta5";
+		public readonly string ShortVersion = "100b5";
 
 		[SerializeField] string gameVersion;
 		public string GameVersion => gameVersion;
@@ -245,6 +245,9 @@ namespace WyteEngine
 		{
 			if (playerTemp != null)
 				Destroy(playerTemp);
+			Player.Life = Player.MaxLife;
+			Player.WaterPoint = PlayerData.MaxWaterPoint;
+			Player.FoodPoint = PlayerData.MaxFoodPoint;
 			IsNotFreezed = CanMove = true;
 			GameReset?.Invoke(this);
 			IsPostInitialized = false;
