@@ -62,7 +62,21 @@ namespace WyteEngine.Entities
 				 .Register("spwalk", SpWalk)
 				 .Register("speve", SpEvent)
 				 .Register("spdir", SpDir)
-				 .Register("spwalkto", SpWalkTo);
+				 .Register("spwalkto", SpWalkTo)
+				 .Register("spwalkasync", SpWalkAsync)
+				 .Register("spwalktoasync",SpWalkToAsync);
+		}
+
+		private IEnumerator SpWalkAsync(string spriteTags, string[] args)
+		{
+			StartCoroutine(SpWalk(spriteTags, args));
+			yield break;
+		}
+
+		private IEnumerator SpWalkToAsync(string spriteTags, string[] args)
+		{
+			StartCoroutine(SpWalkTo(spriteTags, args));
+			yield break;
 		}
 
 		public LivableEntity this[string tag]
@@ -336,6 +350,7 @@ namespace WyteEngine.Entities
 
 		private IEnumerator Walk(LivableEntity npc, float distance, float time)
 		{
+			var target = npc.transform.position.x + distance;
 			// 速さ = 距離 / 時間
 			var speed = distance / time;
 			if (float.IsNaN(speed) || float.IsInfinity(speed))
@@ -343,6 +358,7 @@ namespace WyteEngine.Entities
 			npc.Move(speed);
 			yield return new WaitForSeconds(time);
 			npc.Move(0);
+			npc.transform.position = new Vector3(target, npc.transform.position.y, npc.transform.position.z);
 		}
 
 
