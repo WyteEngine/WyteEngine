@@ -56,7 +56,7 @@ namespace WyteEngine.UI
 		void LateUpdate()
 		{
 			var z = transform.position.z;
-			if (!player)
+			if (!player && Target == CameraTarget.Player)
 			{
 
 				var g = GameObject.FindGameObjectWithTag("Player");
