@@ -171,7 +171,7 @@ namespace WyteEngine.Entities
 				Kill(interacter);
 			}
 			else
-				OnDamaged(interacter);
+				StartCoroutine(OnDamaged(interacter));
 		}
 
 		public void Heal(UObject interacter, int point)
@@ -179,7 +179,7 @@ namespace WyteEngine.Entities
 			Health += point;
 			if (Health > MaxHealth)
 				Health = MaxHealth;
-			OnHealed(interacter);
+			StartCoroutine(OnHealed(interacter));
 		}
 
 		public void Kill(UObject killer)
