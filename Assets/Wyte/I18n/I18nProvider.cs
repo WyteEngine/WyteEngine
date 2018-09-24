@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using WyteEngine.Helper;
 
 namespace WyteEngine.I18n
 {
@@ -21,6 +22,7 @@ namespace WyteEngine.I18n
 			{
 				var oldLang = lang;
 				lang = value;
+				SaveDataHelper.Save("locale.json", new LanguageConfig { Language = lang });
 				LanguageChanged?.Invoke(oldLang, lang);
 			}
 		}
@@ -45,6 +47,30 @@ namespace WyteEngine.I18n
 				Locales[locale] = ParseLangFile(asset.text);
 				Debug.Log($"Loaded a {locale} locale file.");
 			}
+			var lang = SaveDataHelper.Load<LanguageConfig>("locale.json");
+			// 言語設定がない場合
+			if (lang == null || lang.Language == null)
+			{
+				lang = new LanguageConfig();
+				// システムの言語設定と照合する
+				foreach (var loc in Locales)
+				{
+					if (loc.Value.ContainsKey("lang.name.inunity"))
+					{
+						SystemLanguage converted;
+						if (System.Enum.TryParse(loc.Value["lang.name.inunity"], out converted))
+						{
+						 	if (converted == Application.systemLanguage)
+							{
+								lang.Language = loc.Key;
+								break; 
+							}
+						}
+					}
+				}
+			}
+			Language = lang.Language;
+			
 		}
 
 		public T GetResource<T>(string path) where T : Object
@@ -128,6 +154,12 @@ namespace WyteEngine.I18n
 		static string ToLFString(string str) => str.Replace("\r\n", "\n").Replace('\r', '\n');
 
 		public delegate void LanguageChangedEventHandler(string oldLanguage, string newLanguage);
+	}
+
+	[System.Serializable]
+	public class LanguageConfig
+	{
+		public string Language;
 	}
 
 }
