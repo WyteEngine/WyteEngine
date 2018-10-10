@@ -19,6 +19,7 @@ Features
 - Event Scripting System (Powered by Novel Script)
 - Very powerful scripting API for Novel
 - C#-level Extension API
+- 2D-specialized animation system
 - Pixel-perfect 2D camera
 - Very Easy AI Construction API
 - Full and easy-to-use I18n & L10n support
