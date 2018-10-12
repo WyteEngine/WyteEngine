@@ -69,12 +69,12 @@ namespace WyteEngine.Entities
 		protected override void OnUpdate()
 		{
 			Animate();
-			if (!Wyte.IsNotFreezed)
+			base.OnUpdate();
+			if (!Wyte.IsNotFreezed || (this is PlayerController && !Wyte.CanMove))
 			{
-				rigid.velocity = Vector2.zero;
+				ChangeSprite(StayAnimationId);
 				return;
 			}
-			base.OnUpdate();
 			var sp = CurrentAnim?.Sprite;
 			if (sp != null)
 			{
@@ -103,18 +103,25 @@ namespace WyteEngine.Entities
 
 		protected override void OnFixedUpdate()
 		{
-			if (!Wyte.IsNotFreezed)
+			base.OnFixedUpdate();
+			if (!Wyte.IsNotFreezed || (this is PlayerController && !Wyte.CanMove))
 			{
-				rigid.velocity = Vector2.zero;
+				// Xは一回0にする
+				rigid.velocity *= Vector2.up;
+				Gravity();
 				return;
 			}
-			base.OnFixedUpdate();
 
 			if (Velocity.y < 0 && IsGrounded())
 			{
 				Velocity = new Vector2(Velocity.x, 0);
 			}
 
+			Gravity();
+		}
+
+		protected void Gravity()
+		{
 			if (Camera.IsVisible(transform.position))
 			{
 				if (!IsGrounded())

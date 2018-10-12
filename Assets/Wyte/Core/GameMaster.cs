@@ -16,8 +16,8 @@ namespace WyteEngine
 	public class GameMaster : SingletonBaseBehaviour<GameMaster>
 	{
 		#region ゲームデータ
-		public readonly string LongVersion = "1.0.0beta5";
-		public readonly string ShortVersion = "100b5";
+		public readonly string LongVersion = "1.0.0";
+		public readonly string ShortVersion = "100";
 
 		[SerializeField] string gameVersion;
 		public string GameVersion => gameVersion;

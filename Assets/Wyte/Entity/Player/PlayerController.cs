@@ -79,15 +79,11 @@ namespace WyteEngine.Entities
 
 		protected override void OnFixedUpdate()
 		{
+			base.OnFixedUpdate();
+			if (!Wyte.CanMove) { return; }
+			
 			// 移動可能時に処理を行う
-			if (Wyte.CanMove)
-				InputKey();
-
-			if (!Wyte.IsNotFreezed)
-			{
-				rigid.velocity = Vector2.zero;
-				return;
-			}
+			InputKey();
 
 			UpdateUI();
 
@@ -99,7 +95,6 @@ namespace WyteEngine.Entities
 
 			prevHealth = Health;
 			prevWytePlayerHealth = Wyte.Player.Life;
-			base.OnFixedUpdate();
 		}
 
 		bool GetJumpKeyPushed(bool down = false) =>

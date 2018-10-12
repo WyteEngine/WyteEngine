@@ -354,7 +354,10 @@ namespace WyteEngine.Entities
 			// 速さ = 距離 / 時間
 			var speed = distance / time;
 			if (float.IsNaN(speed) || float.IsInfinity(speed))
+			{
+				npc.transform.position = new Vector3(target, npc.transform.position.y, npc.transform.position.z);
 				yield break;
+			}
 			npc.Move(speed);
 			yield return new WaitForSeconds(time);
 			npc.Move(0);
