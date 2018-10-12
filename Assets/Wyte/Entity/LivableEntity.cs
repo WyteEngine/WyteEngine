@@ -55,6 +55,8 @@ namespace WyteEngine.Entities
 		/// </summary>
 		protected bool prevIntersects;
 
+		protected bool prevIsFreezed;
+
 		protected override void Start()
 		{
 			base.Start();
@@ -72,7 +74,12 @@ namespace WyteEngine.Entities
 			base.OnUpdate();
 			if (!Wyte.IsNotFreezed || (this is PlayerController && !Wyte.CanMove))
 			{
-				ChangeSprite(StayAnimationId);
+				// 1回だけ変える
+				if (!prevIsFreezed)
+				{
+					IsJumping = false;
+				}
+				prevIsFreezed = !Wyte.IsNotFreezed || (this is PlayerController && !Wyte.CanMove);
 				return;
 			}
 			var sp = CurrentAnim?.Sprite;
@@ -91,6 +98,7 @@ namespace WyteEngine.Entities
 
 			prevIsCeiling = IsCeiling();
 			prevIsGrounded = IsGrounded();
+			prevIsFreezed = !Wyte.IsNotFreezed || (this is PlayerController && !Wyte.CanMove);
 
 			CheckCollision(IsCollidedWithPlayer());
 		}
