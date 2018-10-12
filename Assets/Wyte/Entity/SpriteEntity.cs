@@ -10,12 +10,7 @@ namespace WyteEngine.Entities
 	[RequireComponent(typeof(SpriteRenderer))]
 	public class SpriteEntity : Entity
 	{
-		private new WyteAnimation animation;
-		public WyteAnimation Animation
-		{
-			get { return animation; }
-			set { animation = value; }
-		}
+		public WyteAnimation Animation { get; set; }
 
 		public int AnimationIndex => animPtr;
 
@@ -76,10 +71,12 @@ namespace WyteEngine.Entities
 			Animation = AnimMan[id];
 			if (Animation != null)
 				spriteRenderer.sprite = Animation[0].Sprite;
-			animPtr = 0;
-			loopTimes = 0;
 			if (prevAnim != Animation)
+			{
+				animPtr = 0;
+				loopTimes = 0;
 				StartAnim();
+			}
 		}
 
 		protected virtual void Awake()
@@ -106,10 +103,11 @@ namespace WyteEngine.Entities
 			// 無敵のときにチカチカする
 			spriteRenderer.enabled = GodTime <= 0 || (GodTime * 1000 % 250 < 125);
 
-			if (Animation != null && IsAnimating)
-			{
+			if (CurrentAnim?.Sprite != null)
 				spriteRenderer.sprite = CurrentAnim.Sprite;
 
+			if (Animation != null && IsAnimating)
+			{
 				time += Time.deltaTime;
 				if (time > CurrentAnim.Time * (1 / AnimationMultiplier))
 				{
