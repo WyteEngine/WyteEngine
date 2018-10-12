@@ -12,7 +12,9 @@ namespace WyteEngine.UI
 	public class PlayerCamera : SingletonBaseBehaviour<PlayerCamera>
 	{
 
-		public Transform player;
+		private Transform player;
+
+		private Transform entity;
 
 		private static readonly Vector3 zero = new Vector3(0, 0, -1);
 
@@ -50,7 +52,8 @@ namespace WyteEngine.UI
 
 			Novel.Runtime
 				 .Register("playercamera", SwitchToPlayerCamera)
-				 .Register("freecamera", SwitchToFreeCamera);
+				 .Register("freecamera", SwitchToFreeCamera)
+				 .Register("spritecamera", SwitchToSpriteCamera);
 		}
 
 		void LateUpdate()
@@ -73,6 +76,14 @@ namespace WyteEngine.UI
 				case CameraTarget.Player:
 					if (!player.GetComponent<PlayerController>().Dying && player.gameObject != null)
 						newPosition = player.position + offset + Vector3.down * 24;
+					break;
+				case CameraTarget.Entity:
+					if (entity == null)
+					{
+						SwitchToPlayerCamera();
+						goto case CameraTarget.Player;
+					}
+					newPosition = entity.position + offset + Vector3.down * 24;
 					break;
 				case CameraTarget.Free:
 					newPosition = FreePosition;
@@ -107,6 +118,14 @@ namespace WyteEngine.UI
 		public IEnumerator SwitchToPlayerCamera(string _, string[] args)
 		{
 			SwitchToPlayerCamera();
+			yield break;
+		}
+
+		public IEnumerator SwitchToSpriteCamera(string _, string[] args)
+		{
+			NArgsAssert(args.Length == 1);
+			entity = Npc[args[0]].transform;
+			Target = CameraTarget.Entity;
 			yield break;
 		}
 
@@ -152,6 +171,7 @@ namespace WyteEngine.UI
 	public enum CameraTarget
 	{
 		Player,
-		Free
+		Free,
+		Entity,
 	}
 }
