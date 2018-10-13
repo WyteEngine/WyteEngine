@@ -75,11 +75,11 @@ namespace WyteEngine.Entities
 			var sp = CurrentAnim?.Sprite;
 			if (sp != null)
 			{
-				charaWidth = sp.bounds.size.x;
-				charaWidth2 = sp.bounds.size.x + 1;
+				charaWidth = sp.bounds.size.x - 2;
+				charaWidth2 = sp.bounds.size.x + 2;
 				charaHead = sp.bounds.size.y / 2;
 				charaFoot = -sp.bounds.size.y / 2;
-				collider2D.size = new Vector2(sp.bounds.size.x, sp.bounds.size.y - 1f);
+				collider2D.size = new Vector2(sp.bounds.size.x - 1f, sp.bounds.size.y - 1f);
 			}
 
 			if (!Wyte.IsNotFreezed || (this is PlayerController && !Wyte.CanMove))
