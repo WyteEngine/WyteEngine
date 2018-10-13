@@ -111,8 +111,12 @@ namespace WyteEngine.UI
 				if (newPosition.y + camSize.y / 2 > Map.CurrentMapSize.yMax)
 					newPosition.y = Map.CurrentMapSize.yMax - camSize.y / 2;
 			}
-			transform.position = Vector3.Lerp(transform.position, newPosition, 5f * Time.deltaTime);
-			transform.position.Set(transform.position.x, transform.position.y, z);
+
+			transform.position = FadeController.Instance.State == FadeState.Out
+				? newPosition
+				: Vector3.Lerp(transform.position, newPosition, 5f * Time.deltaTime);
+
+			transform.position = new Vector3(transform.position.x, transform.position.y, z);
 		}
 
 		public IEnumerator SwitchToPlayerCamera(string _, string[] args)
