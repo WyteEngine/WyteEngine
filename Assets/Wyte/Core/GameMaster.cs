@@ -122,7 +122,8 @@ namespace WyteEngine
 				 .Register("gui", Gui)
 				 .Register("freeze", Freeze)
 				 .Register("pfreeze", PlayerFreeze)
-				 .Register("sethp", SetHp);
+				 .Register("sethp", SetHp)
+				 .Register("setplayerhp", SetPlayerHp);
 		}
 
 		protected override void PostStart()
@@ -347,6 +348,15 @@ namespace WyteEngine
 			NArgsAssert(a.Length > 0);
 			NArgsAssert(int.TryParse(a[0], out amount));
 			target.Health = amount;
+			yield break;
+		}
+
+		public IEnumerator SetPlayerHp(string t, params string[] a) 
+		{
+			int amount;
+			NArgsAssert(a.Length > 0);
+			NArgsAssert(int.TryParse(a[0], out amount));
+			Player.Life = amount;
 			yield break;
 		}
 
