@@ -7,13 +7,13 @@ using Novel.Exceptions;
 using System.Security.AccessControl;
 namespace WyteEngine.UI
 {
-	enum FadeState { In, Out }
+	public enum FadeState { In, Out }
 	[RequireComponent(typeof(Image))]
 	public class FadeController : SingletonBaseBehaviour<FadeController>
 	{
 		Image image;
 
-		FadeState state = FadeState.Out;	
+		public FadeState State { get; private set; } = FadeState.Out;
 
 		private void Start()
 		{
@@ -55,7 +55,7 @@ namespace WyteEngine.UI
 					throw new NRuntimeException("時間が不正です。");
 			}
 
-			if ((state == FadeState.In && mode == "in") || (state == FadeState.Out && mode == "out"))
+			if ((State == FadeState.In && mode == "in") || (State == FadeState.Out && mode == "out"))
 			{
 				// フェードイン済み、もしくはフェードアウト済みのときはフェード処理を行わない
 				yield return new WaitForSeconds(time);
@@ -82,11 +82,11 @@ namespace WyteEngine.UI
 			{
 				case "in":
 					image.color = light;
-					state = FadeState.In;
+					State = FadeState.In;
 					break;
 				case "out":
 					image.color = dark;
-					state = FadeState.Out;
+					State = FadeState.Out;
 					break;
 			}
 		}
