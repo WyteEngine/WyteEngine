@@ -72,6 +72,16 @@ namespace WyteEngine.Entities
 		{
 			Animate();
 			base.OnUpdate();
+			var sp = CurrentAnim?.Sprite;
+			if (sp != null)
+			{
+				charaWidth = .5f;
+				charaWidth2 = sp.bounds.size.x - .5f;
+				charaHead = sp.bounds.size.y / 2;
+				charaFoot = -sp.bounds.size.y / 2;
+				collider2D.size = new Vector2(sp.bounds.size.x, sp.bounds.size.y - 0.5f);
+			}
+
 			if (!Wyte.IsNotFreezed || (this is PlayerController && !Wyte.CanMove))
 			{
 				// 1回だけ変える
@@ -81,15 +91,6 @@ namespace WyteEngine.Entities
 				}
 				prevIsFreezed = !Wyte.IsNotFreezed || (this is PlayerController && !Wyte.CanMove);
 				return;
-			}
-			var sp = CurrentAnim?.Sprite;
-			if (sp != null)
-			{
-				charaWidth = sp.bounds.size.x * 0.625f;
-				charaWidth2 = sp.bounds.size.x * 1.2f;
-				charaHead = (sp.bounds.size.y / 2) * 1.2857143f;
-				charaFoot = (sp.bounds.size.y / 2) * -1.25f;
-				collider2D.size = sp.bounds.size * 0.9f;
 			}
 
 			// 落下死
@@ -152,6 +153,12 @@ namespace WyteEngine.Entities
 
 			Gizmos.color = CanKickRight() ? Color.red : Color.blue;
 			Gizmos.DrawLine(KickRA, KickRB);
+
+			Gizmos.color = IsGrounded() ? Color.red : Color.blue;
+			Gizmos.DrawLine(FloorA, FloorB);
+
+			Gizmos.color = IsCeiling() ? Color.red : Color.blue;
+			Gizmos.DrawLine(CeilingA, CeilingB);
 		}
 
 		/// <summary>
