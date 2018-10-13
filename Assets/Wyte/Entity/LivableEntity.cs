@@ -75,11 +75,11 @@ namespace WyteEngine.Entities
 			var sp = CurrentAnim?.Sprite;
 			if (sp != null)
 			{
-				charaWidth = .5f;
-				charaWidth2 = sp.bounds.size.x - .5f;
+				charaWidth = sp.bounds.size.x;
+				charaWidth2 = sp.bounds.size.x + 1;
 				charaHead = sp.bounds.size.y / 2;
 				charaFoot = -sp.bounds.size.y / 2;
-				collider2D.size = new Vector2(sp.bounds.size.x, sp.bounds.size.y - 0.5f);
+				collider2D.size = new Vector2(sp.bounds.size.x, sp.bounds.size.y - 1f);
 			}
 
 			if (!Wyte.IsNotFreezed || (this is PlayerController && !Wyte.CanMove))
@@ -237,7 +237,6 @@ namespace WyteEngine.Entities
 				return false;
 
 			return collider2D.bounds.Intersects(playerCollider.bounds);
-
 		}
 
 		protected virtual void CheckCollision(bool intersects)
