@@ -48,7 +48,7 @@ namespace WyteEngine.Entities
 
 		public bool Dead { get; protected set; }
 		public virtual int MaxHealth => 1;
-		public int Health { get; protected set; }
+		public int Health { get; set; }
 
 		public float HealthRatio => Health / (float)MaxHealth;
 

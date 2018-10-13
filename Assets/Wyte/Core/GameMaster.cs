@@ -121,7 +121,8 @@ namespace WyteEngine
 				 .Register("phide", PlayerHide)
 				 .Register("gui", Gui)
 				 .Register("freeze", Freeze)
-				 .Register("pfreeze", PlayerFreeze);
+				 .Register("pfreeze", PlayerFreeze)
+				 .Register("sethp", SetHp);
 		}
 
 		protected override void PostStart()
@@ -335,6 +336,17 @@ namespace WyteEngine
 				default:
 					throw new NRuntimeException("引数にはonまたはoffを指定してください．");
 			}
+			yield break;
+		}
+
+		public IEnumerator SetHp(string t, params string[] a)
+		{
+			NArgsAssert(!string.IsNullOrEmpty(t));
+			var target = Npc[t];
+			int amount;
+			NArgsAssert(a.Length > 0);
+			NArgsAssert(int.TryParse(a[0], out amount));
+			target.Health = amount;
 			yield break;
 		}
 
