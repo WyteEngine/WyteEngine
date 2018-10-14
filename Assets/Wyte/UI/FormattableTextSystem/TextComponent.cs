@@ -37,8 +37,10 @@ namespace WyteEngine.UI.TextFormatting
 		static List<TextElement> ParseCommand(string text)
 		{
 			var elems = new List<TextElement>();
-			var element = new TextElement();
-			element.Speed = 1;
+			var element = new TextElement
+			{
+				Speed = 1
+			};
 			var state = ParseState.PlainText;
 			var cmdName = new StringBuilder();
 			var cmdArgs = new StringBuilder();
@@ -256,21 +258,21 @@ namespace WyteEngine.UI.TextFormatting
 				case "date_wd":
 					return DateTime.Now.ToString("dddd");
 				case "key_left":
-					return keys.Left;
+					return ConvertKeyText(keys.Left);
 				case "key_right":
-					return keys.Right;
+					return ConvertKeyText(keys.Right);
 				case "key_up":
-					return keys.Up;
+					return ConvertKeyText(keys.Up);
 				case "key_down":
-					return keys.Down;
+					return ConvertKeyText(keys.Down);
 				case "key_jump":
-					return keys.Jump;
+					return ConvertKeyText(keys.Jump);
 				case "key_dash":
-					return keys.Dash;
+					return ConvertKeyText(keys.Dash);
 				case "key_action":
-					return keys.Action;
+					return ConvertKeyText(keys.Action);
 				case "key_pause":
-					return keys.Pause;
+					return ConvertKeyText(keys.Pause);
 				case "now":
 					return DateTime.Now.ToString("yy/MM/dd HH:mm:ss");
 				case "map_id":
@@ -287,6 +289,23 @@ namespace WyteEngine.UI.TextFormatting
 		static string ElementToText(IEnumerable<TextElement> elements)
 		{
 			return string.Concat(elements.Select(e => e.ToString()));
+		}
+
+		static string ConvertKeyText(string text)
+		{
+			switch (text)
+			{
+				default:
+					return text;
+				case "up":
+					return "↑";
+				case "down":
+					return "↓";
+				case "left":
+					return "←";
+				case "right":
+					return "→";
+			}
 		}
 
 
