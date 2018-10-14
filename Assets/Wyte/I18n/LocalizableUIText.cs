@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using WyteEngine.UI.TextFormatting;
 
 namespace WyteEngine.I18n
 {
@@ -26,7 +27,7 @@ namespace WyteEngine.I18n
 		protected override void Update()
 		{
 			base.Update();
-			ui.text = I18n[localizableStringId];
+			ui.text = TextComponent.Parse(I18n[localizableStringId]);
 		}
 	}
 }
